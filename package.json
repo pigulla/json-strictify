@@ -1,0 +1,36 @@
+{
+  "name": "json-strictify",
+  "version": "0.1.0",
+  "description": "Strict JSON-stringification to avoid and detect bugs during development.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node_modules/gulp/bin/gulp.js test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pigulla/json-strictify.git"
+  },
+  "keywords": [
+    "JSON",
+    "debugging",
+    "validation",
+    "stringify"
+  ],
+  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pigulla/json-strictify/issues"
+  },
+  "homepage": "https://github.com/pigulla/json-strictify",
+  "dependencies": {
+    "json-pointer": "^0.2.1"
+  },
+  "devDependencies": {
+    "buster": "^0.7.13",
+    "gulp": "^3.8.8",
+    "gulp-jscs": "^1.1.2",
+    "gulp-jshint": "^1.8.4",
+    "gulp-mocha": "^1.1.0",
+    "sinon": "^1.10.3"
+  }
+}
