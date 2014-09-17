@@ -1,7 +1,43 @@
 # json-strictify
 
-Check if a value can safely be JSON.stringify'd, i.e. if it doesn't contain values that would be dropped during serialization (such as functions, `undefined` or `NaN`).
+Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped (such as functions, `undefined` or `NaN`).
 
-#### Known limitations
+### Installation
 
-json-strictify is intended to be used with POJSO, meaning objects that are created with either the object literal syntax (`{}`) or with `Object.create(null)`. It will reject any object that does not have `Object` as its prototype (or none at all). This means that some values will fail validation even if they are completely safe to stringify. Also, any `toJSON` methods are ignored.
+Simply install via npm:
+```
+npm install json-strictify
+```
+
+### Usage
+
+json-strictify exposes three methods: `stringify`, `parse` and `enable`, so it can be used as a drop-in replacement for the native JSON object:
+
+```javascript
+var JSON = require('json-strictify');
+
+JSON.stringify(someObject);
+```
+
+The `parse` method is simply a reference to the native `JSON.parse` function.
+
+### Examples
+
+The `stringify` function throws an error if the input to be serialized contains invalid values:
+```javascript
+var JSONs = require('json-strictify');
+var serialized = JSONs.stringify({ x: 42, y: NaN });
+// "InvalidValueError: Invalid value at /y (non-finite number is not a valid JSON type)"
+```
+
+The location of the value that caused the error is a [JSON Pointer](http://tools.ietf.org/html/rfc6901) reference.
+
+### Disabling json-strictify
+
+In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enable` method:
+
+```javascript
+var JSON = require('json-strictify').enable(config.debug);
+```
+
+If called with a falsy parameter, `enable` will return the native JSON object so there will be no performance penalty whatsoever.

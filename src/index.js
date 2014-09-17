@@ -1,12 +1,25 @@
+/**
+ * json-strictify
+ *
+ * @class JSONs
+ * @version 0.1.0
+ * @author Raphael Pigulla <pigulla@four66.com>
+ * @license MIT
+ */
+
 var util = require('util');
 
 var InvalidValueError = require('./InvalidValueError');
 
+/**
+ * @param {*} data
+ * @param {Array.<(string|number)>} references
+ * @throws {JSONs.InvalidValueError}
+ */
 function check(data, references) {
+    /*jshint maxcomplexity:false*/
+    
     // Give more helpful error messages for the most common errors
-    if (util.isDate(data)) {
-        throw new InvalidValueError('Date is not a valid JSON type', data, references);
-    }
     if (util.isError(data)) {
         throw new InvalidValueError('Error is not a valid JSON type', data, references);
     }
@@ -20,7 +33,7 @@ function check(data, references) {
         throw new InvalidValueError('function is not a valid JSON type', data, references);
     }
     if (typeof data === 'number' && !isFinite(data)) {
-        throw new InvalidValueError('infinite number is not a valid JSON type', data, references);
+        throw new InvalidValueError('non-finite number is not a valid JSON type', data, references);
     }
 
     // Primitive types are always okay
@@ -38,14 +51,13 @@ function check(data, references) {
 
     // If an object, check its properties
     if (typeof data === 'object') {
-        if (data.__proto__ && data.__proto__ !== Object.prototype) {
-            throw new InvalidValueError('unexpected prototype', data, references);
+        if (typeof data.toJSON === 'function') {
+            check(data.toJSON(), references);
+        } else {
+            for (var key in data) { // jshint ignore:line
+                check(data[key], references.concat(key));
+            }
         }
-
-        Object.keys(data).forEach(function (key) {
-            check(data[key], references.concat(key));
-        });
-
         return;
     }
 
@@ -53,30 +65,22 @@ function check(data, references) {
     throw new InvalidValueError('invalid type', data, references);
 }
 
-function validate(data) {
-    check(data, []);
-    return true;
-}
-
-function isValid(data) {
-    try {
-        return validate(data);
-    } catch (e) {
-        if (e instanceof InvalidValueError) {
-            return false
-        } else {
-            throw e;
-        }
-    }
-}
-
+/**
+ * @param {*} data
+ * @return {string}
+ * @throws {JSONs.InvalidValueError}
+ */
 function stringify(data) {
-    validate(data);
+    check(data, []);
     return JSON.stringify.apply(JSON, arguments);
 }
 
-module.exports = {
-    validate: validate,
-    isValid: isValid,
-    stringify: stringify
+var JSONs = {
+    parse: JSON.parse,
+    stringify: stringify,
+    enable: function (enabled) {
+        return enabled ? JSONs : JSON;
+    }
 };
+
+module.exports = JSONs;

@@ -1,11 +1,10 @@
 {
   "name": "json-strictify",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Strict JSON-stringification to avoid and detect bugs during development.",
+  "version": "0.1.0",
+  "description": "Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped.",
   "main": "src/index.js",
   "scripts": {
-    "test": "node_modules/gulp/bin/gulp.js test"
+    "test": "node_modules/gulp/bin/gulp.js default"
   },
   "repository": {
     "type": "git",
@@ -15,7 +14,8 @@
     "JSON",
     "debugging",
     "validation",
-    "stringify"
+    "stringify",
+    "parse"
   ],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
