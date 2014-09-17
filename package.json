@@ -1,6 +1,7 @@
 {
   "name": "json-strictify",
-  "version": "0.1.0",
+  "version": "0.0.0",
+  "private": true,
   "description": "Strict JSON-stringification to avoid and detect bugs during development.",
   "main": "src/index.js",
   "scripts": {
