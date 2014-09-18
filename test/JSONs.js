@@ -31,6 +31,9 @@ describe('JSONs', function () {
             assert.exception(function () {
                 JSONs.stringify([0, NaN, 2]);
             }, 'InvalidValueError');
+            assert.exception(function () {
+                JSONs.stringify([0, NaN, 2]);
+            }, 'InvalidValueError');
         });
 
         it('honors "toJSON" methods', function () {
@@ -90,6 +93,10 @@ describe('JSONs', function () {
 
         it('when disabled', function () {
             assert.same(JSONs.enable(false), JSON);
+        });
+
+        it('not when enabled', function () {
+            assert.same(JSONs.enable(true), JSONs);
         });
     });
 
