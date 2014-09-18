@@ -1,3 +1,8 @@
+[![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg?style=flat-square)](https://travis-ci.org/pigulla/json-strictify)
+[![NPM version](http://img.shields.io/npm/v/json-strictify.svg?style=flat-square)](http://badge.fury.io/js/json-strictify)
+[![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg?style=flat)](https://david-dm.org/pigulla/json-strictify)
+[![devDependency Status](https://david-dm.org/pigulla/json-strictify/dev-status.svg?style=flat)](https://david-dm.org/pigulla/json-strictify#info=devDependencies)
+
 # json-strictify
 
 Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped (such as functions, `undefined` or `NaN`).
