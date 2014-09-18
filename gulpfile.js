@@ -13,7 +13,7 @@ gulp.task('lint', function () {
         .pipe(jscs());
 });
 
-gulp.task('test', function (cb) {
+gulp.task('test', function () {
     return gulp.src('test/**/*.js')
         .pipe(mocha({ reporter: 'spec' }));
 });

@@ -241,7 +241,7 @@ describe('JSONs', function () {
                         c: 13,
                         replaceMe: undefined
                     }, replacer);
-                }, 'InvalidValueError', '/replaceMe/y')
+                }, 'InvalidValueError', '/replaceMe/y');
             });
         });
     });
