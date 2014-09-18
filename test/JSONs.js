@@ -7,7 +7,12 @@ var JSONs = require('../src/JSONs');
 var assert = referee.assert,
     refute = referee.refute;
 
-function assertErrorAt(fn, name, path) {
+/**
+ * @param {function()} fn
+ * @param {string} name
+ * @param {string} reference
+ */
+function assertErrorAt(fn, name, reference) {
     var error;
     
     try {
@@ -18,8 +23,7 @@ function assertErrorAt(fn, name, path) {
 
     assert(error);
     assert.same(error.name, name);
-    assert.same(error.path, path);
-
+    assert.same(error.path, reference);
 }
 
 describe('JSONs', function () {
