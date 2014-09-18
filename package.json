@@ -1,8 +1,8 @@
 {
   "name": "json-strictify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped.",
-  "main": "src/index.js",
+  "main": "src/JSONs.js",
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js default"
   },
@@ -32,6 +32,6 @@
     "gulp-jscs": "^1.1.2",
     "gulp-jshint": "^1.8.4",
     "gulp-mocha": "^1.1.0",
-    "sinon": "^1.10.3"
+    "gulp-tap": "^0.1.1"
   }
 }

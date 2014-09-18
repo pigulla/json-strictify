@@ -16,7 +16,7 @@ function InvalidValueError(message, value, references) {
     this.path = pointer.compile(this.references);
 
     this.name = 'InvalidValueError';
-    this.message = util.format('Invalid value at %s (%s)', this.path, message);
+    this.message = util.format('Invalid value at "%s" (%s)', this.path, message);
 
     Error.call(this);
 }
