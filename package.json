@@ -1,7 +1,7 @@
 {
   "name": "json-strictify",
   "version": "0.2.0",
-  "description": "Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped.",
+  "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "main": "src/JSONs.js",
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js default"
@@ -15,7 +15,7 @@
     "debugging",
     "validation",
     "stringify",
-    "parse"
+    "strict"
   ],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
@@ -27,13 +27,12 @@
     "json-pointer": "^0.2.1"
   },
   "devDependencies": {
-    "buster": "^0.7.13",
     "gulp": "^3.8.8",
     "gulp-coveralls": "^0.1.3",
     "gulp-istanbul": "^0.3.1",
     "gulp-jscs": "^1.1.2",
     "gulp-jshint": "^1.8.4",
     "gulp-mocha": "^1.1.0",
-    "gulp-tap": "^0.1.1"
+    "referee": "^1.0.3"
   }
 }

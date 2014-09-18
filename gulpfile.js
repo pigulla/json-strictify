@@ -14,6 +14,11 @@ gulp.task('lint', function () {
 });
 
 gulp.task('test', function (cb) {
+    return gulp.src('test/**/*.js')
+        .pipe(mocha({ reporter: 'spec' }));
+});
+
+gulp.task('test-with-coverage', function (cb) {
     gulp.src('src/**/*.js')
         .pipe(istanbul())
         .on('finish', function () {
@@ -30,4 +35,4 @@ gulp.task('coveralls', function () {
 });
 
 
-gulp.task('default', ['lint', 'test']);
+gulp.task('default', ['lint', 'test-with-coverage']);

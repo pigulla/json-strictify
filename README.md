@@ -6,7 +6,26 @@
 
 # json-strictify
 
-Assert that a value can safely be serialized to JSON, i.e. that it doesn't contain values that would be dropped (such as functions, `undefined` or `NaN`).
+Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.
+
+#### Why
+
+The native [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) function drops all values that are not supported by the [JSON specification](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf):
+
+```js
+JSON.stringify({ a: 42, b: undefined });
+// returns '{"a":42}'
+
+JSON.parse(JSON.stringify(NaN));
+// returns 'null'
+
+JSON.stringify([1, NaN, 3]);
+// returns '[1,null,3]'
+```
+
+In many cases this is not the behaviour you want: relying on the serialization method to clean up your data is error prone and can lead to suble bugs that are annoying to find. json-strictify helps you to easily avoid these issues with literally a single line of code.
+
+---
 
 ### Installation
 
@@ -27,16 +46,28 @@ JSON.stringify(someObject);
 
 The `parse` method is simply a reference to the native `JSON.parse` function.
 
+---
+
 ### Examples
 
 The `stringify` function throws an error if the input to be serialized contains invalid values:
 ```javascript
 var JSONs = require('json-strictify');
-var serialized = JSONs.stringify({ x: 42, y: NaN });
-// "InvalidValueError: Invalid value at /y (non-finite number is not a valid JSON type)"
+JSONs.stringify({ x: 42, y: NaN });
+// InvalidValueError: Invalid value at /y (non-finite number is not a valid JSON type)
 ```
 
-The location of the value that caused the error is a [JSON Pointer](http://tools.ietf.org/html/rfc6901) reference.
+Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
+```javascript
+var data = [];
+data.push(data);
+JSONs.stringify(data);
+// CircularReferenceError: Circular reference found at "/0"
+```
+
+The location of the value that caused the error is given as a [JSON Pointer](http://tools.ietf.org/html/rfc6901) reference.
+
+---
 
 ### Disabling json-strictify
 

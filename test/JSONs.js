@@ -1,11 +1,26 @@
 var util = require('util');
 
-var buster = require('buster');
+var referee = require('referee');
 
 var JSONs = require('../src/JSONs');
 
-var assert = buster.referee.assert,
-    refute = buster.referee.refute;
+var assert = referee.assert,
+    refute = referee.refute;
+
+function assertErrorAt(fn, name, path) {
+    var error;
+    
+    try {
+        fn();
+    } catch (e) {
+        error = e;
+    }
+
+    assert(error);
+    assert.same(error.name, name);
+    assert.same(error.path, path);
+
+}
 
 describe('JSONs', function () {
     describe('basic functionality', function () {
@@ -74,6 +89,51 @@ describe('JSONs', function () {
             });
 
             assert.same(JSONs.stringify(o), JSON.stringify(o));
+        });
+    });
+
+    describe('detects circular references', function () {
+        it('when it is direct', function () {
+            var o = { a: 42 };
+
+            o.b = o;
+            
+            assertErrorAt(function () {
+                JSONs.stringify(o);
+            }, 'CircularReferenceError', '/b');
+        });
+
+        it('when it is indirect', function () {
+            var o = { a: [{ b: {} }] };
+
+            o.a[0].b.circular = o;
+            
+            assertErrorAt(function () {
+                JSONs.stringify(o);
+            }, 'CircularReferenceError', '/a/0/b/circular');
+        });
+        
+        it('introduced by toJSON and a replacer', function () {
+            var o = {
+                a: [{
+                    x: NaN,
+                    toJSON: function () {
+                        return [
+                            42, {
+                                y: null
+                            }
+                        ];
+                    }
+                }]
+            };
+            
+            function replacer(key, value) {
+                return key === 'y' ? o : value; 
+            }
+
+            assertErrorAt(function () {
+                JSONs.stringify(o, replacer);
+            }, 'CircularReferenceError', '/a/0/1/y');
         });
     });
 
@@ -174,27 +234,19 @@ describe('JSONs', function () {
                     }
                 }
 
-                var error;
-
-                try {
+                assertErrorAt(function () {
                     JSONs.stringify({
                         a: 0,
                         b: 1,
                         c: 13,
                         replaceMe: undefined
                     }, replacer);
-                } catch (e) {
-                    error = e;
-                }
-
-                assert(error);
-                assert.same(error.name, 'InvalidValueError');
-                assert.same(error.path, '/replaceMe/y');
+                }, 'InvalidValueError', '/replaceMe/y')
             });
         });
     });
 
-    describe('works when both "replacer" and "toJSON" is used', function () {
+    describe('works when both a replacer and toJSON() is used', function () {
         it('for a valid object', function () {
             var o = {
                 a: 42,
@@ -218,61 +270,44 @@ describe('JSONs', function () {
         });
 
         it('for an invalid object', function () {
-            var error,
-                o = {
-                    a: 42,
-                    b: {
-                        toJSON: function () {
-                            return {
-                                x: 'test',
-                                y: [],
-                                z: {
-                                    p: NaN,
-                                    toJSON: function () {
-                                        return [null, /invalid/];
-                                    }
+            var o = {
+                a: 42,
+                b: {
+                    toJSON: function () {
+                        return {
+                            x: 'test',
+                            y: [],
+                            z: {
+                                p: NaN,
+                                toJSON: function () {
+                                    return [null, /invalid/];
                                 }
-                            };
-                        }
-                    },
-                    c: [0, 8, 15]
-                };
+                            }
+                        };
+                    }
+                },
+                c: [0, 8, 15]
+            };
 
             function replacer(key, value) {
                 return key === 'p' ? undefined : value;
             }
-
-            try {
+            
+            assertErrorAt(function () {
                 JSONs.stringify(o, replacer);
-            } catch (e) {
-                error = e;
-            }
-
-            assert(error);
-            assert.same(error.name, 'InvalidValueError');
-            assert.same(error.path, '/b/z/1');
+            }, 'InvalidValueError', '/b/z/1');
         });
     });
 
     describe('reports the correct path', function () {
         it('for the root value', function () {
-            var error;
-
-            try {
+            assertErrorAt(function () {
                 JSONs.stringify(undefined);
-            } catch (e) {
-                error = e;
-            }
-
-            assert(error);
-            assert.same(error.name, 'InvalidValueError');
-            assert.same(error.path, '');
+            }, 'InvalidValueError', '');
         });
 
         it('for some nested value', function () {
-            var error;
-            
-            try {
+            assertErrorAt(function () {
                 JSONs.stringify([null, 42, {
                     x: {
                         toJSON: function () {
@@ -280,13 +315,7 @@ describe('JSONs', function () {
                         }
                     }
                 }]);
-            } catch (e) {
-                error = e;
-            }
-
-            assert(error);
-            assert.same(error.name, 'InvalidValueError');
-            assert.same(error.path, '/2/x/1/y');
+            }, 'InvalidValueError', '/2/x/1/y');
         });
     });
 });
