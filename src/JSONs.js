@@ -18,46 +18,46 @@ var JSONs = {
     replacer: null,
 
     /**
-     * @type {Array}
-     */
-    visited: [],
-    
-    /**
-     * @param {Object} value
+     * @param {Object} object
      * @param {Array.<(string|number)>} references
+     * @param {Array.<(Object|Array)>} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkObject: function (value, references) {
-        this.visit(value, references);
-        
-        if (typeof value.toJSON === 'function') {
-            return this.check(value.toJSON(), references);
+    checkObject: function (object, references, ancestors) {
+        var actual;
+
+        this.detectCycle(object, references, ancestors);
+
+        if (typeof object.toJSON === 'function') {
+            actual = object.toJSON();
+            return this.check(actual, references, ancestors);
         }
     
-        for (var key in value) { // jshint ignore:line
-            var actual = this.replacer ? this.replacer(key, value[key]) : value[key];
+        for (var key in object) { // jshint ignore:line
+            actual = this.replacer ? this.replacer(key, object[key]) : object[key];
     
             if (!(this.replacer && actual === undefined)) {
-                this.check(actual, references.concat(key));
+                this.check(actual, references.concat(key), ancestors.concat(object));
             }
         }
     },
     
     /**
-     * @param {Array} value
+     * @param {Array} array
      * @param {Array.<(string|number)>} references
+     * @param {Array.<(Object|Array)>} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkArray: function (value, references) {
-        this.visit(value, references);
+    checkArray: function (array, references, ancestors) {
+        this.detectCycle(array, references, ancestors);
 
-        return value.forEach(function (item, index) {
+        return array.forEach(function (item, index) {
             var actual = this.replacer ? this.replacer(index, item) : item;
-            this.check(actual, references.concat(index));
+            this.check(actual, references.concat(index), ancestors.concat([array]));
         }, this);
     },
     
@@ -70,29 +70,31 @@ var JSONs = {
      */
     checkCommonTypes: function (value, references) {
         if (util.isError(value)) {
-            throw new InvalidValueError('Error is not a valid JSON type', value, references);
+            throw new InvalidValueError('An error is not a valid JSON type', value, references);
         }
         if (util.isRegExp(value)) {
-            throw new InvalidValueError('RegExp is not a valid JSON type', value, references);
+            throw new InvalidValueError('A RegExp is not a valid JSON type', value, references);
         }
         if (value === undefined) {
             throw new InvalidValueError('undefined is not a valid JSON type', value, references);
         }
         if (typeof value === 'function') {
-            throw new InvalidValueError('function is not a valid JSON type', value, references);
+            throw new InvalidValueError('A function is not a valid JSON type', value, references);
         }
         if (typeof value === 'number' && !isFinite(value)) {
-            throw new InvalidValueError('non-finite number is not a valid JSON type', value, references);
+            throw new InvalidValueError(value + ' is not a valid JSON type', value, references);
         }
     },
     
     /**
      * @param {*} value
      * @param {Array.<(string|number)>} references
+     * @param {Array.<(Object|Array)>} ancestors
+     * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    check: function (value, references) {
+    check: function (value, references, ancestors) {
         this.checkCommonTypes(value, references);
     
         // Primitive types are always okay (we've already checked for non-finite numbers)
@@ -102,10 +104,10 @@ var JSONs = {
     
         if (Array.isArray(value)) {
             // If an array, check its elements
-            return this.checkArray(value, references);
+            return this.checkArray(value, references, ancestors);
         } else /* istanbul ignore else */ if (typeof value === 'object') {
             // If an object, check its properties (we've already checked for null)
-            return this.checkObject(value, references);
+            return this.checkObject(value, references, ancestors);
         } else {
             // Anything else (e.g., a host object) is an error
             throw new InvalidValueError('Invalid type', value);
@@ -129,16 +131,15 @@ var JSONs = {
     /**
      * @param {(Object|Array)} value
      * @param {Array.<(string|number)>} references
+     * @param {Array.<(Object|Array)>} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
-    visit: function (value, references) {
-        var idx = this.visited.indexOf(value);
+    detectCycle: function (value, references, ancestors) {
+        var idx = ancestors.indexOf(value);
 
         if (idx !== -1) {
             throw new CircularReferenceError(references);
         }
-        
-        this.visited.push(value);
     },
     
     /**
@@ -151,12 +152,12 @@ var JSONs = {
      */
     stringify: function (value, replacer, space) {
         this.replacer = this.normalizeReplacer(replacer);
-        this.visited = [];
-        
-        var initialData = this.replacer ? this.replacer('', value) : value,
-            references = [];
 
-        this.check(initialData, references);
+        var initialData = this.replacer ? this.replacer('', value) : value,
+            references = [],
+            ancestors = [];
+
+        this.check(initialData, references, ancestors);
         return JSON.stringify(value, replacer, space);
     }
 };

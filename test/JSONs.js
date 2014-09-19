@@ -97,7 +97,7 @@ describe('JSONs', function () {
     });
 
     describe('detects circular references', function () {
-        it('when it is direct', function () {
+        it('that is a self loop', function () {
             var o = { a: 42 };
 
             o.b = o;
@@ -107,7 +107,7 @@ describe('JSONs', function () {
             }, 'CircularReferenceError', '/b');
         });
 
-        it('when it is indirect', function () {
+        it('that is transitive', function () {
             var o = { a: [{ b: {} }] };
 
             o.a[0].b.circular = o;
@@ -116,7 +116,18 @@ describe('JSONs', function () {
                 JSONs.stringify(o);
             }, 'CircularReferenceError', '/a/0/b/circular');
         });
-        
+
+        it('that is none', function () {
+            // This is the case that breaks json-stringify-safe, so we want to do it right.
+            // See https://github.com/isaacs/json-stringify-safe/issues/9
+            var p = {},
+                o = { a: p, b: p };
+
+            refute.exception(function () {
+                JSONs.stringify(o);
+            });
+        });
+
         it('introduced by toJSON and a replacer', function () {
             var o = {
                 a: [{
