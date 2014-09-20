@@ -1,7 +1,7 @@
 /**
  * json-strictify
  *
- * @version 0.2.0
+ * @version 0.3.0-dev
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -13,11 +13,13 @@ var CircularReferenceError = require('./CircularReferenceError'),
 
 var JSONs = {
     /**
-     * @type {?function(string,*)}
+     * @type {?function(string,*):*}
      */
     replacer: null,
 
     /**
+     * Recursively check if the given object can be serialized to JSON safely.
+     * 
      * @param {Object} object
      * @param {Array.<(string|number)>} references
      * @param {Array.<(Object|Array)>} ancestors
@@ -45,6 +47,8 @@ var JSONs = {
     },
     
     /**
+     * Recursively check if the given array can be serialized to JSON safely.
+     * 
      * @param {Array} array
      * @param {Array.<(string|number)>} references
      * @param {Array.<(Object|Array)>} ancestors
@@ -62,10 +66,11 @@ var JSONs = {
     },
     
     /**
-     * Give more helpful error messages for most common invalid types.
+     * Check if the given value is of a known, not-serializable type and provide a more specific, helpful error message.
      *
      * @param {*} value
      * @param {Array.<(string|number)>} references
+     * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      */
     checkCommonTypes: function (value, references) {
@@ -82,11 +87,14 @@ var JSONs = {
             throw new InvalidValueError('A function is not a valid JSON type', value, references);
         }
         if (typeof value === 'number' && !isFinite(value)) {
+            // The value's string representation itself will actually be descriptive ("Infinity", "-Infinity" or "NaN").
             throw new InvalidValueError(value + ' is not a valid JSON type', value, references);
         }
     },
     
     /**
+     * Recursively check if the given value can be serialized to JSON safely.
+     * 
      * @param {*} value
      * @param {Array.<(string|number)>} references
      * @param {Array.<(Object|Array)>} ancestors
@@ -95,28 +103,39 @@ var JSONs = {
      * @throws {JSONs.CircularReferenceError}
      */
     check: function (value, references, ancestors) {
+        // Check for the most common non-serializable types.
         this.checkCommonTypes(value, references);
     
-        // Primitive types are always okay (we've already checked for non-finite numbers)
+        // Primitive types are always okay (we've already checked for non-finite numbers).
         if (value === null || typeof value === 'string' || typeof value === 'boolean' || typeof value === 'number') {
             return;
         }
     
         if (Array.isArray(value)) {
-            // If an array, check its elements
+            // If an array, check its elements.
             return this.checkArray(value, references, ancestors);
         } else /* istanbul ignore else */ if (typeof value === 'object') {
-            // If an object, check its properties (we've already checked for null)
+            // If an object, check its properties (we've already checked for null).
             return this.checkObject(value, references, ancestors);
         } else {
-            // Anything else (e.g., a host object) is an error
+            // This case will not occur in a regular Node.JS or browser environment, but could happen if you run your
+            // script in an engine like Rhino or Nashorn and try to serialize a host object.
             throw new InvalidValueError('Invalid type', value);
         }
     },
     
     /**
+     * Normalizes the user-specified replacer function.
+     * 
+     * In short, JSON.stringify's "replacer" parameter can either be a function or an array containing the names of the
+     * properties to be included. This method normalizes the latter case to the former so we can always treat the
+     * "replacer" option as a function internally.
+     * 
+     * For more information about the replacer function take a look at the documentation on
+     * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_native_JSON#The_replacer_parameter).
+     * 
      * @param {(function(string,*)|Array.<(string|number)>)=} replacer
-     * @return {?function(string,*)}
+     * @return {?function(string,*):*}
      */
     normalizeReplacer: function (replacer) {
         if (Array.isArray(replacer)) {
@@ -129,22 +148,24 @@ var JSONs = {
     },
 
     /**
+     * Check if the passed value is a circular reference, i.e. whether it is one of its own ancestors.
+     * 
      * @param {(Object|Array)} value
      * @param {Array.<(string|number)>} references
      * @param {Array.<(Object|Array)>} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
     detectCycle: function (value, references, ancestors) {
-        var idx = ancestors.indexOf(value);
-
-        if (idx !== -1) {
+        if (ancestors.indexOf(value) !== -1) {
             throw new CircularReferenceError(references);
         }
     },
     
     /**
+     * The drop-in replacement function for JSON.stringify.
+     * 
      * @param {*} value
-     * @param {(function(string,*)|Array.<(string|number)>)=} replacer
+     * @param {(function(string,*):*|Array.<(string|number)>)=} replacer
      * @param {number=} space
      * @return {string}
      * @throws {JSONs.InvalidValueError}
@@ -153,11 +174,11 @@ var JSONs = {
     stringify: function (value, replacer, space) {
         this.replacer = this.normalizeReplacer(replacer);
 
-        var initialData = this.replacer ? this.replacer('', value) : value,
-            references = [],
-            ancestors = [];
+        var initialData = this.replacer ? this.replacer('', value) : value;
 
-        this.check(initialData, references, ancestors);
+        this.check(initialData, [], []);
+        
+        // Fall back to the native JSON.stringify that we now now is safe to use.
         return JSON.stringify(value, replacer, space);
     }
 };

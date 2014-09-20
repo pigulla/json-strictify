@@ -23,7 +23,9 @@ JSON.stringify([1, NaN, 3]);
 // returns '[1,null,3]'
 ```
 
-In many cases this is not the behaviour you want: relying on the serialization method to clean up your data is error prone and can lead to suble bugs that are annoying to find. json-strictify helps you to easily avoid these issues with literally a single line of code.
+In many cases this is not the behaviour you want: relying on the serialization method to clean up your data is error prone and can lead to subtle bugs that are annoying to find. json-strictify helps you to easily avoid these issues with literally a single line of code.
+
+Unlike [`json-stringify-safe`](https://www.npmjs.org/package/json-stringify-safe) it does not attempt to "fix" its input but always bails out when it encounters something that would prevent it from being serialized properly.
 
 ---
 

@@ -118,7 +118,7 @@ describe('JSONs', function () {
         });
 
         it('that is none', function () {
-            // This is the case that breaks json-stringify-safe, so we want to do it right.
+            // This is the case that breaks json-stringify-safe, so we want to get it right.
             // See https://github.com/isaacs/json-stringify-safe/issues/9
             var p = {},
                 o = { a: p, b: p };

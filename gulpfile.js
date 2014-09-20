@@ -34,5 +34,4 @@ gulp.task('coveralls', function () {
         .pipe(coveralls());
 });
 
-
 gulp.task('default', ['lint', 'test-with-coverage']);
