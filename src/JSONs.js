@@ -30,7 +30,7 @@ var JSONs = {
     checkObject: function (object, references, ancestors) {
         var actual;
 
-        this.detectCycle(object, references, ancestors);
+        this.assertNoCycle(object, references, ancestors);
 
         if (typeof object.toJSON === 'function') {
             actual = object.toJSON();
@@ -57,7 +57,7 @@ var JSONs = {
      * @throws {JSONs.CircularReferenceError}
      */
     checkArray: function (array, references, ancestors) {
-        this.detectCycle(array, references, ancestors);
+        this.assertNoCycle(array, references, ancestors);
 
         return array.forEach(function (item, index) {
             var actual = this.replacer ? this.replacer(index, item) : item;
@@ -75,7 +75,7 @@ var JSONs = {
      */
     checkCommonTypes: function (value, references) {
         if (util.isError(value)) {
-            throw new InvalidValueError('An error is not a valid JSON type', value, references);
+            throw new InvalidValueError('An error object is not a valid JSON type', value, references);
         }
         if (util.isRegExp(value)) {
             throw new InvalidValueError('A RegExp is not a valid JSON type', value, references);
@@ -155,7 +155,7 @@ var JSONs = {
      * @param {Array.<(Object|Array)>} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
-    detectCycle: function (value, references, ancestors) {
+    assertNoCycle: function (value, references, ancestors) {
         if (ancestors.indexOf(value) !== -1) {
             throw new CircularReferenceError(references);
         }

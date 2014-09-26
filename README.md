@@ -17,7 +17,7 @@ JSON.stringify({ a: 42, b: undefined });
 // returns '{"a":42}'
 
 JSON.parse(JSON.stringify(NaN));
-// returns 'null'
+// returns null
 
 JSON.stringify([1, NaN, 3]);
 // returns '[1,null,3]'
@@ -56,7 +56,7 @@ The `stringify` function throws an error if the input to be serialized contains 
 ```javascript
 var JSONs = require('json-strictify');
 JSONs.stringify({ x: 42, y: NaN });
-// InvalidValueError: Invalid value at /y (non-finite number is not a valid JSON type)
+// InvalidValueError: Invalid value at /y (NaN is not a valid JSON type)
 ```
 
 Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
