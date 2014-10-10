@@ -1,6 +1,6 @@
-## 0.3.0 (2014-??-??)
+## 0.2.1 (2014-10-10)
 
- - 
+ - maintenance release
 
 ## 0.2.0 (2014-09-19)
  - added circular reference detection
