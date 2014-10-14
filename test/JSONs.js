@@ -14,7 +14,7 @@ var assert = referee.assert,
  */
 function assertErrorAt(fn, name, reference) {
     var error;
-    
+
     try {
         fn();
     } catch (e) {
@@ -101,7 +101,7 @@ describe('JSONs', function () {
             var o = { a: 42 };
 
             o.b = o;
-            
+
             assertErrorAt(function () {
                 JSONs.stringify(o);
             }, 'CircularReferenceError', '/b');
@@ -111,7 +111,7 @@ describe('JSONs', function () {
             var o = { a: [{ b: {} }] };
 
             o.a[0].b.circular = o;
-            
+
             assertErrorAt(function () {
                 JSONs.stringify(o);
             }, 'CircularReferenceError', '/a/0/b/circular');
@@ -141,9 +141,9 @@ describe('JSONs', function () {
                     }
                 }]
             };
-            
+
             function replacer(key, value) {
-                return key === 'y' ? o : value; 
+                return key === 'y' ? o : value;
             }
 
             assertErrorAt(function () {
@@ -167,11 +167,16 @@ describe('JSONs', function () {
         });
 
         it('when disabled', function () {
-            assert.same(JSONs.enable(false), JSON);
+            assert.same(JSONs.enabled(false).parse, JSON.parse);
         });
 
         it('not when enabled', function () {
-            assert.same(JSONs.enable(true), JSONs);
+            assert.same(JSONs.enabled(true), JSONs);
+        });
+
+        it('when enabled and then disabled again', function () {
+            // call 'enable' more than necessary to cover all code paths
+            assert.same(JSONs.enabled(false).enabled(true).enabled(false).enabled(false).parse, JSON.parse);
         });
     });
 
@@ -307,7 +312,7 @@ describe('JSONs', function () {
             function replacer(key, value) {
                 return key === 'p' ? undefined : value;
             }
-            
+
             assertErrorAt(function () {
                 JSONs.stringify(o, replacer);
             }, 'InvalidValueError', '/b/z/1');
@@ -331,6 +336,93 @@ describe('JSONs', function () {
                     }
                 }]);
             }, 'InvalidValueError', '/2/x/1/y');
+        });
+    });
+
+    describe('works as callbacks', function () {
+        describe('via stringifyAsync', function () {
+            it('without arguments', function (done) {
+                var o = { foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] };
+
+                JSONs.stringifyAsync(o, function (error, result) {
+                    assert.isNull(error);
+                    assert.equals(result, JSONs.stringify(o));
+                    done();
+                });
+            });
+
+            it('with arguments', function (done) {
+                var replacer = ['c', 'd'],
+                    o = {
+                        a: 0,
+                        b: 1,
+                        c: 13,
+                        d: 42
+                    };
+
+                assert.same(JSONs.stringify(o, replacer), JSON.stringify(o, replacer));
+
+                JSONs.stringifyAsync(o, replacer, function (error, result) {
+                    assert.isNull(error);
+                    assert.equals(result, JSONs.stringify(o, replacer));
+                    done();
+                });
+            });
+
+            it('with InvalidValueError', function (done) {
+                JSONs.stringifyAsync([function () {}], function (error, result) {
+                    assert.equals(error.name, 'InvalidValueError');
+                    assert.equals(error.path, '/0');
+                    refute.defined(result);
+                    done();
+                });
+            });
+
+            it('with CircularReferenceError', function (done) {
+                var o = [1];
+                o.push(o);
+
+                JSONs.stringifyAsync(o, function (error, result) {
+                    assert.equals(error.name, 'CircularReferenceError');
+                    assert.equals(error.path, '/1');
+                    refute.defined(result);
+                    done();
+                });
+            });
+        });
+
+        describe('via parseAsync', function () {
+            it('without arguments', function (done) {
+                var data = JSON.stringify({ foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] });
+
+                JSONs.parseAsync(data, function (error, result) {
+                    assert.isNull(error);
+                    assert.equals(result, JSON.parse(data));
+                    done();
+                });
+            });
+
+            it('with arguments', function (done) {
+                var data = JSON.stringify({ foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] });
+
+                function reviver(k, v) {
+                    return k === 'meaning' ? 'none' : v;
+                }
+
+                JSONs.parseAsync(data, reviver, function (error, result) {
+                    assert.isNull(error);
+                    assert.equals(result, JSON.parse(data, reviver));
+                    done();
+                });
+            });
+
+            it('with error', function (done) {
+                JSONs.parseAsync('foo', function (error, result) {
+                    assert.equals(error.name, 'SyntaxError');
+                    refute.defined(result);
+                    done();
+                });
+            });
         });
     });
 });

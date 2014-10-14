@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "main": "src/JSONs.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "debugging",
     "validation",
     "stringify",
-    "strict"
+    "strict",
+    "callback"
   ],
   "author": "Raphael Pigulla <pigulla@four66.com>",
   "license": "MIT",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/pigulla/json-strictify",
   "dependencies": {
+    "fkt": "^0.1.5",
     "json-pointer": "^0.2.2"
   },
   "devDependencies": {

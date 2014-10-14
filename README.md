@@ -6,7 +6,7 @@
 
 # json-strictify
 
-Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.
+Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references. Also provides a Node-like callback interface for `JSON.parse` and `JSON.stringify`. 
 
 #### Why
 
@@ -71,12 +71,42 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 
 ---
 
-### Disabling json-strictify
+### Callback interface
 
-In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enable` method:
+It's sometimes convenience to have a Node-style callback interface event for functions that are not actually asynchronous (like `JSON.parse` and `JSON.stringify`). This is because it allows you to seamlessly use them in libraries like [async](https://github.com/caolan/async) or, in fact, any place that follows the Node convention of expecting a callback as its last parameter.
 
-```javascript
-var JSON = require('json-strictify').enable(config.debug);
+For this use case, json-strictify provides the functions `parseAsync` and `stringifyAsync` (please note that these functions are despite their name still execute synchronously): 
+
+```js
+async.waterfall([
+    function (cb) {
+        fs.readFile('a.json', cb);
+    },
+    JSONs.parseAsync
+], function (error, result) {
+    console.dir(arguments);
+});
+
 ```
 
-If called with a falsy parameter, `enable` will return the native JSON object so there will be no performance penalty whatsoever.
+If an exception was thrown, that exception is passed to the callback as its error argument:
+
+```js
+JSONs.parseAsync('oops', function (error, result) {
+    console.dir(arguments);
+    // Output: { '0': [SyntaxError: Unexpected token o] }
+});
+
+```
+
+---
+
+### Disabling json-strictify
+
+In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enabled` method:
+
+```javascript
+var JSON = require('json-strictify').enabled(config.debug);
+```
+
+If called with a falsy parameter, `enabled` will return an object that delegates directly to the native JSON object so there will be no performance penalty whatsoever.
