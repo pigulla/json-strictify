@@ -1,3 +1,7 @@
+## 0.3.1 (2014-11-28)
+
+ - maintenance release
+
 ## 0.3.0 (2014-10-14)
 
  - Breaking Change: `enable` is now called `enabled`
