@@ -3,7 +3,8 @@ branches:
   only:
     - master
 node_js:
-  - "0.11"
+  - "iojs-v1.2.0"
+  - "0.12"
   - "0.10"
 install: npm install
 after_script: node_modules/.bin/gulp coveralls

@@ -1,3 +1,7 @@
+## 0.3.3 (2015-02-13)
+
+ - maintenance release
+
 ## 0.3.2 (2015-01-24)
 
  - maintenance release
