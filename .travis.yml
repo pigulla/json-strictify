@@ -3,7 +3,7 @@ branches:
   only:
     - master
 node_js:
-  - "iojs-v1.2.0"
+  - "4"
   - "0.12"
   - "0.10"
 install: npm install
