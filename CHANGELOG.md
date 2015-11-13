@@ -1,6 +1,7 @@
 ## 0.3.6 (2015-11-13)
 
  - maintenance release (update dependencies and fix typo)
+ - fix test coverage report
 
 ## 0.3.5 (2015-11-04)
 
