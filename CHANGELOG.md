@@ -1,3 +1,7 @@
+## 0.3.6 (2015-11-13)
+
+ - maintenance release (update dependencies and fix typo)
+
 ## 0.3.5 (2015-11-04)
 
  - maintenance release (update dependencies)

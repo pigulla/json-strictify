@@ -1,7 +1,7 @@
 /**
  * json-strictify
  *
- * @version 0.3.5
+ * @version 0.3.6
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -180,7 +180,7 @@ var JSONs = {
 
         this.check(initialData, [], []);
 
-        // Fall back to the native JSON.stringify that we now now is safe to use.
+        // Fall back to the native JSON.stringify that we now know is safe to use.
         return JSON.stringify(value, replacer, space);
     }
 };
