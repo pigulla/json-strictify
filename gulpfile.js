@@ -21,6 +21,7 @@ gulp.task('test', function () {
 gulp.task('test-with-coverage', function (cb) {
     gulp.src('src/**/*.js')
         .pipe(istanbul())
+        .pipe(istanbul.hookRequire())
         .on('finish', function () {
             gulp.src('test/**/*.js')
                 .pipe(mocha({ reporter: 'dot' }))
