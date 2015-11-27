@@ -10,7 +10,7 @@ var pointer = require('json-pointer');
  * @constructor
  * @param {string} message
  * @param {*} value
- * @param {Array.<(string|number)>} references
+ * @param {Array.<(string|number)>=} references
  */
 function InvalidValueError(message, value, references) {
     this.references = references;

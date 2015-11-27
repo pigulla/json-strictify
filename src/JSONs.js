@@ -169,7 +169,7 @@ var JSONs = {
      * The drop-in replacement function for JSON.stringify.
      *
      * @param {*} value
-     * @param {(function(string,*):*|Array.<(string|number)>)=} replacer
+     * @param {(function(string,*):*|Array.<(string|number)>|null)=} replacer
      * @param {number=} space
      * @return {string}
      * @throws {JSONs.InvalidValueError}
