@@ -1,21 +1,19 @@
 var coveralls = require('gulp-coveralls'),
     gulp = require('gulp'),
     istanbul = require('gulp-istanbul'),
-    jscs = require('gulp-jscs'),
-    jshint = require('gulp-jshint'),
+    eslint = require('gulp-eslint'),
     mocha = require('gulp-mocha');
 
 gulp.task('lint', function () {
     return gulp.src(['src/**/*.js', 'test/**/*.js'])
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'))
-        .pipe(jshint.reporter('fail'))
-        .pipe(jscs());
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 });
 
 gulp.task('test', function () {
     return gulp.src('test/**/*.js')
-        .pipe(mocha({ reporter: 'spec' }));
+        .pipe(mocha({reporter: 'spec'}));
 });
 
 gulp.task('test-with-coverage', function (cb) {
@@ -24,7 +22,7 @@ gulp.task('test-with-coverage', function (cb) {
         .pipe(istanbul.hookRequire())
         .on('finish', function () {
             gulp.src('test/**/*.js')
-                .pipe(mocha({ reporter: 'dot' }))
+                .pipe(mocha({reporter: 'dot'}))
                 .pipe(istanbul.writeReports())
                 .on('end', cb);
         });

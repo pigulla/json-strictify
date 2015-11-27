@@ -1,3 +1,7 @@
+## 0.3.7 (2015-11-27)
+
+ - move from JSHint/JSCS to ESLint 
+
 ## 0.3.6 (2015-11-13)
 
  - maintenance release (update dependencies and fix typo)

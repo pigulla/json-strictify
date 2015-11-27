@@ -1,3 +1,5 @@
+'use strict';
+
 var util = require('util');
 
 var pointer = require('json-pointer');
@@ -20,7 +22,7 @@ function CircularReferenceError(references) {
 
 util.inherits(CircularReferenceError, Error);
 
-/*jshint -W030*/
+/* eslint-disable no-unused-expressions */
 /**
  * @type {string}
  */
@@ -35,6 +37,6 @@ CircularReferenceError.prototype.path;
  * @type {Array.<(string|number)>}
  */
 CircularReferenceError.prototype.references;
-/*jshint +W030*/
+/* eslint-enable no-unused-expressions */
 
 module.exports = CircularReferenceError;

@@ -1,7 +1,9 @@
+'use strict';
+
 /**
  * json-strictify
  *
- * @version 0.3.6
+ * @version 0.3.7
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -39,7 +41,7 @@ var JSONs = {
             return this.check(actual, references, ancestors);
         }
 
-        for (var key in object) { // jshint ignore:line
+        for (var key in object) { // eslint-disable-line guard-for-in
             actual = this.replacer ? this.replacer(key, object[key]) : object[key];
 
             if (!(this.replacer && actual === undefined)) {
