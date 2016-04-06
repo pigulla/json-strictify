@@ -46,7 +46,6 @@
         "no-caller": 2,
         "no-div-regex": 0,
         "no-else-return": 0,
-        "no-empty-label": 2,
         "no-eq-null": 2,
         "no-eval": 2,
         "no-extend-native": 2,

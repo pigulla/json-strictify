@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 0.3.7
+ * @version 0.3.8
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
