@@ -1,16 +1,18 @@
+[![npm version](http://img.shields.io/npm/v/json-strictify.svg?style=flat-square)](http://badge.fury.io/js/json-strictify)
 [![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg?style=flat-square)](https://travis-ci.org/pigulla/json-strictify)
-[![NPM version](http://img.shields.io/npm/v/json-strictify.svg?style=flat-square)](http://badge.fury.io/js/json-strictify)
 [![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg?style=flat-square)](https://coveralls.io/r/pigulla/json-strictify)
 [![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg?style=flat-square)](https://david-dm.org/pigulla/json-strictify)
 [![devDependency Status](https://david-dm.org/pigulla/json-strictify/dev-status.svg?style=flat-square)](https://david-dm.org/pigulla/json-strictify#info=devDependencies)
+![node](https://img.shields.io/node/v/json-strictify.svg?maxAge=2592000&style=flat-square)
+[![License](https://img.shields.io/npm/l/json-strictify.svg?maxAge=2592000&style=flat-square)](https://github.com/pigulla/json-strictify/blob/master/LICENSE)
 
 # json-strictify
 
-Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references. Also provides a Node-like callback interface for `JSON.parse` and `JSON.stringify`. 
+Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references. Also provides a Node-like callback interface for `JSON.parse` and `JSON.stringify`.
 
 #### Why
 
-The native [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) function drops all values that are not supported by the [JSON specification](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf):
+The native [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) function drops or silently modifies all values that are not supported by the [JSON specification](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf):
 
 ```js
 JSON.stringify({ a: 42, b: undefined });
@@ -56,7 +58,7 @@ The `stringify` function throws an error if the input to be serialized contains 
 ```javascript
 var JSONs = require('json-strictify');
 JSONs.stringify({ x: 42, y: NaN });
-// InvalidValueError: Invalid value at /y (NaN is not a valid JSON type)
+// InvalidValueError: Invalid value at /y (NaN is not JSON-serializable)
 ```
 
 Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
@@ -75,7 +77,7 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 
 It's sometimes convenience to have a Node-style callback interface event for functions that are not actually asynchronous (like `JSON.parse` and `JSON.stringify`). This is because it allows you to seamlessly use them in libraries like [async](https://github.com/caolan/async) or, in fact, any place that follows the Node convention of expecting a callback as its last parameter.
 
-For this use case, json-strictify provides the functions `parseAsync` and `stringifyAsync` (please note that these functions, despite their name, still execute synchronously): 
+For this use case, json-strictify provides the functions `parseAsync` and `stringifyAsync` (please note that these functions, despite their name, still execute synchronously):
 
 ```js
 async.waterfall([

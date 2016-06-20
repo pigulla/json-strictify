@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 0.3.8
+ * @version 1.0.0
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -70,7 +70,7 @@ var JSONs = {
     },
 
     /**
-     * Check if the given value is of a known, not-serializable type and provide a more specific, helpful error message.
+     * Check if the given value is of a known, non-serializable type and provide a more specific, helpful error message.
      *
      * @param {*} value
      * @param {Array.<(string|number)>} references
@@ -79,20 +79,20 @@ var JSONs = {
      */
     checkCommonTypes: function (value, references) {
         if (util.isError(value)) {
-            throw new InvalidValueError('An error object is not a valid JSON type', value, references);
+            throw new InvalidValueError('An error object is not JSON-serializable', value, references);
         }
         if (util.isRegExp(value)) {
-            throw new InvalidValueError('A RegExp is not a valid JSON type', value, references);
+            throw new InvalidValueError('A RegExp is not JSON-serializable', value, references);
         }
         if (value === undefined) {
-            throw new InvalidValueError('undefined is not a valid JSON type', value, references);
+            throw new InvalidValueError('undefined is not JSON-serializable', value, references);
         }
         if (typeof value === 'function') {
-            throw new InvalidValueError('A function is not a valid JSON type', value, references);
+            throw new InvalidValueError('A function is not JSON-serializable', value, references);
         }
         if (typeof value === 'number' && !isFinite(value)) {
             // The value's string representation itself will actually be descriptive ("Infinity", "-Infinity" or "NaN").
-            throw new InvalidValueError(value + ' is not a valid JSON type', value, references);
+            throw new InvalidValueError(value + ' is not JSON-serializable', value, references);
         }
     },
 

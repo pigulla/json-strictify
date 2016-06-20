@@ -1,7 +1,10 @@
 {
   "name": "json-strictify",
-  "version": "0.3.8",
+  "version": "1.0.0",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
+  "engines": {
+    "node": ">=0.10"
+  },
   "main": "src/JSONs.js",
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js default"
@@ -32,7 +35,7 @@
     "gulp": "^3.9.1",
     "gulp-coveralls": "^0.1.4",
     "gulp-eslint": "^2.0.0",
-    "gulp-istanbul": "^0.10.4",
+    "gulp-istanbul": "^1.0.0",
     "gulp-mocha": "^2.2.0",
     "referee": "^1.2.0"
   }

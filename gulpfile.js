@@ -13,7 +13,7 @@ gulp.task('lint', function () {
 
 gulp.task('test', function () {
     return gulp.src('test/**/*.js')
-        .pipe(mocha({reporter: 'spec'}));
+        .pipe(mocha({ reporter: 'spec' }));
 });
 
 gulp.task('test-with-coverage', function (cb) {
@@ -22,7 +22,7 @@ gulp.task('test-with-coverage', function (cb) {
         .pipe(istanbul.hookRequire())
         .on('finish', function () {
             gulp.src('test/**/*.js')
-                .pipe(mocha({reporter: 'dot'}))
+                .pipe(mocha({ reporter: 'dot' }))
                 .pipe(istanbul.writeReports())
                 .on('end', cb);
         });

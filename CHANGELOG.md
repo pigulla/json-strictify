@@ -1,3 +1,9 @@
+## 1.0.0 (2016-06-20)
+
+ - add Node 6 to build targets
+ - slightly rephrase error messages
+  - maintenance release (update dependencies)
+
 ## 0.3.8 (2016-04-06)
 
  - maintenance release (update dependencies)
