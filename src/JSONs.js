@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 1.0.0
+ * @version 1.0.1
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -38,14 +38,14 @@ var JSONs = {
 
         if (typeof object.toJSON === 'function') {
             actual = object.toJSON();
-            return this.check(actual, references, ancestors);
-        }
+            this.check(actual, references, ancestors);
+        } else {
+            for (var key in object) { // eslint-disable-line guard-for-in
+                actual = this.replacer ? this.replacer(key, object[key]) : object[key];
 
-        for (var key in object) { // eslint-disable-line guard-for-in
-            actual = this.replacer ? this.replacer(key, object[key]) : object[key];
-
-            if (!(this.replacer && actual === undefined)) {
-                this.check(actual, references.concat(key), ancestors.concat(object));
+                if (!(this.replacer && actual === undefined)) {
+                    this.check(actual, references.concat(key), ancestors.concat(object));
+                }
             }
         }
     },
@@ -65,6 +65,7 @@ var JSONs = {
 
         return array.forEach(function (item, index) {
             var actual = this.replacer ? this.replacer(index, item) : item;
+
             this.check(actual, references.concat(index), ancestors.concat([array]));
         }, this);
     },
@@ -117,10 +118,10 @@ var JSONs = {
 
         if (Array.isArray(value)) {
             // If an array, check its elements.
-            return this.checkArray(value, references, ancestors);
+            this.checkArray(value, references, ancestors);
         } else /* istanbul ignore else */ if (typeof value === 'object') {
             // If an object, check its properties (we've already checked for null).
-            return this.checkObject(value, references, ancestors);
+            this.checkObject(value, references, ancestors);
         } else {
             // This case will not occur in a regular Node.JS or browser environment, but could happen if you run your
             // script in an engine like Rhino or Nashorn and try to serialize a host object.

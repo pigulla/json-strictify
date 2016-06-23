@@ -1,8 +1,13 @@
+## 1.0.1 (2016-06-??)
+
+ - remove Gulp
+ - use external ESLint config
+
 ## 1.0.0 (2016-06-20)
 
  - add Node 6 to build targets
  - slightly rephrase error messages
-  - maintenance release (update dependencies)
+ - update dependencies
 
 ## 0.3.8 (2016-04-06)
 

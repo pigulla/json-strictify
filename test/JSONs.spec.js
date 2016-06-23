@@ -31,7 +31,12 @@ function assertErrorAt(fn, name, reference) {
 describe('JSONs', function () {
     describe('basic functionality', function () {
         it('accepts a valid object', function () {
-            var o = { foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] };
+            var o = {
+                foo: 'bar',
+                meaning: 42,
+                awesome: true,
+                stuff: [1, 2, 3]
+            };
 
             assert.equals(JSONs.stringify(o), JSON.stringify(o));
         });
@@ -123,7 +128,10 @@ describe('JSONs', function () {
             // This is the case that breaks json-stringify-safe, so we want to get it right.
             // See https://github.com/isaacs/json-stringify-safe/issues/9
             var p = {},
-                o = { a: p, b: p };
+                o = {
+                    a: p,
+                    b: p
+                };
 
             refute.exception(function () {
                 JSONs.stringify(o);
@@ -136,9 +144,8 @@ describe('JSONs', function () {
                     x: NaN,
                     toJSON: function () {
                         return [
-                            42, {
-                                y: null
-                            }
+                            42,
+                            { y: null }
                         ];
                     }
                 }]
@@ -178,7 +185,11 @@ describe('JSONs', function () {
 
         it('when enabled and then disabled again', function () {
             // call 'enable' more than necessary to cover all code paths
-            assert.same(JSONs.enabled(false).enabled(true).enabled(false).enabled(false).parse, JSON.parse);
+            assert.same(JSONs
+                .enabled(false)
+                .enabled(true)
+                .enabled(false)
+                .enabled(false).parse, JSON.parse);
         });
     });
 
@@ -344,7 +355,12 @@ describe('JSONs', function () {
     describe('works as callbacks', function () {
         describe('via stringifyAsync', function () {
             it('without arguments', function (done) {
-                var o = { foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] };
+                var o = {
+                    foo: 'bar',
+                    meaning: 42,
+                    awesome: true,
+                    stuff: [1, 2, 3]
+                };
 
                 JSONs.stringifyAsync(o, function (error, result) {
                     assert.isNull(error);
@@ -382,6 +398,7 @@ describe('JSONs', function () {
 
             it('with CircularReferenceError', function (done) {
                 var o = [1];
+
                 o.push(o);
 
                 JSONs.stringifyAsync(o, function (error, result) {
@@ -395,7 +412,12 @@ describe('JSONs', function () {
 
         describe('via parseAsync', function () {
             it('without arguments', function (done) {
-                var data = JSON.stringify({ foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] });
+                var data = JSON.stringify({
+                    foo: 'bar',
+                    meaning: 42,
+                    awesome: true,
+                    stuff: [1, 2, 3]
+                });
 
                 JSONs.parseAsync(data, function (error, result) {
                     assert.isNull(error);
@@ -405,7 +427,12 @@ describe('JSONs', function () {
             });
 
             it('with arguments', function (done) {
-                var data = JSON.stringify({ foo: 'bar', meaning: 42, awesome: true, stuff: [1, 2, 3] });
+                var data = JSON.stringify({
+                    foo: 'bar',
+                    meaning: 42,
+                    awesome: true,
+                    stuff: [1, 2, 3]
+                });
 
                 function reviver(k, v) {
                     return k === 'meaning' ? 'none' : v;

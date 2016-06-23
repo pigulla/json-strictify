@@ -1,13 +1,19 @@
 {
   "name": "json-strictify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=0.10"
   },
   "main": "src/JSONs.js",
   "scripts": {
-    "test": "node_modules/gulp/bin/gulp.js default"
+    "test": "npm run lint && npm run test-with-coverage && npm run check-coverage && npm run nsp",
+    "lint": "eslint .",
+    "nsp": "nsp check",
+    "mocha": "mocha test/\\*\\*/\\*.spec.js",
+    "test-with-coverage": "NODE_BINARY=`which node` istanbul cover _mocha test/\\*\\*/\\*.spec.js",
+    "check-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -32,11 +38,12 @@
     "json-pointer": "^0.5.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-coveralls": "^0.1.4",
-    "gulp-eslint": "^2.0.0",
-    "gulp-istanbul": "^1.0.0",
-    "gulp-mocha": "^2.2.0",
+    "coveralls": "^2.11.9",
+    "eslint": "^2.13.1",
+    "eslint-config-four66": "^1.0.0",
+    "istanbul": "^0.4.4",
+    "mocha": "^2.5.3",
+    "nsp": "^2.4.0",
     "referee": "^1.2.0"
   }
 }
