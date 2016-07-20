@@ -1,7 +1,8 @@
-## 1.0.1 (2016-06-??)
+## 1.0.1 (2016-07-20)
 
  - remove Gulp
  - use external ESLint config
+ - update dependencies
 
 ## 1.0.0 (2016-06-20)
 
