@@ -1,8 +1,9 @@
-## 1.0.1 (2016-08-29)
+## 2.0.0 (2016-08-29)
 
  - remove Gulp
  - use external ESLint config
  - update dependencies
+ - requires Node.js version 4 or higher 
 
 ## 1.0.0 (2016-06-20)
 

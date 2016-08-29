@@ -1,50 +1,27 @@
 'use strict';
 
-var util = require('util');
-
-var pointer = require('json-pointer');
+const pointer = require('json-pointer');
 
 /**
  * @class JSONs.InvalidValueError
- * @extends {Error}
- * @constructor
- * @param {string} message
- * @param {*} value
- * @param {Array.<(string|number)>=} references
+ * @extends Error
  */
-function InvalidValueError(message, value, references) {
-    this.references = references;
-    this.value = value;
-    this.path = pointer.compile(this.references);
+class InvalidValueError extends Error {
+    /**
+     * @param {string} message
+     * @param {*} value
+     * @param {Array.<(string|number)>=} references
+     */
+    constructor(message, value, references) {
+        super();
 
-    this.name = 'InvalidValueError';
-    this.message = util.format('Invalid value at "%s" (%s)', this.path, message);
+        this.references = references;
+        this.value = value;
+        this.path = pointer.compile(this.references);
 
-    Error.call(this);
+        this.name = this.constructor.name;
+        this.message = `Invalid value at "${this.path}" (${message}})`;
+    }
 }
-
-util.inherits(InvalidValueError, Error);
-
-/* eslint-disable no-unused-expressions */
-/**
- * @type {string}
- */
-InvalidValueError.prototype.name;
-
-/**
- * @type {string}
- */
-InvalidValueError.prototype.path;
-
-/**
- * @type {Array.<(string|number)>}
- */
-InvalidValueError.prototype.references;
-
-/**
- * @type {*}
- */
-InvalidValueError.prototype.value;
-/* eslint-enable no-unused-expressions */
 
 module.exports = InvalidValueError;

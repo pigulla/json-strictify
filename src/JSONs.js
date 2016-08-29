@@ -3,19 +3,19 @@
 /**
  * json-strictify
  *
- * @version 1.0.1
+ * @version 2.0.0
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
 
-var util = require('util');
+const util = require('util');
 
-var fkt = require('fkt');
+const fkt = require('fkt');
 
-var CircularReferenceError = require('./CircularReferenceError'),
-    InvalidValueError = require('./InvalidValueError');
+const CircularReferenceError = require('./CircularReferenceError');
+const InvalidValueError = require('./InvalidValueError');
 
-var JSONs = {
+const JSONs = {
     /**
      * @type {?function(string,*):*}
      */
@@ -31,8 +31,8 @@ var JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkObject: function (object, references, ancestors) {
-        var actual;
+    checkObject(object, references, ancestors) {
+        let actual;
 
         this.assertNoCycle(object, references, ancestors);
 
@@ -40,7 +40,7 @@ var JSONs = {
             actual = object.toJSON();
             this.check(actual, references, ancestors);
         } else {
-            for (var key in object) { // eslint-disable-line guard-for-in
+            for (const key in object) { // eslint-disable-line guard-for-in
                 actual = this.replacer ? this.replacer(key, object[key]) : object[key];
 
                 if (!(this.replacer && actual === undefined)) {
@@ -60,11 +60,11 @@ var JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkArray: function (array, references, ancestors) {
+    checkArray(array, references, ancestors) {
         this.assertNoCycle(array, references, ancestors);
 
         return array.forEach(function (item, index) {
-            var actual = this.replacer ? this.replacer(index, item) : item;
+            const actual = this.replacer ? this.replacer(index, item) : item;
 
             this.check(actual, references.concat(index), ancestors.concat([array]));
         }, this);
@@ -78,7 +78,7 @@ var JSONs = {
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      */
-    checkCommonTypes: function (value, references) {
+    checkCommonTypes(value, references) {
         if (util.isError(value)) {
             throw new InvalidValueError('An error object is not JSON-serializable', value, references);
         }
@@ -93,7 +93,7 @@ var JSONs = {
         }
         if (typeof value === 'number' && !isFinite(value)) {
             // The value's string representation itself will actually be descriptive ("Infinity", "-Infinity" or "NaN").
-            throw new InvalidValueError(value + ' is not JSON-serializable', value, references);
+            throw new InvalidValueError(`${value} is not JSON-serializable`, value, references);
         }
     },
 
@@ -107,7 +107,7 @@ var JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    check: function (value, references, ancestors) {
+    check(value, references, ancestors) {
         // Check for the most common non-serializable types.
         this.checkCommonTypes(value, references);
 
@@ -142,7 +142,7 @@ var JSONs = {
      * @param {(function(string,*)|Array.<(string|number)>)=} replacer
      * @return {?function(string,*):*}
      */
-    normalizeReplacer: function (replacer) {
+    normalizeReplacer(replacer) {
         if (Array.isArray(replacer)) {
             return function (key, value) {
                 return (key !== '' && replacer.indexOf(key) === -1) ? undefined : value;
@@ -160,7 +160,7 @@ var JSONs = {
      * @param {Array.<(Object|Array)>} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
-    assertNoCycle: function (value, references, ancestors) {
+    assertNoCycle(value, references, ancestors) {
         if (ancestors.indexOf(value) !== -1) {
             throw new CircularReferenceError(references);
         }
@@ -176,10 +176,10 @@ var JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    stringify: function (value, replacer, space) {
+    stringify(value, replacer, space) {
         this.replacer = this.normalizeReplacer(replacer);
 
-        var initialData = this.replacer ? this.replacer('', value) : value;
+        const initialData = this.replacer ? this.replacer('', value) : value;
 
         this.check(initialData, [], []);
 
@@ -188,25 +188,24 @@ var JSONs = {
     }
 };
 
-var nativeImpl,
-    strictImpl;
+/* eslint-disable no-use-before-define */
 
-nativeImpl = {
+const nativeImpl = {
     parse: JSON.parse,
     parseAsync: fkt.callbackify(JSON.parse, JSON),
     stringify: JSON.stringify,
     stringifyAsync: fkt.callbackify(JSON.stringify, JSON),
-    enabled: function (enabled) {
+    enabled(enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
 };
 
-strictImpl = {
+const strictImpl = {
     parse: JSON.parse,
     parseAsync: fkt.callbackify(JSON.parse, JSON),
     stringify: JSONs.stringify.bind(JSONs),
     stringifyAsync: fkt.callbackify(JSONs.stringify, JSONs),
-    enabled: function (enabled) {
+    enabled(enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
 };

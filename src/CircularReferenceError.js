@@ -1,42 +1,24 @@
 'use strict';
 
-var util = require('util');
-
-var pointer = require('json-pointer');
+const pointer = require('json-pointer');
 
 /**
  * @class JSONs.CircularReferenceError
- * @extends {Error}
- * @constructor
- * @param {Array.<(string|number)>} references
+ * @extends Error
  */
-function CircularReferenceError(references) {
-    this.references = references;
-    this.path = pointer.compile(this.references);
+class CircularReferenceError extends Error {
+    /**
+     * @param {Array.<(string|number)>} references
+     */
+    constructor(references) {
+        super();
 
-    this.name = 'CircularReferenceError';
-    this.message = util.format('Circular reference found at "%s"', this.path);
+        this.references = references;
+        this.path = pointer.compile(this.references);
 
-    Error.call(this);
+        this.name = this.constructor.name;
+        this.message = `Circular reference found at "${this.path}"'`;
+    }
 }
-
-util.inherits(CircularReferenceError, Error);
-
-/* eslint-disable no-unused-expressions */
-/**
- * @type {string}
- */
-CircularReferenceError.prototype.name;
-
-/**
- * @type {string}
- */
-CircularReferenceError.prototype.path;
-
-/**
- * @type {Array.<(string|number)>}
- */
-CircularReferenceError.prototype.references;
-/* eslint-enable no-unused-expressions */
 
 module.exports = CircularReferenceError;

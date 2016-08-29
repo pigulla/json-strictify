@@ -1,16 +1,7 @@
 {
     "extends": "eslint-config-four66",
 
-    "parserOptions": {
-        "ecmaVersion": 5
-    },
-
     "env": {
         "node": true
-    },
-
-    "rules": {
-        "object-shorthand": 0,
-        "prefer-template": 0
     }
 }
