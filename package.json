@@ -41,12 +41,12 @@
     "json-pointer": "^0.5.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.9",
-    "eslint": "^2.13.1",
-    "eslint-config-four66": "^1.0.0",
+    "coveralls": "^2.11.12",
+    "eslint": "^3.4.0",
+    "eslint-config-four66": "^3.0.0",
     "istanbul": "^0.4.4",
-    "mocha": "^2.5.3",
-    "nsp": "^2.4.0",
+    "mocha": "^3.0.2",
+    "nsp": "^2.6.1",
     "referee": "^1.2.0"
   }
 }
