@@ -1,3 +1,8 @@
+## 2.0.1 (2016-10-05)
+ 
+ - update dependencies
+ - use more efficient ES6 data structure
+
 ## 2.0.0 (2016-08-29)
 
  - remove Gulp

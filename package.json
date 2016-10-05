@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=4"
@@ -12,7 +12,7 @@
     "nsp": "nsp check",
     "mocha": "mocha test/\\*\\*/\\*.spec.js",
     "test-with-coverage": "NODE_BINARY=`which node` istanbul cover _mocha test/\\*\\*/\\*.spec.js",
-    "check-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "check-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100 coverage/coverage.json",
     "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
@@ -41,12 +41,12 @@
     "json-pointer": "^0.5.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.12",
-    "eslint": "^3.4.0",
-    "eslint-config-four66": "^3.0.0",
-    "istanbul": "^0.4.4",
-    "mocha": "^3.0.2",
-    "nsp": "^2.6.1",
+    "coveralls": "^2.11.14",
+    "eslint": "^3.7.1",
+    "eslint-config-four66": "^3.7.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.1.0",
+    "nsp": "^2.6.2",
     "referee": "^1.2.0"
   }
 }

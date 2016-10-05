@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 2.0.0
+ * @version 2.0.1
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -26,7 +26,7 @@ const JSONs = {
      *
      * @param {Object} object
      * @param {Array.<(string|number)>} references
-     * @param {Array.<(Object|Array)>} ancestors
+     * @param {Set} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -44,7 +44,7 @@ const JSONs = {
                 actual = this.replacer ? this.replacer(key, object[key]) : object[key];
 
                 if (!(this.replacer && actual === undefined)) {
-                    this.check(actual, references.concat(key), ancestors.concat(object));
+                    this.check(actual, references.concat(key), ancestors.add(object));
                 }
             }
         }
@@ -55,7 +55,7 @@ const JSONs = {
      *
      * @param {Array} array
      * @param {Array.<(string|number)>} references
-     * @param {Array.<(Object|Array)>} ancestors
+     * @param {Set} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -66,7 +66,7 @@ const JSONs = {
         return array.forEach(function (item, index) {
             const actual = this.replacer ? this.replacer(index, item) : item;
 
-            this.check(actual, references.concat(index), ancestors.concat([array]));
+            this.check(actual, references.concat(index), ancestors.add(array));
         }, this);
     },
 
@@ -102,7 +102,7 @@ const JSONs = {
      *
      * @param {*} value
      * @param {Array.<(string|number)>} references
-     * @param {Array.<(Object|Array)>} ancestors
+     * @param {Set} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -157,11 +157,11 @@ const JSONs = {
      *
      * @param {(Object|Array)} value
      * @param {Array.<(string|number)>} references
-     * @param {Array.<(Object|Array)>} ancestors
+     * @param {Set} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
     assertNoCycle(value, references, ancestors) {
-        if (ancestors.indexOf(value) !== -1) {
+        if (ancestors.has(value)) {
             throw new CircularReferenceError(references);
         }
     },
@@ -181,7 +181,7 @@ const JSONs = {
 
         const initialData = this.replacer ? this.replacer('', value) : value;
 
-        this.check(initialData, [], []);
+        this.check(initialData, [], new Set());
 
         // Fall back to the native JSON.stringify that we now know is safe to use.
         return JSON.stringify(value, replacer, space);
