@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=4"
@@ -38,14 +38,14 @@
   },
   "dependencies": {
     "fkt": "^0.1.5",
-    "json-pointer": "^0.5.0"
+    "json-pointer": "^0.6.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.14",
-    "eslint": "^3.7.1",
-    "eslint-config-four66": "^3.7.0",
+    "eslint": "^3.8.0",
+    "eslint-config-four66": "^3.8.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.0",
+    "mocha": "^3.1.2",
     "nsp": "^2.6.2",
     "referee": "^1.2.0"
   }
