@@ -1,5 +1,7 @@
 'use strict';
 
+/* eslint-disable no-empty-function */
+
 const util = require('util');
 
 const referee = require('referee');
@@ -122,15 +124,17 @@ describe('JSONs', function () {
 
         it('introduced by toJSON and a replacer', function () {
             const o = {
-                a: [{
-                    x: NaN,
-                    toJSON() {
-                        return [
-                            42,
-                            { y: null }
-                        ];
+                a: [
+                    {
+                        x: NaN,
+                        toJSON() {
+                            return [
+                                42,
+                                { y: null }
+                            ];
+                        }
                     }
-                }]
+                ]
             };
 
             function replacer(key, value) {
@@ -317,13 +321,17 @@ describe('JSONs', function () {
 
         it('for some nested value', function () {
             assertErrorAt(function () {
-                JSONs.stringify([null, 42, {
-                    x: {
-                        toJSON() {
-                            return [false, { y: undefined }];
+                JSONs.stringify([
+                    null,
+                    42,
+                    {
+                        x: {
+                            toJSON() {
+                                return [false, { y: undefined }];
+                            }
                         }
                     }
-                }]);
+                ]);
             }, 'InvalidValueError', '/2/x/1/y');
         });
     });

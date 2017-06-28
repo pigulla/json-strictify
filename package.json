@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=4"
@@ -34,19 +34,22 @@
   },
   "homepage": "https://github.com/pigulla/json-strictify",
   "david": {
-    "ignore": ["eslint", "eslint-config-four66"]
+    "ignore": [
+      "eslint",
+      "eslint-config-four66"
+    ]
   },
   "dependencies": {
     "fkt": "^0.1.5",
     "json-pointer": "^0.6.0"
   },
   "devDependencies": {
-    "coveralls": "^2.11.14",
-    "eslint": "^3.8.0",
-    "eslint-config-four66": "^3.8.0",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.1.1",
+    "eslint-config-four66": "^4.1.0",
     "istanbul": "^0.4.5",
-    "mocha": "^3.1.2",
-    "nsp": "^2.6.2",
+    "mocha": "^3.4.2",
+    "nsp": "^2.6.3",
     "referee": "^1.2.0"
   }
 }
