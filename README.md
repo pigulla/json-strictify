@@ -2,7 +2,7 @@
 [![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg?style=flat-square)](https://travis-ci.org/pigulla/json-strictify)
 [![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg?style=flat-square)](https://coveralls.io/r/pigulla/json-strictify)
 [![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg?style=flat-square)](https://david-dm.org/pigulla/json-strictify)
-[![devDependency Status](https://david-dm.org/pigulla/json-strictify/dev-status.svg?style=flat-square)](https://david-dm.org/pigulla/json-strictify#info=devDependencies)
+https://david-dm.org/pigulla/json-strictify#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/pigulla/json-strictify/badge.svg?style=flat-square)](https://snyk.io/test/github/pigulla/json-strictify)
 ![node](https://img.shields.io/node/v/json-strictify.svg?maxAge=2592000&style=flat-square)
 [![License](https://img.shields.io/npm/l/json-strictify.svg?maxAge=2592000&style=flat-square)](https://github.com/pigulla/json-strictify/blob/master/LICENSE)
