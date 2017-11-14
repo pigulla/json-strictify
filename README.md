@@ -8,6 +8,8 @@
 
 # json-strictify
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/pigulla/json-strictify.svg)](https://greenkeeper.io/)
+
 Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references. Also provides a Node-like callback interface for `JSON.parse` and `JSON.stringify`.
 
 #### Why
