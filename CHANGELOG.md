@@ -1,7 +1,8 @@
 ## 3.0.0 (2017-11-14)
 
  - drop support for Node.js version 5 and below
- - move from referee to chai
+ - move from 'referee' to 'chai'
+ - remove dependency 'fkt'
 
 ## 2.0.3 (2017-06-28)
  
