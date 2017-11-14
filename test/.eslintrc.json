@@ -4,6 +4,6 @@
     },
 
     "rules": {
-        "require-jsdoc": 0
+        "no-unused-expressions": "off"
     }
 }

@@ -3,14 +3,14 @@
 /**
  * json-strictify
  *
- * @version 2.0.3
+ * @version 3.0.0
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
 
 const util = require('util');
 
-const fkt = require('fkt');
+const callbackify = require('./callbackify');
 
 const CircularReferenceError = require('./CircularReferenceError');
 const InvalidValueError = require('./InvalidValueError');
@@ -81,17 +81,13 @@ const JSONs = {
     checkCommonTypes(value, references) {
         if (util.isError(value)) {
             throw new InvalidValueError('An error object is not JSON-serializable', value, references);
-        }
-        if (util.isRegExp(value)) {
+        } else if (util.isRegExp(value)) {
             throw new InvalidValueError('A RegExp is not JSON-serializable', value, references);
-        }
-        if (value === undefined) {
+        } else if (value === undefined) {
             throw new InvalidValueError('undefined is not JSON-serializable', value, references);
-        }
-        if (typeof value === 'function') {
+        } else if (typeof value === 'function') {
             throw new InvalidValueError('A function is not JSON-serializable', value, references);
-        }
-        if (typeof value === 'number' && !isFinite(value)) {
+        } else if (typeof value === 'number' && !isFinite(value)) {
             // The value's string representation itself will actually be descriptive ("Infinity", "-Infinity" or "NaN").
             throw new InvalidValueError(`${value} is not JSON-serializable`, value, references);
         }
@@ -192,9 +188,9 @@ const JSONs = {
 
 const nativeImpl = {
     parse: JSON.parse,
-    parseAsync: fkt.callbackify(JSON.parse, JSON),
+    parseAsync: callbackify(JSON.parse, JSON),
     stringify: JSON.stringify,
-    stringifyAsync: fkt.callbackify(JSON.stringify, JSON),
+    stringifyAsync: callbackify(JSON.stringify, JSON),
     enabled(enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
@@ -202,9 +198,9 @@ const nativeImpl = {
 
 const strictImpl = {
     parse: JSON.parse,
-    parseAsync: fkt.callbackify(JSON.parse, JSON),
+    parseAsync: callbackify(JSON.parse, JSON),
     stringify: JSONs.stringify.bind(JSONs),
-    stringifyAsync: fkt.callbackify(JSONs.stringify, JSONs),
+    stringifyAsync: callbackify(JSONs.stringify, JSONs),
     enabled(enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
