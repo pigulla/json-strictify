@@ -1,14 +1,13 @@
-[![npm version](http://img.shields.io/npm/v/json-strictify.svg?style=flat-square)](http://badge.fury.io/js/json-strictify)
-[![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg?style=flat-square)](https://travis-ci.org/pigulla/json-strictify)
-[![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg?style=flat-square)](https://coveralls.io/r/pigulla/json-strictify)
-[![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg?style=flat-square)](https://david-dm.org/pigulla/json-strictify)
-[![Known Vulnerabilities](https://snyk.io/test/github/pigulla/json-strictify/badge.svg?style=flat-square)](https://snyk.io/test/github/pigulla/json-strictify)
-![node](https://img.shields.io/node/v/json-strictify.svg?maxAge=2592000&style=flat-square)
-[![License](https://img.shields.io/npm/l/json-strictify.svg?maxAge=2592000&style=flat-square)](https://github.com/pigulla/json-strictify/blob/master/LICENSE)
+[![npm version](http://img.shields.io/npm/v/json-strictify.svg)](http://badge.fury.io/js/json-strictify)
+[![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg)](https://travis-ci.org/pigulla/json-strictify)
+[![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg)](https://coveralls.io/r/pigulla/json-strictify)
+[![Greenkeeper badge](https://badges.greenkeeper.io/pigulla/json-strictify.svg)](https://greenkeeper.io/)
+[![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg)](https://david-dm.org/pigulla/json-strictify)
+[![Known Vulnerabilities](https://snyk.io/test/github/pigulla/json-strictify/badge.svg)](https://snyk.io/test/github/pigulla/json-strictify)
+![node](https://img.shields.io/node/v/json-strictify.svg)
+[![License](https://img.shields.io/npm/l/json-strictify.svg)](https://github.com/pigulla/json-strictify/blob/master/LICENSE)
 
 # json-strictify
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/pigulla/json-strictify.svg)](https://greenkeeper.io/)
 
 Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references. Also provides a Node-like callback interface for `JSON.parse` and `JSON.stringify`.
 
