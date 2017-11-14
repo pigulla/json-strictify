@@ -1,3 +1,8 @@
+## 3.0.0 (2017-11-14)
+
+ - drop support for Node.js version 5 and below
+ - move from referee to chai
+
 ## 2.0.3 (2017-06-28)
  
  - update dependencies
@@ -20,7 +25,7 @@
 
 ## 1.0.0 (2016-06-20)
 
- - add Node 6 to build targets
+ - add Node.js 6 to build targets
  - slightly rephrase error messages
  - update dependencies
 
