@@ -46,7 +46,7 @@
   "devDependencies": {
     "coveralls": "^3.0.0",
     "eslint": "^4.11.0",
-    "eslint-config-four66": "^4.10.0",
+    "eslint-config-four66": "^4.11.0",
     "istanbul": "^0.4.5",
     "mocha": "^4.0.1",
     "nsp": "^3.1.0",

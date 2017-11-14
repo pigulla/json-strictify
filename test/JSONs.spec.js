@@ -111,7 +111,7 @@ describe('JSONs', function () {
         });
 
         it('that is none', function () {
-            // This is the case that breaks json-stringify-safe, so we want to get it right.
+            // This is the case that used to break json-stringify-safe, so we want to get it right.
             // See https://github.com/isaacs/json-stringify-safe/issues/9
             const p = {};
             const o = {
