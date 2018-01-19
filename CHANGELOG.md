@@ -1,3 +1,7 @@
+## 4.0.0 (2018-01-19)
+
+ - disable by default if NODE_ENV is "production"
+
 ## 3.0.0 (2017-11-14)
 
  - drop support for Node.js version 5 and below

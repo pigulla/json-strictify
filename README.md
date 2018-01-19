@@ -44,7 +44,7 @@ npm install json-strictify
 json-strictify exposes three methods: `stringify`, `parse` and `enable`, so it can be used as a drop-in replacement for the native JSON object:
 
 ```javascript
-var JSON = require('json-strictify');
+const JSON = require('json-strictify');
 
 JSON.stringify(someObject);
 ```
@@ -57,14 +57,14 @@ The `parse` method is simply a reference to the native `JSON.parse` function.
 
 The `stringify` function throws an error if the input to be serialized contains invalid values:
 ```javascript
-var JSONs = require('json-strictify');
+const JSONs = require('json-strictify');
 JSONs.stringify({ x: 42, y: NaN });
 // InvalidValueError: Invalid value at /y (NaN is not JSON-serializable)
 ```
 
 Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
 ```javascript
-var data = [];
+const data = [];
 data.push(data);
 JSONs.stringify(data);
 // CircularReferenceError: Circular reference found at "/0"
@@ -109,7 +109,9 @@ JSONs.parseAsync('oops', function (error, result) {
 In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enabled` method:
 
 ```javascript
-var JSON = require('json-strictify').enabled(config.debug);
+const JSON = require('json-strictify').enabled(config.debug);
 ```
 
 If called with a falsy parameter, `enabled` will return an object that delegates directly to the native JSON object so there will be no performance penalty whatsoever.
+
+**Note:** json-strictify is disabled by default if `NODE_ENV` is set to `production` (you may still enable it manually, of course).  

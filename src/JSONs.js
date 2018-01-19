@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -206,4 +206,5 @@ const strictImpl = {
     }
 };
 
-module.exports = strictImpl;
+/* eslint-disable no-process-env */
+module.exports = process.env.NODE_ENV === 'production' ? nativeImpl : strictImpl;
