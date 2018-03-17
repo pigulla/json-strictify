@@ -39,10 +39,10 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
-    "eslint": "^4.15.0",
-    "eslint-config-four66": "^4.15.0",
+    "eslint": "^4.19.0",
+    "eslint-config-four66": "^4.19.0",
     "istanbul": "^0.4.5",
-    "mocha": "^5.0.0",
-    "nsp": "^3.1.0"
+    "mocha": "^5.0.4",
+    "nsp": "^3.2.1"
   }
 }
