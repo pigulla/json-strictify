@@ -76,7 +76,7 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 
 ### Callback interface
 
-It's sometimes convenience to have a Node-style callback interface event for functions that are not actually asynchronous (like `JSON.parse` and `JSON.stringify`). This is because it allows you to seamlessly use them in libraries like [async](https://github.com/caolan/async) or, in fact, any place that follows the Node convention of expecting a callback as its last parameter.
+It's sometimes convenient to have a Node-style callback interface event for functions that are not actually asynchronous (like `JSON.parse` and `JSON.stringify`). This is because it allows you to seamlessly use them in libraries like [async](https://github.com/caolan/async) or, in fact, any place that follows the Node convention of expecting a callback as its last parameter.
 
 For this use case, json-strictify provides the functions `parseAsync` and `stringifyAsync` (please note that these functions, despite their name, still execute synchronously):
 
