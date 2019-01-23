@@ -1,7 +1,8 @@
-## 4.1.0 (2019-01-23)
+## 5.0.0 (2019-01-23)
 
  - use JavaScript Standard Style (mostly)
  - remove nsp and use 'npm audit' instead
+ - require Node.js >= 10
 
 ## 4.0.0 (2018-01-19)
 

@@ -6,9 +6,5 @@ branches:
 node_js:
   - "11"
   - "10"
-  - "9"
-  - "8"
-  - "7"
-  - "6"
 install: npm install
 after_script: npm run coveralls
