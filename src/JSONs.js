@@ -31,7 +31,7 @@ const JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkObject(object, references, ancestors) {
+    checkObject (object, references, ancestors) {
         let actual;
 
         this.assertNoCycle(object, references, ancestors);
@@ -60,7 +60,7 @@ const JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    checkArray(array, references, ancestors) {
+    checkArray (array, references, ancestors) {
         this.assertNoCycle(array, references, ancestors);
 
         return array.forEach(function (item, index) {
@@ -78,10 +78,10 @@ const JSONs = {
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      */
-    checkCommonTypes(value, references) {
-        if (util.isError(value)) {
+    checkCommonTypes (value, references) {
+        if (util.types.isNativeError(value)) {
             throw new InvalidValueError('An error object is not JSON-serializable', value, references);
-        } else if (util.isRegExp(value)) {
+        } else if (util.types.isRegExp(value)) {
             throw new InvalidValueError('A RegExp is not JSON-serializable', value, references);
         } else if (value === undefined) {
             throw new InvalidValueError('undefined is not JSON-serializable', value, references);
@@ -103,7 +103,7 @@ const JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    check(value, references, ancestors) {
+    check (value, references, ancestors) {
         // Check for the most common non-serializable types.
         this.checkCommonTypes(value, references);
 
@@ -138,7 +138,7 @@ const JSONs = {
      * @param {(function(string,*)|Array.<(string|number)>)=} replacer
      * @return {?function(string,*):*}
      */
-    normalizeReplacer(replacer) {
+    normalizeReplacer (replacer) {
         if (Array.isArray(replacer)) {
             return function (key, value) {
                 return (key !== '' && replacer.indexOf(key) === -1) ? undefined : value;
@@ -156,7 +156,7 @@ const JSONs = {
      * @param {Set} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
-    assertNoCycle(value, references, ancestors) {
+    assertNoCycle (value, references, ancestors) {
         if (ancestors.has(value)) {
             throw new CircularReferenceError(references);
         }
@@ -172,7 +172,7 @@ const JSONs = {
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
      */
-    stringify(value, replacer, space) {
+    stringify (value, replacer, space) {
         this.replacer = this.normalizeReplacer(replacer);
 
         const initialData = this.replacer ? this.replacer('', value) : value;
@@ -191,7 +191,7 @@ const nativeImpl = {
     parseAsync: callbackify(JSON.parse, JSON),
     stringify: JSON.stringify,
     stringifyAsync: callbackify(JSON.stringify, JSON),
-    enabled(enabled) {
+    enabled (enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
 };
@@ -201,7 +201,7 @@ const strictImpl = {
     parseAsync: callbackify(JSON.parse, JSON),
     stringify: JSONs.stringify.bind(JSONs),
     stringifyAsync: callbackify(JSONs.stringify, JSONs),
-    enabled(enabled) {
+    enabled (enabled) {
         return enabled ? strictImpl : nativeImpl;
     }
 };

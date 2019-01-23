@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function callbackify(fn, scope) {
+module.exports = function callbackify (fn, scope) {
     return function () {
         const cb = arguments[arguments.length - 1];
         const args = Array.prototype.slice.call(arguments, 0, arguments.length - 1);

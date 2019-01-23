@@ -1,7 +1,12 @@
 {
-    "extends": "eslint-config-four66",
+    "extends": "eslint-config-standard",
 
     "env": {
         "node": true
+    },
+
+    "rules": {
+        "indent": ["error", 4],
+        "semi": ["error", "always"]
     }
 }

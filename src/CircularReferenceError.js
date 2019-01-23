@@ -10,7 +10,7 @@ class CircularReferenceError extends Error {
     /**
      * @param {Array.<(string|number)>} references
      */
-    constructor(references) {
+    constructor (references) {
         super();
 
         this.references = references;

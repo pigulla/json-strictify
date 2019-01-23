@@ -14,7 +14,7 @@ const CircularReferenceError = require('../src/CircularReferenceError');
  * @param {function()} clazz
  * @param {string} reference
  */
-function assertErrorAt(fn, clazz, reference) {
+function assertErrorAt (fn, clazz, reference) {
     let error;
 
     try {
@@ -55,7 +55,7 @@ describe('JSONs', function () {
             });
 
             it('refuses invalid values', function () {
-                expect(() => JSONs.stringify({ foo() {} })).to.throw(InvalidValueError);
+                expect(() => JSONs.stringify({ foo () {} })).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify([undefined])).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify(/regex/)).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify(new Error())).to.throw(InvalidValueError);
@@ -67,7 +67,7 @@ describe('JSONs', function () {
                 const o = {
                     x: 42,
                     y: {
-                        toJSON() {
+                        toJSON () {
                             return [0, 8, 15];
                         }
                     }
@@ -77,10 +77,10 @@ describe('JSONs', function () {
             });
 
             it('works with the prototype chain', function () {
-                function A() {}
+                function A () {}
                 A.prototype.a = 42;
 
-                function B() {}
+                function B () {}
                 util.inherits(B, A);
                 B.prototype.b = 'foo';
 
@@ -138,7 +138,7 @@ describe('JSONs', function () {
                     a: [
                         {
                             x: NaN,
-                            toJSON() {
+                            toJSON () {
                                 return [
                                     42,
                                     { y: null }
@@ -148,7 +148,7 @@ describe('JSONs', function () {
                     ]
                 };
 
-                function replacer(key, value) {
+                function replacer (key, value) {
                     return key === 'y' ? o : value;
                 }
 
@@ -220,7 +220,7 @@ describe('JSONs', function () {
 
             describe('that is a function', function () {
                 it('for valid input', function () {
-                    function replacer(key, value) {
+                    function replacer (key, value) {
                         return (key === '' || value > 5) ? value : undefined;
                     }
 
@@ -235,7 +235,7 @@ describe('JSONs', function () {
                 });
 
                 it('for validly replaced input', function () {
-                    function replacer(key, value) {
+                    function replacer (key, value) {
                         if (key === '') {
                             return value;
                         } else {
@@ -254,7 +254,7 @@ describe('JSONs', function () {
                 });
 
                 it('for invalidly replaced input', function () {
-                    function replacer(key, value) {
+                    function replacer (key, value) {
                         if (key === '') {
                             return value;
                         } else {
@@ -279,7 +279,7 @@ describe('JSONs', function () {
                 const o = {
                     a: 42,
                     b: {
-                        toJSON() {
+                        toJSON () {
                             return {
                                 x: 'test',
                                 y: [],
@@ -290,7 +290,7 @@ describe('JSONs', function () {
                     c: [0, 8, 15]
                 };
 
-                function replacer(key, value) {
+                function replacer (key, value) {
                     return key === 'z' ? undefined : value;
                 }
 
@@ -302,13 +302,13 @@ describe('JSONs', function () {
                 const o = {
                     a: 42,
                     b: {
-                        toJSON() {
+                        toJSON () {
                             return {
                                 x: 'test',
                                 y: [],
                                 z: {
                                     p: NaN,
-                                    toJSON() {
+                                    toJSON () {
                                         return [null, x];
                                     }
                                 }
@@ -319,7 +319,7 @@ describe('JSONs', function () {
                     x
                 };
 
-                function replacer(key, value) {
+                function replacer (key, value) {
                     return key === 'p' ? undefined : value;
                 }
 
@@ -330,13 +330,13 @@ describe('JSONs', function () {
                 const o = {
                     a: 42,
                     b: {
-                        toJSON() {
+                        toJSON () {
                             return {
                                 x: 'test',
                                 y: [],
                                 z: {
                                     p: NaN,
-                                    toJSON() {
+                                    toJSON () {
                                         return [null, /invalid/];
                                     }
                                 }
@@ -346,7 +346,7 @@ describe('JSONs', function () {
                     c: [0, 8, 15]
                 };
 
-                function replacer(key, value) {
+                function replacer (key, value) {
                     return key === 'p' ? undefined : value;
                 }
 
@@ -366,7 +366,7 @@ describe('JSONs', function () {
                         42,
                         {
                             x: {
-                                toJSON() {
+                                toJSON () {
                                     return [false, { y: undefined }];
                                 }
                             }
@@ -458,7 +458,7 @@ describe('JSONs', function () {
                         stuff: [1, 2, 3]
                     });
 
-                    function reviver(k, v) {
+                    function reviver (k, v) {
                         return k === 'meaning' ? 'none' : v;
                     }
 

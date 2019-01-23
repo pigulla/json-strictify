@@ -1,3 +1,8 @@
+## 4.1.0 (2019-01-23)
+
+ - use JavaScript Standard Style (mostly)
+ - remove nsp and use 'npm audit' instead
+
 ## 4.0.0 (2018-01-19)
 
  - disable by default if NODE_ENV is "production"

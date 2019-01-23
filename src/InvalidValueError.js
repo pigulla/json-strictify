@@ -12,7 +12,7 @@ class InvalidValueError extends Error {
      * @param {*} value
      * @param {Array.<(string|number)>=} references
      */
-    constructor(message, value, references) {
+    constructor (message, value, references) {
         super();
 
         this.references = references;
