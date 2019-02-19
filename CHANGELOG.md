@@ -1,3 +1,7 @@
+## 5.0.1 (2019-02-19)
+
+ - update dependencies
+ 
 ## 5.0.0 (2019-01-23)
 
  - use JavaScript Standard Style (mostly)
