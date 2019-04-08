@@ -1,50 +1,50 @@
 {
-  "name": "json-strictify",
-  "version": "5.0.1",
-  "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
-  "engines": {
-    "node": ">=10"
-  },
-  "main": "src/JSONs.js",
-  "scripts": {
-    "test": "npm run lint && npm run test-with-coverage && npm run check-coverage && npm audit",
-    "lint": "eslint .",
-    "mocha": "mocha test/\\*\\*/\\*.spec.js",
-    "test-with-coverage": "NODE_BINARY=`which node` istanbul cover _mocha test/\\*\\*/\\*.spec.js",
-    "check-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100 coverage/coverage.json",
-    "coveralls": "coveralls < coverage/lcov.info"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pigulla/json-strictify.git"
-  },
-  "keywords": [
-    "JSON",
-    "debugging",
-    "validation",
-    "stringify",
-    "strict",
-    "callback"
-  ],
-  "author": "Raphael Pigulla <pigulla@four66.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pigulla/json-strictify/issues"
-  },
-  "homepage": "https://github.com/pigulla/json-strictify",
-  "dependencies": {
-    "json-pointer": "^0.6.0"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "coveralls": "^3.0.2",
-    "eslint": "^5.14.1",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "istanbul": "^0.4.5",
-    "mocha": "^6.0.0"
-  }
+    "name": "json-strictify",
+    "version": "5.0.2",
+    "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
+    "engines": {
+        "node": ">=10"
+    },
+    "main": "src/JSONs.js",
+    "scripts": {
+        "test": "npm run lint && npm run test-with-coverage && npm run check-coverage && npm audit",
+        "lint": "eslint .",
+        "mocha": "mocha test/\\*\\*/\\*.spec.js",
+        "test-with-coverage": "nyc mocha",
+        "check-coverage": "nyc check-coverage",
+        "coveralls": "coveralls < coverage/lcov.info"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pigulla/json-strictify.git"
+    },
+    "keywords": [
+        "JSON",
+        "debugging",
+        "validation",
+        "stringify",
+        "strict",
+        "callback"
+    ],
+    "author": "Raphael Pigulla <pigulla@four66.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/pigulla/json-strictify/issues"
+    },
+    "homepage": "https://github.com/pigulla/json-strictify",
+    "dependencies": {
+        "json-pointer": "^0.6.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "coveralls": "^3.0.3",
+        "eslint": "^5.16.0",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-promise": "^4.1.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "mocha": "^6.1.1",
+        "nyc": "^13.3.0"
+    }
 }

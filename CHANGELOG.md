@@ -1,3 +1,8 @@
+## 5.0.2 (2019-04-??)
+
+ - update dependencies
+ - replace Istanbul with nyc
+ 
 ## 5.0.1 (2019-02-19)
 
  - update dependencies

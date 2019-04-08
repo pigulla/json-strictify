@@ -1,7 +1,5 @@
 'use strict';
 
-/* eslint-disable no-empty-function */
-
 const util = require('util');
 
 const expect = require('chai').expect;
@@ -38,8 +36,8 @@ describe('JSONs', function () {
 
     describe('in a non-production environment', function () {
         beforeEach(function () {
-            process.env.NODE_ENV = 'development'; // eslint-disable-line no-process-env
-            JSONs = require('../src/JSONs'); // eslint-disable-line global-require
+            process.env.NODE_ENV = 'development';
+            JSONs = require('../src/JSONs');
         });
 
         describe('provides basic functionality', function () {
@@ -481,9 +479,16 @@ describe('JSONs', function () {
     });
 
     describe('in a production environment', function () {
+        let originalNodeEnv;
+
         beforeEach(function () {
-            process.env.NODE_ENV = 'production'; // eslint-disable-line no-process-env
-            JSONs = require('../src/JSONs'); // eslint-disable-line global-require
+            originalNodeEnv = process.env.NODE_ENV;
+            process.env.NODE_ENV = 'production';
+            JSONs = require('../src/JSONs');
+        });
+
+        afterEach(function () {
+            process.env.NODE_ENV = originalNodeEnv;
         });
 
         it('uses native implementation by default', function () {

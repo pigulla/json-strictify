@@ -40,7 +40,7 @@ const JSONs = {
             actual = object.toJSON();
             this.check(actual, references, ancestors);
         } else {
-            for (const key in object) { // eslint-disable-line guard-for-in
+            for (const key in object) {
                 actual = this.replacer ? this.replacer(key, object[key]) : object[key];
 
                 if (!(this.replacer && actual === undefined)) {
@@ -112,14 +112,15 @@ const JSONs = {
             return;
         }
 
+        /* istanbul ignore else */
         if (Array.isArray(value)) {
             // If an array, check its elements.
             this.checkArray(value, references, ancestors);
-        } else /* istanbul ignore else */ if (typeof value === 'object') {
+        } else if (typeof value === 'object') {
             // If an object, check its properties (we've already checked for null).
             this.checkObject(value, references, ancestors);
         } else {
-            // This case will not occur in a regular Node.JS or browser environment, but could happen if you run your
+            // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
             // script in an engine like Rhino or Nashorn and try to serialize a host object.
             throw new InvalidValueError('Invalid type', value);
         }
@@ -184,8 +185,6 @@ const JSONs = {
     }
 };
 
-/* eslint-disable no-use-before-define */
-
 const nativeImpl = {
     parse: JSON.parse,
     parseAsync: callbackify(JSON.parse, JSON),
@@ -206,5 +205,4 @@ const strictImpl = {
     }
 };
 
-/* eslint-disable no-process-env */
 module.exports = process.env.NODE_ENV === 'production' ? nativeImpl : strictImpl;
