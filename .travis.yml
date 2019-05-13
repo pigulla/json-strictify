@@ -4,7 +4,7 @@ branches:
     - master
     - /^greenkeeper/.*$/
 node_js:
-  - "11"
+  - "12"
   - "10"
 install: npm install
 after_script: npm run coveralls

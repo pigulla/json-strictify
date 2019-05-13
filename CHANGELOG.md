@@ -1,6 +1,6 @@
 ## 5.0.3 (2019-04-19)
 
- - update dependencies to fix known security invulnerabilities
+ - update dependencies to fix known security vulnerabilities
  
 ## 5.0.2 (2019-04-08)
 
