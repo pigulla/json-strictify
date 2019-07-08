@@ -1,6 +1,5 @@
 ## 5.0.4 (2019-07-08)
 
- - add Node.js 13 to build targets
  - use rewire to test an edge case (instead of ignoring it)
  
 ## 5.0.3 (2019-04-19)
