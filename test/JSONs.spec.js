@@ -1,7 +1,11 @@
 'use strict';
 
+/* eslint-disable no-return-assign */
+
 const util = require('util');
 
+const rewire = require('rewire');
+const noop = require('lodash.noop');
 const expect = require('chai').expect;
 
 const InvalidValueError = require('../src/InvalidValueError');
@@ -28,16 +32,33 @@ function assertErrorAt (fn, clazz, reference) {
 
 describe('JSONs', function () {
     let JSONs;
+    let revert;
 
+    // Generic setup for rewire
     beforeEach(function () {
-        const resolved = require.resolve('../src/JSONs');
-        delete require.cache[resolved];
+        revert = noop;
+    });
+    afterEach(function () {
+        revert();
     });
 
     describe('in a non-production environment', function () {
         beforeEach(function () {
             process.env.NODE_ENV = 'development';
-            JSONs = require('../src/JSONs');
+            JSONs = rewire('../src/JSONs');
+        });
+
+        it('throws an InvalidValueError for unexpected types', function () {
+            const impl = JSONs.__get__('JSONs');
+            const originalFn = impl.checkCommonTypes;
+            revert = () => impl.checkCommonTypes = originalFn;
+            impl.checkCommonTypes = noop;
+
+            const o = {
+                x: undefined
+            };
+
+            assertErrorAt(() => JSONs.stringify(o), InvalidValueError, '/x');
         });
 
         describe('provides basic functionality', function () {
@@ -484,7 +505,7 @@ describe('JSONs', function () {
         beforeEach(function () {
             originalNodeEnv = process.env.NODE_ENV;
             process.env.NODE_ENV = 'production';
-            JSONs = require('../src/JSONs');
+            JSONs = rewire('../src/JSONs');
         });
 
         afterEach(function () {

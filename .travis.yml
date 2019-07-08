@@ -3,7 +3,7 @@ branches:
   only:
     - master
     - /^greenkeeper/.*$/
-node_js:
+node_j"
   - "12"
   - "10"
 install: npm install

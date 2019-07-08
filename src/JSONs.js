@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 4.0.0
+ * @version 5.0.4
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -38,14 +38,14 @@ const JSONs = {
 
         if (typeof object.toJSON === 'function') {
             actual = object.toJSON();
-            this.check(actual, references, ancestors);
-        } else {
-            for (const key in object) {
-                actual = this.replacer ? this.replacer(key, object[key]) : object[key];
+            return this.check(actual, references, ancestors);
+        }
 
-                if (!(this.replacer && actual === undefined)) {
-                    this.check(actual, references.concat(key), ancestors.add(object));
-                }
+        for (const key in object) {
+            actual = this.replacer ? this.replacer(key, object[key]) : object[key];
+
+            if (!this.replacer || actual !== undefined) {
+                this.check(actual, references.concat(key), ancestors.add(object));
             }
         }
     },
@@ -112,18 +112,19 @@ const JSONs = {
             return;
         }
 
-        /* istanbul ignore else */
         if (Array.isArray(value)) {
             // If an array, check its elements.
-            this.checkArray(value, references, ancestors);
-        } else if (typeof value === 'object') {
-            // If an object, check its properties (we've already checked for null).
-            this.checkObject(value, references, ancestors);
-        } else {
-            // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
-            // script in an engine like Rhino or Nashorn and try to serialize a host object.
-            throw new InvalidValueError('Invalid type', value);
+            return this.checkArray(value, references, ancestors);
         }
+
+        if (typeof value === 'object') {
+            // If an object, check its properties (we've already checked for null).
+            return this.checkObject(value, references, ancestors);
+        }
+
+        // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
+        // script in an engine like Rhino or Nashorn and try to serialize a host object.
+        throw new InvalidValueError('Invalid type', value, references);
     },
 
     /**
