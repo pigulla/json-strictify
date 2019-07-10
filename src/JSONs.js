@@ -3,7 +3,7 @@
 /**
  * json-strictify
  *
- * @version 5.0.4
+ * @version 5.0.5
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -63,11 +63,11 @@ const JSONs = {
     checkArray (array, references, ancestors) {
         this.assertNoCycle(array, references, ancestors);
 
-        return array.forEach(function (item, index) {
-            const actual = this.replacer ? this.replacer(index, item) : item;
+        for (let i = 0; i < array.length; ++i) {
+            const actual = this.replacer ? this.replacer(i, array[i]) : array[i];
 
-            this.check(actual, references.concat(index), ancestors.add(array));
-        }, this);
+            this.check(actual, references.concat(i), ancestors.add(array));
+        }
     },
 
     /**
@@ -85,8 +85,12 @@ const JSONs = {
             throw new InvalidValueError('A RegExp is not JSON-serializable', value, references);
         } else if (value === undefined) {
             throw new InvalidValueError('undefined is not JSON-serializable', value, references);
+        } else if (typeof value === 'symbol') {
+            throw new InvalidValueError('A symbol is not JSON-serializable', value, references);
         } else if (typeof value === 'function') {
             throw new InvalidValueError('A function is not JSON-serializable', value, references);
+        } else if (typeof value === 'bigint') {
+            throw new InvalidValueError('A BigInt is not JSON-serializable', value, references);
         } else if (typeof value === 'number' && !isFinite(value)) {
             // The value's string representation itself will actually be descriptive ("Infinity", "-Infinity" or "NaN").
             throw new InvalidValueError(`${value} is not JSON-serializable`, value, references);

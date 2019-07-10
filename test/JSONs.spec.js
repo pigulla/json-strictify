@@ -52,6 +52,8 @@ describe('JSONs', function () {
             const impl = JSONs.__get__('JSONs');
             const originalFn = impl.checkCommonTypes;
             revert = () => impl.checkCommonTypes = originalFn;
+
+            // Any "non-object" primitive type will now cause an InvalidValueError
             impl.checkCommonTypes = noop;
 
             const o = {
@@ -79,7 +81,8 @@ describe('JSONs', function () {
                 expect(() => JSONs.stringify(/regex/)).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify(new Error())).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify([0, NaN, 2])).to.throw(InvalidValueError);
-                expect(() => JSONs.stringify([0, NaN, 2])).to.throw(InvalidValueError);
+                expect(() => JSONs.stringify(BigInt(1))).to.throw(InvalidValueError);
+                expect(() => JSONs.stringify(Symbol('test'))).to.throw(InvalidValueError);
             });
 
             it('honors "toJSON" methods', function () {

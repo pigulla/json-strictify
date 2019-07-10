@@ -1,3 +1,8 @@
+## 5.0.5 (2019-07-10)
+
+ - add support for BigInts and Symbols in error reporting
+ - tests require Node.js 10.4 or higher to run
+
 ## 5.0.4 (2019-07-08)
 
  - use rewire to test an edge case (instead of ignoring it)

@@ -5,6 +5,10 @@
         "node": true
     },
 
+    "globals": {
+        "BigInt": false
+    },
+
     "rules": {
         "indent": ["error", 4],
         "semi": ["error", "always"]

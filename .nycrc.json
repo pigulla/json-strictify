@@ -6,6 +6,5 @@
     "branches": 100,
     "reporter": [
         "lcov"
-    ],
-    "all": true
+    ]
 }
