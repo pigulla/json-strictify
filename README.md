@@ -74,6 +74,18 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 
 ---
 
+### ESLint integration
+
+If you want to ensure that all serialization is done through json-strictify you can disable the global `JSON` variable like so:
+```js
+"globals": {
+    "JSON": "off"
+}
+```
+See the ESLint documentation on [configuring globals](https://eslint.org/docs/user-guide/configuring#specifying-globals) for details.
+
+---
+
 ### Callback interface
 
 It's sometimes convenient to have a Node-style callback interface event for functions that are not actually asynchronous (like `JSON.parse` and `JSON.stringify`). This is because it allows you to seamlessly use them in libraries like [async](https://github.com/caolan/async) or, in fact, any place that follows the Node convention of expecting a callback as its last parameter.
