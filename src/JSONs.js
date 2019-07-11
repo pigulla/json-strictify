@@ -17,7 +17,7 @@ const InvalidValueError = require('./InvalidValueError');
 
 const JSONs = {
     /**
-     * @type {?function(string,*):*}
+     * @type {?function(string|number,*):*}
      */
     replacer: null,
 
@@ -26,7 +26,7 @@ const JSONs = {
      *
      * @param {Object} object
      * @param {Array.<(string|number)>} references
-     * @param {Set} ancestors
+     * @param {Set.<(object|array)>} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -55,7 +55,7 @@ const JSONs = {
      *
      * @param {Array} array
      * @param {Array.<(string|number)>} references
-     * @param {Set} ancestors
+     * @param {Set.<(object|array)>} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -102,7 +102,7 @@ const JSONs = {
      *
      * @param {*} value
      * @param {Array.<(string|number)>} references
-     * @param {Set} ancestors
+     * @param {Set.<(object|array)>} ancestors
      * @return {undefined}
      * @throws {JSONs.InvalidValueError}
      * @throws {JSONs.CircularReferenceError}
@@ -139,19 +139,26 @@ const JSONs = {
      * "replacer" option as a function internally.
      *
      * For more information about the replacer function take a look at the documentation on
-     * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_native_JSON#The_replacer_parameter).
+     * [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#The_replacer_parameter).
      *
      * @param {(function(string,*)|Array.<(string|number)>)=} replacer
      * @return {?function(string,*):*}
      */
     normalizeReplacer (replacer) {
+        if (typeof replacer === 'function') {
+            return replacer;
+        }
+
         if (Array.isArray(replacer)) {
             return function (key, value) {
                 return (key !== '' && replacer.indexOf(key) === -1) ? undefined : value;
             };
         }
 
-        return typeof replacer === 'function' ? replacer : null;
+        // We can't easily normalize an "empty replacer" with the identity function because we later need to distinguish
+        // between a "real" undefined (which is illegal) and an undefined returned by the replacer (which means "drop
+        // that value").
+        return null;
     },
 
     /**
@@ -159,7 +166,7 @@ const JSONs = {
      *
      * @param {(Object|Array)} value
      * @param {Array.<(string|number)>} references
-     * @param {Set} ancestors
+     * @param {Set.<(object|array)>} ancestors
      * @throws {JSONs.CircularReferenceError}
      */
     assertNoCycle (value, references, ancestors) {
