@@ -211,6 +211,25 @@ describe('JSONs', function () {
         });
 
         describe('honors the "replacer" parameter', function () {
+            it('and preserves its context correctly', function () {
+                const o = [{ a: 42 }, { b: 42 }];
+                const contexts = new Map();
+                contexts.set('0', o);
+                contexts.set('1', o);
+                contexts.set('a', o[0]);
+                contexts.set('b', o[1]);
+
+                function replacer (key, value) {
+                    if (key !== '') {
+                        expect(this).to.equal(contexts.get(String(key)));
+                    }
+
+                    return value;
+                }
+
+                JSONs.stringify(o, replacer);
+            });
+
             describe('that is an array', function () {
                 it('for valid input', function () {
                     const replacer = ['c', 'd'];

@@ -1,3 +1,8 @@
+## 5.1.0 (2019-07-17)
+
+ - the replacer function now correctly preservers its context
+ - update dependencies to resolve potential security issues
+
 ## 5.0.5 (2019-07-10)
 
  - add support for BigInts and Symbols in error reporting

@@ -42,7 +42,7 @@ const JSONs = {
         }
 
         for (const key in object) {
-            actual = this.replacer ? this.replacer(key, object[key]) : object[key];
+            actual = this.replacer ? this.replacer.call(object, key, object[key]) : object[key];
 
             if (!this.replacer || actual !== undefined) {
                 this.check(actual, references.concat(key), ancestors.add(object));
@@ -64,7 +64,7 @@ const JSONs = {
         this.assertNoCycle(array, references, ancestors);
 
         for (let i = 0; i < array.length; ++i) {
-            const actual = this.replacer ? this.replacer(i, array[i]) : array[i];
+            const actual = this.replacer ? this.replacer.call(array, i, array[i]) : array[i];
 
             this.check(actual, references.concat(i), ancestors.add(array));
         }
@@ -128,6 +128,7 @@ const JSONs = {
 
         // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
         // script in an engine like Rhino or Nashorn and try to serialize a host object.
+        /* istanbul-ignore next */
         throw new InvalidValueError('Invalid type', value, references);
     },
 
@@ -188,7 +189,7 @@ const JSONs = {
     stringify (value, replacer, space) {
         this.replacer = this.normalizeReplacer(replacer);
 
-        const initialData = this.replacer ? this.replacer('', value) : value;
+        const initialData = this.replacer ? this.replacer.call(value, '', value) : value;
 
         this.check(initialData, [], new Set());
 
