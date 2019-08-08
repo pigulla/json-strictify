@@ -1,16 +1,33 @@
 {
-    "extends": "eslint-config-standard",
-
+    "extends": [
+        "eslint-config-standard"
+    ],
     "env": {
         "node": true
     },
-
     "globals": {
         "BigInt": false
     },
-
     "rules": {
-        "indent": ["error", 4],
-        "semi": ["error", "always"]
+        "object-curly-spacing": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "camelcase": "off",
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ]
     }
 }

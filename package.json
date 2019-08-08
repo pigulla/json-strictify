@@ -1,14 +1,22 @@
 {
     "name": "json-strictify",
-    "version": "5.1.0",
+    "version": "6.0.0",
     "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
     "engines": {
         "node": ">=10"
     },
-    "main": "src/JSONs.js",
+    "main": "dist/JSONs.js",
+    "types": "dist/JSONs.d.ts",
+    "files": [
+        "dist/**/*",
+        "CHANGELOG.md",
+        "README.md",
+        "LICENSE"
+    ],
     "scripts": {
-        "test": "npm run lint && npm run test-with-coverage && npm run check-coverage && npm audit",
-        "lint": "eslint .",
+        "build": "rm -rf dist/ && tsc --build tsconfig.json",
+        "test": "npm run lint && npm run build && npm run test-with-coverage && npm run check-coverage && npm audit",
+        "lint": "eslint --ext=.ts .",
         "mocha": "mocha test/\\*\\*/\\*.spec.js",
         "test-with-coverage": "nyc mocha",
         "check-coverage": "nyc check-coverage",
@@ -23,8 +31,7 @@
         "debugging",
         "validation",
         "stringify",
-        "strict",
-        "callback"
+        "strict"
     ],
     "author": "Raphael Pigulla <pigulla@four66.com>",
     "license": "MIT",
@@ -33,20 +40,26 @@
     },
     "homepage": "https://github.com/pigulla/json-strictify",
     "dependencies": {
-        "json-pointer": "^0.6.0"
+        "json-pointer": "^0.6.0",
+        "ts-custom-error": "^3.1.1"
     },
     "devDependencies": {
+        "@types/json-pointer": "^1.0.30",
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0",
         "chai": "^4.2.0",
-        "coveralls": "^3.0.4",
-        "eslint": "^6.0.1",
+        "coveralls": "^3.0.6",
+        "eslint": "^6.1.0",
         "eslint-config-standard": "^13.0.1",
-        "eslint-plugin-import": "^2.18.0",
+        "eslint-plugin-import": "^2.18.2",
         "eslint-plugin-node": "^9.1.0",
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-standard": "^4.0.0",
+        "jest": "^24.8.0",
         "lodash.noop": "^3.0.1",
-        "mocha": "^6.1.4",
+        "mocha": "^6.2.0",
         "nyc": "^14.1.1",
-        "rewire": "^4.0.1"
+        "rewire": "^4.0.1",
+        "typescript": "^3.5.3"
     }
 }

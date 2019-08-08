@@ -8,15 +8,15 @@ const rewire = require('rewire');
 const noop = require('lodash.noop');
 const expect = require('chai').expect;
 
-const InvalidValueError = require('../src/InvalidValueError');
-const CircularReferenceError = require('../src/CircularReferenceError');
+const InvalidValueError = require('../dist/InvalidValueError').default;
+const CircularReferenceError = require('../dist/CircularReferenceError').default;
 
 /**
  * @param {function()} fn
  * @param {function()} clazz
  * @param {string} reference
  */
-function assertErrorAt (fn, clazz, reference) {
+function assert_error_at (fn, clazz, reference) {
     let error;
 
     try {
@@ -31,6 +31,7 @@ function assertErrorAt (fn, clazz, reference) {
 }
 
 describe('JSONs', function () {
+    let module;
     let JSONs;
     let revert;
 
@@ -45,22 +46,23 @@ describe('JSONs', function () {
     describe('in a non-production environment', function () {
         beforeEach(function () {
             process.env.NODE_ENV = 'development';
-            JSONs = rewire('../src/JSONs');
+            module = rewire('../dist/JSONs');
+            JSONs = module.default;
         });
 
         it('throws an InvalidValueError for unexpected types', function () {
-            const impl = JSONs.__get__('JSONs');
-            const originalFn = impl.checkCommonTypes;
-            revert = () => impl.checkCommonTypes = originalFn;
+            const impl = module.__get__('JSONstrictify');
+            const originalFn = impl.prototype.check_common_types;
+            revert = () => impl.prototype.check_common_types = originalFn;
 
             // Any "non-object" primitive type will now cause an InvalidValueError
-            impl.checkCommonTypes = noop;
+            impl.prototype.check_common_types = noop;
 
             const o = {
                 x: undefined
             };
 
-            assertErrorAt(() => JSONs.stringify(o), InvalidValueError, '/x');
+            assert_error_at(() => JSONs.stringify(o), InvalidValueError, '/x');
         });
 
         describe('provides basic functionality', function () {
@@ -76,7 +78,7 @@ describe('JSONs', function () {
             });
 
             it('refuses invalid values', function () {
-                expect(() => JSONs.stringify({ foo () {} })).to.throw(InvalidValueError);
+                expect(() => JSONs.stringify({foo () {}})).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify([undefined])).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify(/regex/)).to.throw(InvalidValueError);
                 expect(() => JSONs.stringify(new Error())).to.throw(InvalidValueError);
@@ -128,19 +130,19 @@ describe('JSONs', function () {
 
         describe('detects circular references', function () {
             it('that is a self loop', function () {
-                const o = { a: 42 };
+                const o = {a: 42};
 
                 o.b = o;
 
-                assertErrorAt(() => JSONs.stringify(o), CircularReferenceError, '/b');
+                assert_error_at(() => JSONs.stringify(o), CircularReferenceError, '/b');
             });
 
             it('that is transitive', function () {
-                const o = { a: [{ b: {} }] };
+                const o = {a: [{b: {}}]};
 
                 o.a[0].b.circular = o;
 
-                assertErrorAt(() => JSONs.stringify(o), CircularReferenceError, '/a/0/b/circular');
+                assert_error_at(() => JSONs.stringify(o), CircularReferenceError, '/a/0/b/circular');
             });
 
             it('that is none', function () {
@@ -163,7 +165,7 @@ describe('JSONs', function () {
                             toJSON () {
                                 return [
                                     42,
-                                    { y: null }
+                                    {y: null}
                                 ];
                             }
                         }
@@ -174,7 +176,7 @@ describe('JSONs', function () {
                     return key === 'y' ? o : value;
                 }
 
-                assertErrorAt(() => JSONs.stringify(o, replacer), CircularReferenceError, '/a/0/1/y');
+                assert_error_at(() => JSONs.stringify(o, replacer), CircularReferenceError, '/a/0/1/y');
             });
         });
 
@@ -197,14 +199,14 @@ describe('JSONs', function () {
             });
 
             it('not when enabled', function () {
-                expect(JSONs.enabled(true)).to.equal(JSONs);
+                expect(JSONs.enabled()).to.equal(JSONs);
             });
 
             it('when enabled and then disabled again', function () {
                 // call 'enable' more than necessary to cover all code paths
                 expect(JSONs
                     .enabled(false)
-                    .enabled(true)
+                    .enabled()
                     .enabled(false)
                     .enabled(false).parse).to.equal(JSON.parse);
             });
@@ -212,7 +214,7 @@ describe('JSONs', function () {
 
         describe('honors the "replacer" parameter', function () {
             it('and preserves its context correctly', function () {
-                const o = [{ a: 42 }, { b: 42 }];
+                const o = [{a: 42}, {b: 42}];
                 const contexts = new Map();
                 contexts.set('0', o);
                 contexts.set('1', o);
@@ -255,7 +257,7 @@ describe('JSONs', function () {
                             },
                             invalid: undefined
                         }, replacer);
-                    }).not.to.throw();
+                    }).to.not.throw();
                 });
             });
 
@@ -280,7 +282,7 @@ describe('JSONs', function () {
                         if (key === '') {
                             return value;
                         } else {
-                            return key === 'replaceMe' ? { y: 42 } : value;
+                            return key === 'replaceMe' ? {y: 42} : value;
                         }
                     }
 
@@ -299,11 +301,11 @@ describe('JSONs', function () {
                         if (key === '') {
                             return value;
                         } else {
-                            return key === 'replaceMe' ? { y: NaN } : value;
+                            return key === 'replaceMe' ? {y: NaN} : value;
                         }
                     }
 
-                    assertErrorAt(function () {
+                    assert_error_at(function () {
                         JSONs.stringify({
                             a: 0,
                             b: 1,
@@ -339,7 +341,7 @@ describe('JSONs', function () {
             });
 
             it('for an object with circular references', function () {
-                const x = { y: 'z' };
+                const x = {y: 'z'};
                 const o = {
                     a: 42,
                     b: {
@@ -364,7 +366,7 @@ describe('JSONs', function () {
                     return key === 'p' ? undefined : value;
                 }
 
-                assertErrorAt(() => JSONs.stringify(o, replacer), CircularReferenceError, '/x');
+                assert_error_at(() => JSONs.stringify(o, replacer), CircularReferenceError, '/x');
             });
 
             it('for an invalid object', function () {
@@ -391,24 +393,24 @@ describe('JSONs', function () {
                     return key === 'p' ? undefined : value;
                 }
 
-                assertErrorAt(() => JSONs.stringify(o, replacer), InvalidValueError, '/b/z/1');
+                assert_error_at(() => JSONs.stringify(o, replacer), InvalidValueError, '/b/z/1');
             });
         });
 
         describe('reports the correct path', function () {
             it('for the root value', function () {
-                assertErrorAt(() => JSONs.stringify(undefined), InvalidValueError, '');
+                assert_error_at(() => JSONs.stringify(undefined), InvalidValueError, '');
             });
 
             it('for some nested value', function () {
-                assertErrorAt(function () {
+                assert_error_at(function () {
                     JSONs.stringify([
                         null,
                         42,
                         {
                             x: {
                                 toJSON () {
-                                    return [false, { y: undefined }];
+                                    return [false, {y: undefined}];
                                 }
                             }
                         }
@@ -416,122 +418,20 @@ describe('JSONs', function () {
                 }, InvalidValueError, '/2/x/1/y');
             });
         });
-
-        describe('works as callbacks', function () {
-            describe('via stringifyAsync', function () {
-                it('without arguments', function (done) {
-                    const o = {
-                        foo: 'bar',
-                        meaning: 42,
-                        awesome: true,
-                        stuff: [1, 2, 3]
-                    };
-
-                    JSONs.stringifyAsync(o, function (error, result) {
-                        expect(error).to.be.null;
-                        expect(result).to.equal(JSONs.stringify(o));
-                        done();
-                    });
-                });
-
-                it('with arguments', function (done) {
-                    const replacer = ['c', 'd'];
-                    const o = {
-                        a: 0,
-                        b: 1,
-                        c: 13,
-                        d: 42
-                    };
-
-                    expect(JSONs.stringify(o, replacer)).to.equal(JSON.stringify(o, replacer));
-
-                    JSONs.stringifyAsync(o, replacer, function (error, result) {
-                        expect(error).to.be.null;
-                        expect(result).to.equal(JSONs.stringify(o, replacer));
-                        done();
-                    });
-                });
-
-                it('with InvalidValueError', function (done) {
-                    JSONs.stringifyAsync([function () {}], function (error, result) {
-                        expect(error).to.be.an.instanceof(InvalidValueError);
-                        expect(error.path).to.equal('/0');
-                        expect(arguments).to.have.a.lengthOf(1);
-                        done();
-                    });
-                });
-
-                it('with CircularReferenceError', function (done) {
-                    const o = [1];
-
-                    o.push(o);
-
-                    JSONs.stringifyAsync(o, function (error, result) {
-                        expect(error).to.be.an.instanceof(CircularReferenceError);
-                        expect(error.path).to.equal('/1');
-                        expect(arguments).to.have.a.lengthOf(1);
-                        done();
-                    });
-                });
-            });
-
-            describe('via parseAsync', function () {
-                it('without arguments', function (done) {
-                    const data = JSON.stringify({
-                        foo: 'bar',
-                        meaning: 42,
-                        awesome: true,
-                        stuff: [1, 2, 3]
-                    });
-
-                    JSONs.parseAsync(data, function (error, result) {
-                        expect(error).to.be.null;
-                        expect(result).to.deep.equal(JSON.parse(data));
-                        done();
-                    });
-                });
-
-                it('with arguments', function (done) {
-                    const data = JSON.stringify({
-                        foo: 'bar',
-                        meaning: 42,
-                        awesome: true,
-                        stuff: [1, 2, 3]
-                    });
-
-                    function reviver (k, v) {
-                        return k === 'meaning' ? 'none' : v;
-                    }
-
-                    JSONs.parseAsync(data, reviver, function (error, result) {
-                        expect(error).to.be.null;
-                        expect(result).to.deep.equal(JSON.parse(data, reviver));
-                        done();
-                    });
-                });
-
-                it('with error', function (done) {
-                    JSONs.parseAsync('foo', function (error, result) {
-                        expect(error).to.be.an.instanceof(SyntaxError);
-                        expect(arguments).to.have.a.lengthOf(1);
-                        done();
-                    });
-                });
-            });
-        });
     });
 
     describe('in a production environment', function () {
-        let originalNodeEnv;
+        let original_node_env;
 
         beforeEach(function () {
-            originalNodeEnv = process.env.NODE_ENV;
+            original_node_env = process.env.NODE_ENV;
             process.env.NODE_ENV = 'production';
-            JSONs = rewire('../src/JSONs');
+            module = rewire('../dist/JSONs');
+            JSONs = module.default;
         });
 
         afterEach(function () {
-            process.env.NODE_ENV = originalNodeEnv;
+            process.env.NODE_ENV = original_node_env;
         });
 
         it('uses native implementation by default', function () {
@@ -540,7 +440,8 @@ describe('JSONs', function () {
         });
 
         it('can still be enabled', function () {
-            expect(JSONs.enabled(true).parse).to.equal(JSON.parse);
+            expect(JSONs.enabled().stringify).to.not.equal(JSON.stringify);
+            expect(JSONs.enabled().parse).to.equal(JSON.parse);
         });
     });
 });

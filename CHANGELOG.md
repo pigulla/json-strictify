@@ -1,3 +1,8 @@
+## 6.0.0 (2019-08-??)
+
+ - move to TypeScript
+ - remove the *Async-methods
+
 ## 5.1.0 (2019-07-17)
 
  - the replacer function now correctly preservers its context
