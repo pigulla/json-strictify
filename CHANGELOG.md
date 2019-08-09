@@ -1,4 +1,4 @@
-## 6.0.0 (2019-08-??)
+## 6.0.0 (2019-08-09)
 
  - move to TypeScript
  - remove the *Async-methods
