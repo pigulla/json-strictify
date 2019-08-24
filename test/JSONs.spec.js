@@ -1,7 +1,5 @@
 'use strict';
 
-/* eslint-disable no-return-assign */
-
 const util = require('util');
 
 const rewire = require('rewire');
