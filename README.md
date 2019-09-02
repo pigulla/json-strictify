@@ -93,7 +93,7 @@ See the ESLint documentation on [configuring globals](https://eslint.org/docs/us
 In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enabled` method:
 
 ```typescript
-import JSONs from './src/JSONs';
+import JSONs from 'json-strictify';
 const JSON = JSONs.enabled(false);
 
 // or for older versions of Javascript:
