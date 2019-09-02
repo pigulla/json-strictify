@@ -1,4 +1,5 @@
 [![npm version](http://img.shields.io/npm/v/json-strictify.svg)](http://badge.fury.io/js/json-strictify)
+![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg)
 [![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg)](https://travis-ci.org/pigulla/json-strictify)
 [![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg)](https://coveralls.io/r/pigulla/json-strictify)
 [![Greenkeeper badge](https://badges.greenkeeper.io/pigulla/json-strictify.svg)](https://greenkeeper.io/)
@@ -43,8 +44,8 @@ npm install json-strictify
 
 json-strictify exposes three methods: `stringify`, `parse` and `enable`, so it can be used as a drop-in replacement for the native JSON object:
 
-```javascript
-const JSON = require('json-strictify');
+```typescript
+import JSON from 'json-strictify';
 
 JSON.stringify(someObject);
 ```
@@ -56,14 +57,15 @@ The `parse` method is simply a reference to the native `JSON.parse` function.
 ### Examples
 
 The `stringify` function throws an error if the input to be serialized contains invalid values:
-```javascript
-const JSONs = require('json-strictify');
+```typescript
+import JSONs from 'json-strictify';
+
 JSONs.stringify({ x: 42, y: NaN });
 // InvalidValueError: Invalid value at /y (NaN is not JSON-serializable)
 ```
 
 Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
-```javascript
+```typescript
 const data = [];
 data.push(data);
 JSONs.stringify(data);
@@ -77,7 +79,7 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 ### ESLint integration
 
 If you want to ensure that all serialization is done through json-strictify you can disable the global `JSON` variable like so:
-```js
+```json
 "globals": {
     "JSON": "off"
 }
@@ -90,7 +92,11 @@ See the ESLint documentation on [configuring globals](https://eslint.org/docs/us
 
 In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enabled` method:
 
-```javascript
+```typescript
+import JSONs from './src/JSONs';
+const JSON = JSONs.enabled(false);
+
+// or for older versions of Javascript:
 const JSON = require('json-strictify').enabled(config.debug);
 ```
 

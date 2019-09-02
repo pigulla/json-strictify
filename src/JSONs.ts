@@ -16,6 +16,7 @@ type ReplacerFn = (this: any, key: string, value: any) => any;
 type Replacer = ReplacerFn|(string|number)[]|undefined|null;
 type NormalizedReplacer = null|((key: string, value: any) => any);
 type GenericArray = any[];
+
 interface GenericObject {[key: string]: any};
 
 /**
