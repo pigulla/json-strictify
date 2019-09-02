@@ -94,7 +94,7 @@ In production you may not want to have the additional overhead introduced by jso
 
 ```typescript
 import JSONs from 'json-strictify';
-const JSON = JSONs.enabled(false);
+const JSON = JSONs.enabled(config.debug);
 
 // or for older versions of Javascript:
 const JSON = require('json-strictify').enabled(config.debug);
