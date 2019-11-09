@@ -1,3 +1,9 @@
+## 6.1.0 (2019-11-09)
+
+ - update dependencies
+ - update code style
+ - add Node.js 13 to build targets
+
 ## 6.0.0 (2019-08-09)
 
  - move to TypeScript
