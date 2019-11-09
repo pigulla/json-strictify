@@ -2,6 +2,7 @@ language: node_js
 branches:
   only:
     - master
+    - develop
     - /^greenkeeper/.*$/
 node_js:
   - "13"
