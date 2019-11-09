@@ -17,10 +17,6 @@
             "error",
             4
         ],
-        "semi": [
-            "error",
-            "always"
-        ],
         "camelcase": "off",
         "lines-between-class-members": [
             "error",

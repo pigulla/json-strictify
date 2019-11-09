@@ -1,6 +1,6 @@
 {
     "name": "json-strictify",
-    "version": "6.0.0",
+    "version": "6.1.0",
     "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
     "engines": {
         "node": ">=10"
@@ -45,12 +45,12 @@
     },
     "devDependencies": {
         "@types/json-pointer": "^1.0.30",
-        "@types/node": "^12.7.11",
-        "@typescript-eslint/eslint-plugin": "^2.3.2",
-        "@typescript-eslint/parser": "^2.3.2",
+        "@types/node": "^12.12.7",
+        "@typescript-eslint/eslint-plugin": "^2.6.1",
+        "@typescript-eslint/parser": "^2.6.1",
         "chai": "^4.2.0",
-        "coveralls": "^3.0.6",
-        "eslint": "^6.5.1",
+        "coveralls": "^3.0.7",
+        "eslint": "^6.6.0",
         "eslint-config-standard": "^14.1.0",
         "eslint-plugin-import": "^2.18.2",
         "eslint-plugin-node": "^10.0.0",
@@ -58,9 +58,9 @@
         "eslint-plugin-standard": "^4.0.1",
         "jest": "^24.9.0",
         "lodash.noop": "^3.0.1",
-        "mocha": "^6.2.1",
+        "mocha": "^6.2.2",
         "nyc": "^14.1.1",
         "rewire": "^4.0.1",
-        "typescript": "^3.6.3"
+        "typescript": "^3.7.2"
     }
 }
