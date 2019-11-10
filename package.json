@@ -1,23 +1,25 @@
 {
     "name": "json-strictify",
-    "version": "6.1.0",
+    "version": "6.2.0",
     "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
     "engines": {
         "node": ">=10"
     },
-    "main": "dist/JSONs.js",
-    "types": "dist/JSONs.d.ts",
+    "main": "./dist/JSONs.js",
+    "types": "./index.d.ts",
     "files": [
+        "index.d.ts",
         "dist/**/*",
         "CHANGELOG.md",
         "README.md",
         "LICENSE"
     ],
     "scripts": {
-        "build": "rm -rf dist/ && tsc --build tsconfig.json",
+        "build": "rm -rf dist/ && rm -f index.d.ts && tsc --build tsconfig.json && npm run ts-definitions",
+        "ts-definitions": "tsc --declaration --emitDeclarationOnly --outFile index.d.ts",
         "test": "npm run lint && npm run build && npm run test-with-coverage && npm run check-coverage && npm audit",
         "lint": "eslint --ext=.ts .",
-        "mocha": "mocha test/\\*\\*/\\*.spec.js",
+        "mocha": "mocha 'test/**/*.spec.js'",
         "test-with-coverage": "nyc mocha",
         "check-coverage": "nyc check-coverage",
         "coveralls": "coveralls < coverage/lcov.info"
