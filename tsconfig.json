@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "declaration": true,
+        "declaration": false,
         "importHelpers": true,
         "module": "commonjs",
         "outDir": "dist",

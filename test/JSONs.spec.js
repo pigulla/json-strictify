@@ -6,6 +6,7 @@ const rewire = require('rewire')
 const noop = require('lodash.noop')
 const expect = require('chai').expect
 
+const JsonStrictifyError = require('../dist/JsonStrictifyError').default
 const InvalidValueError = require('../dist/InvalidValueError').default
 const CircularReferenceError = require('../dist/CircularReferenceError').default
 
@@ -39,6 +40,18 @@ describe('JSONs', function () {
     })
     afterEach(function () {
         revert()
+    })
+
+    it('errors extend properly', function () {
+        const base_error = new JsonStrictifyError('An error message', ['some', 'path'])
+        const circular_reference_error = new CircularReferenceError(['some', 'path'])
+        const invalid_value_error = new InvalidValueError('An error message', 42, ['some', 'path'])
+
+        expect(base_error).to.be.instanceOf(Error)
+        expect(circular_reference_error).to.be.instanceOf(Error)
+        expect(circular_reference_error).to.be.instanceOf(JsonStrictifyError)
+        expect(invalid_value_error).to.be.instanceOf(Error)
+        expect(invalid_value_error).to.be.instanceOf(JsonStrictifyError)
     })
 
     describe('in a non-production environment', function () {
