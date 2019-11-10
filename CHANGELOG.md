@@ -1,3 +1,8 @@
+## 6.2.0 (2019-11-10)
+
+ - InvalidValueError and CircularReferenceError now both extend JsonStrictifyError
+ - TypeScript definitions for custom errors are now properly exported
+
 ## 6.1.0 (2019-11-09)
 
  - update dependencies
