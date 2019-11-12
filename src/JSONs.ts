@@ -1,7 +1,7 @@
 /**
  * json-strictify
  *
- * @version 6.2.0
+ * @version 6.2.1
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
