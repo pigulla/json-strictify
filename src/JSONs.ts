@@ -1,7 +1,7 @@
 /**
  * json-strictify
  *
- * @version 6.2.1
+ * @version 6.3.0
  * @author Raphael Pigulla <pigulla@four66.com>
  * @license MIT
  */
@@ -152,6 +152,7 @@ class JSONstrictify {
             return this.check_array(value, references, ancestors)
         }
 
+        /* istanbul ignore else */
         if (typeof value === 'object') {
             // If an object, check its properties (we've already checked for null).
             return this.check_object(value, references, ancestors)
@@ -159,7 +160,7 @@ class JSONstrictify {
 
         // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
         // script in an engine like Rhino or Nashorn and try to serialize a host object.
-        /* istanbul-ignore next */
+        /* istanbul ignore next */
         throw new InvalidValueError('Invalid type', value, references)
     }
 
@@ -206,4 +207,5 @@ const strict_impl: JSONs = {
     }
 }
 
+/* istanbul ignore next */
 export default process.env.NODE_ENV === 'production' ? native_impl : strict_impl

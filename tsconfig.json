@@ -2,6 +2,7 @@
     "compilerOptions": {
         "declaration": true,
         "declarationMap": true,
+        "esModuleInterop": true,
         "inlineSources": true,
         "inlineSourceMap": true,
         "importHelpers": true,
@@ -13,9 +14,14 @@
         "allowJs": false,
         "noImplicitThis": true,
         "noImplicitReturns": true,
-        "noImplicitAny": true
+        "noImplicitAny": true,
+        "baseUrl": ".",
+        "paths": {
+            "@src": ["src/index.ts"],
+            "@src/*": ["src/*"]
+        }
     },
     "include": [
-        "src/**/*"
+        "src/**/*.ts"
     ]
 }
