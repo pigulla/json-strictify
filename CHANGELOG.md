@@ -1,7 +1,12 @@
-## 6.2.0 (2019-11-10)
+## 6.3.0 (2019-11-12)
+
+ - move tests to TypeScript as well
+ - fix included TypeScript definitions broken in previous version
+
+## 6.2.0 (2019-11-10) - *deprecated*
 
  - InvalidValueError and CircularReferenceError now both extend JsonStrictifyError
- - TypeScript definitions for custom errors are now properly exported
+ - TypeScript definitions for custom errors are now exported
 
 ## 6.1.0 (2019-11-09)
 

@@ -1,27 +1,24 @@
 {
     "name": "json-strictify",
-    "version": "6.2.0",
+    "version": "6.3.0",
     "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
     "engines": {
         "node": ">=10"
     },
-    "main": "./dist/JSONs.js",
-    "types": "./index.d.ts",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "files": [
-        "index.d.ts",
         "dist/**/*",
         "CHANGELOG.md",
         "README.md",
         "LICENSE"
     ],
     "scripts": {
-        "build": "rm -rf dist/ && rm -f index.d.ts && tsc --build tsconfig.json && npm run ts-definitions",
-        "ts-definitions": "tsc --declaration --emitDeclarationOnly --outFile index.d.ts",
-        "test": "npm run lint && npm run build && npm run test-with-coverage && npm run check-coverage && npm audit",
-        "lint": "eslint --ext=.ts .",
-        "mocha": "mocha 'test/**/*.spec.js'",
-        "test-with-coverage": "nyc mocha",
-        "check-coverage": "nyc check-coverage",
+        "build": "npm ci && rm -rf dist/ && npm test && tsc --build tsconfig.json",
+        "test": "npm run lint && npm run test-with-coverage && npm audit",
+        "lint": "eslint --ext=.ts 'src/**/*.ts' 'test/**/*.ts'",
+        "mocha": "mocha",
+        "test-with-coverage": "nyc mocha 'test/**/*.spec.ts'",
         "coveralls": "coveralls < coverage/lcov.info"
     },
     "repository": {
@@ -46,10 +43,13 @@
         "ts-custom-error": "^3.1.1"
     },
     "devDependencies": {
+        "@types/chai": "^4.2.4",
         "@types/json-pointer": "^1.0.30",
+        "@types/lodash.noop": "^3.0.6",
+        "@types/mocha": "^5.2.7",
         "@types/node": "^12.12.7",
-        "@typescript-eslint/eslint-plugin": "^2.6.1",
-        "@typescript-eslint/parser": "^2.6.1",
+        "@typescript-eslint/eslint-plugin": "^2.7.0",
+        "@typescript-eslint/parser": "^2.7.0",
         "chai": "^4.2.0",
         "coveralls": "^3.0.7",
         "eslint": "^6.6.0",
@@ -62,7 +62,9 @@
         "lodash.noop": "^3.0.1",
         "mocha": "^6.2.2",
         "nyc": "^14.1.1",
-        "rewire": "^4.0.1",
+        "ts-node": "^8.5.0",
+        "tsconfig-paths": "^3.9.0",
+        "type-fest": "^0.8.1",
         "typescript": "^3.7.2"
     }
 }
