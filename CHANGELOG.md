@@ -1,6 +1,7 @@
-## 6.2.1 (2019-11-12)
+## 6.3.0 (2019-11-12)
 
- - same as 6.2.0 but with properly exported TypeScript definitions
+ - move tests to TypeScript as well
+ - fix included TypeScript definitions broken in previous version
 
 ## 6.2.0 (2019-11-10) - *deprecated*
 

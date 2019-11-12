@@ -2,6 +2,10 @@
     "extends": [
         "eslint-config-standard"
     ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint/eslint-plugin"
+    ],
     "env": {
         "node": true
     },
@@ -9,6 +13,7 @@
         "BigInt": false
     },
     "rules": {
+        "no-unused-vars": "off",
         "object-curly-spacing": [
             "error",
             "never"
@@ -24,6 +29,20 @@
             {
                 "exceptAfterSingleLine": true
             }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "args": "none"
+            }
         ]
-    }
+    },
+    "overrides" : [
+        {
+            "files": ["test/**/*.ts"],
+            "env": {
+                "mocha": true
+            }
+        }
+    ]
 }
