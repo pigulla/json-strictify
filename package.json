@@ -43,13 +43,13 @@
         "ts-custom-error": "^3.1.1"
     },
     "devDependencies": {
-        "@types/chai": "^4.2.4",
+        "@types/chai": "^4.2.5",
         "@types/json-pointer": "^1.0.30",
         "@types/lodash.noop": "^3.0.6",
         "@types/mocha": "^5.2.7",
-        "@types/node": "^12.12.7",
-        "@typescript-eslint/eslint-plugin": "^2.7.0",
-        "@typescript-eslint/parser": "^2.7.0",
+        "@types/node": "^12.12.8",
+        "@typescript-eslint/eslint-plugin": "^2.8.0",
+        "@typescript-eslint/parser": "^2.8.0",
         "chai": "^4.2.0",
         "coveralls": "^3.0.7",
         "eslint": "^6.6.0",
