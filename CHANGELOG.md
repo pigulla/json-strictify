@@ -1,3 +1,7 @@
+## 6.3.1 (2019-12-04)
+
+ - fixed missing `tslib` dependency (@kylejlin)
+
 ## 6.3.0 (2019-11-12)
 
  - move tests to TypeScript as well
