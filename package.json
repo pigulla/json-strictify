@@ -44,18 +44,19 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.6",
+    "@istanbuljs/nyc-config-typescript": "^1.0.0",
+    "@types/chai": "^4.2.7",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^12.12.14",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
+    "@types/node": "^12.12.21",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.9",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
@@ -66,6 +67,6 @@
     "ts-node": "^8.5.4",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.8.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   }
 }
