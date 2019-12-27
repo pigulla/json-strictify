@@ -15,8 +15,9 @@
   ],
   "scripts": {
     "build": "npm ci && rm -rf dist/ && npm test && tsc --build tsconfig.json",
-    "test": "tsc --noEmit && npm run lint && npm run test-with-coverage && npm audit",
+    "test": "tsc --noEmit && npm run lint && npm run test-with-coverage && npm audit && npm run lockfile-lint",
     "lint": "eslint --ext=.ts 'src/**/*.ts' 'test/**/*.ts'",
+    "lockfile-lint": "npx lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
     "mocha": "mocha",
     "test-with-coverage": "nyc mocha 'test/**/*.spec.ts'",
     "coveralls": "coveralls < coverage/lcov.info"
@@ -50,8 +51,8 @@
     "@types/lodash.noop": "^3.0.6",
     "@types/mocha": "^5.2.7",
     "@types/node": "^13.1.1",
-    "@typescript-eslint/eslint-plugin": "^2.12.0",
-    "@typescript-eslint/parser": "^2.12.0",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.9",
     "eslint": "^6.8.0",
