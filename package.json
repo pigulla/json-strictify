@@ -45,14 +45,14 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.7",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^13.1.1",
-    "@typescript-eslint/eslint-plugin": "^2.13.0",
-    "@typescript-eslint/parser": "^2.13.0",
+    "@types/node": "^13.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.14.0",
+    "@typescript-eslint/parser": "^2.14.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.9",
     "eslint": "^6.8.0",
