@@ -17,9 +17,17 @@
         "noImplicitAny": true,
         "baseUrl": ".",
         "paths": {
-            "@src": ["src/index.ts"],
-            "@src/*": ["src/*"]
-        }
+            "@src": [
+                "src/index.ts"
+            ],
+            "@src/*": [
+                "src/*"
+            ]
+        },
+        "typeRoots": [
+            "overrides",
+            "node_modules/@types"
+        ]
     },
     "include": [
         "src/**/*.ts"
