@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "6.3.2",
+  "version": "6.3.3",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=10"
@@ -46,27 +46,31 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@types/chai": "^4.2.10",
+    "@types/chai": "^4.2.11",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.9.0",
-    "@typescript-eslint/eslint-plugin": "^2.22.0",
-    "@typescript-eslint/parser": "^2.22.0",
+    "@types/node": "^13.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.9",
+    "coveralls": "^3.0.11",
     "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "lodash.noop": "^3.0.1",
-    "mocha": "^7.1.0",
+    "minimist": "^1.2.5",
+    "mocha": "^7.1.1",
     "nyc": "^15.0.0",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.8.1",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.12.0",
     "typescript": "^3.8.3"
+  },
+  "resolutions": {
+    "minimist": "^1.2.5"
   }
 }

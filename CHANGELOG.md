@@ -1,3 +1,7 @@
+## 6.3.3 (2020-03-25)
+
+ - update dependencies to resolve potential security issues
+
 ## 6.3.2 (2019-12-27)
 
  - add [lockfile-lint](https://github.com/lirantal/lockfile-lint) to tests
