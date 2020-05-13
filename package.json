@@ -42,7 +42,7 @@
   "dependencies": {
     "json-pointer": "^0.6.0",
     "ts-custom-error": "^3.1.1",
-    "tslib": "^1.11.1"
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
