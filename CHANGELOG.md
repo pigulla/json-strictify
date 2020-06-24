@@ -1,3 +1,7 @@
+## 6.4.0 (2020-06-24)
+
+ - move to Jest for testing
+
 ## 6.3.3 (2020-03-25)
 
  - update dependencies to resolve potential security issues

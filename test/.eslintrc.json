@@ -1,8 +1,7 @@
 {
     "env": {
-        "mocha": true
+        "jest": true
     },
-
     "rules": {
         "no-return-assign": "off",
         "no-unused-expressions": "off"

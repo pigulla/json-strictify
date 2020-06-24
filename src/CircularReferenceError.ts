@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import * as pointer from 'json-pointer'
 
 import JsonStrictifyError from './JsonStrictifyError'

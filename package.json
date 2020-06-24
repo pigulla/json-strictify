@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "6.3.3",
+  "version": "6.4.0",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=10"
@@ -15,11 +15,11 @@
   ],
   "scripts": {
     "build": "npm ci && rm -rf dist/ && npm test && tsc --build tsconfig.json",
-    "test": "tsc --noEmit && npm run lint && npm run test-with-coverage && npm audit && npm run lockfile-lint",
+    "test": "tsc --noEmit && npm run lint && npm run jest-with-coverage && npm audit && npm run lockfile-lint",
     "lint": "eslint --ext=.ts .",
     "lockfile-lint": "npx lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
-    "mocha": "mocha",
-    "test-with-coverage": "nyc mocha 'test/**/*.spec.ts'",
+    "jest": "jest",
+    "jest-with-coverage": "jest --collectCoverage",
     "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
@@ -47,23 +47,24 @@
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
+    "@types/jest": "^26.0.0",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
-    "@types/mocha": "^7.0.2",
     "@types/node": "^14.0.13",
-    "@typescript-eslint/eslint-plugin": "^3.3.0",
-    "@typescript-eslint/parser": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.3.1",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "jest": "^26.1.0",
     "lodash.noop": "^3.0.1",
-    "mocha": "^8.0.1",
     "nyc": "^15.1.0",
+    "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "type-fest": "^0.15.1",
