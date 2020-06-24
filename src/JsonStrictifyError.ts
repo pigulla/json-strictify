@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import {CustomError} from 'ts-custom-error'
 import * as pointer from 'json-pointer'
 

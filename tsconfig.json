@@ -15,19 +15,7 @@
         "noImplicitThis": true,
         "noImplicitReturns": true,
         "noImplicitAny": true,
-        "baseUrl": ".",
-        "paths": {
-            "@src": [
-                "src/index.ts"
-            ],
-            "@src/*": [
-                "src/*"
-            ]
-        },
-        "typeRoots": [
-            "overrides",
-            "node_modules/@types"
-        ]
+        "baseUrl": "."
     },
     "include": [
         "src/**/*.ts"
