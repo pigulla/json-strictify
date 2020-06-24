@@ -2,7 +2,6 @@
 ![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg)
 [![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg)](https://travis-ci.org/pigulla/json-strictify)
 [![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg)](https://coveralls.io/r/pigulla/json-strictify)
-[![Greenkeeper badge](https://badges.greenkeeper.io/pigulla/json-strictify.svg)](https://greenkeeper.io/)
 [![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg)](https://david-dm.org/pigulla/json-strictify)
 [![Known Vulnerabilities](https://snyk.io/test/github/pigulla/json-strictify/badge.svg)](https://snyk.io/test/github/pigulla/json-strictify)
 ![node](https://img.shields.io/node/v/json-strictify.svg)
