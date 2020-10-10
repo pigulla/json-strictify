@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/pigulla/json-strictify",
   "dependencies": {
-    "json-pointer": "^0.6.0",
+    "json-pointer": "^0.6.1",
     "ts-custom-error": "^3.1.1",
     "tslib": "^2.0.0"
   },
