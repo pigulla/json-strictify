@@ -1,3 +1,8 @@
+## 6.4.1 (2020-10-23)
+
+ - update dependencies to resolve a potential security issue   
+ - add Node.js 15 to build targets
+
 ## 6.4.0 (2020-06-24)
 
  - move to Jest for testing
