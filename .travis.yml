@@ -3,6 +3,7 @@ branches:
   only:
     - master
 node_js:
+  - "15"
   - "14"
   - "13"
   - "12"
