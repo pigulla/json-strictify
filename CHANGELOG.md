@@ -1,4 +1,4 @@
-## 6.4.1 (2020-10-23)
+## 6.4.1 (2020-10-24)
 
  - update dependencies to resolve a potential security issue   
  - add Node.js 15 to build targets
