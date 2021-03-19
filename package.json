@@ -1,9 +1,9 @@
 {
   "name": "json-strictify",
-  "version": "6.4.1",
+  "version": "7.0.0",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

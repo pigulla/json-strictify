@@ -1,3 +1,8 @@
+## 7.0.0 (2021-03-19)
+
+- require Node.js >= 12 (as Node.js 10 it will reach end-of-life on March 30th)
+- remove Node.js 10 and 11 from build targets
+
 ## 6.4.1 (2020-10-24)
 
  - update dependencies to resolve a potential security issue   
