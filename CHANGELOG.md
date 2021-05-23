@@ -1,3 +1,7 @@
+## 7.0.1 (2021-05-23)
+
+- update dependencies to resolve a potential security issue
+
 ## 7.0.0 (2021-03-19)
 
 - require Node.js >= 12 (as Node.js 10 it will reach end-of-life on March 30th)
