@@ -9,21 +9,7 @@
             "node",
             "jest"
         ],
-        "rootDir": "..",
-        "paths": {
-            "~src": [
-                "src/index.ts"
-            ],
-            "~src/*": [
-                "src/*"
-            ],
-            "~test": [
-                "test/index.ts"
-            ],
-            "~test/*": [
-                "test/*"
-            ]
-        }
+        "rootDir": ".."
     }
 }
- 
+

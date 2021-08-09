@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
+        "moduleResolution": "Node",
         "declaration": true,
         "declarationMap": true,
-        "esModuleInterop": true,
+        "esModuleInterop": false,
         "inlineSources": true,
         "inlineSourceMap": true,
         "importHelpers": true,
@@ -10,7 +11,7 @@
         "outDir": "dist",
         "rootDir": "src",
         "strict": true,
-        "target": "es2016",
+        "target": "es2020",
         "allowJs": false,
         "noImplicitThis": true,
         "noImplicitReturns": true,

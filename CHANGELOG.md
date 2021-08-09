@@ -1,3 +1,9 @@
+## 8.0.0 (2021-08-??)
+
+- use ESM
+- drop support for Node.js version 13 and below
+- replace Travis with GitHub Actions
+
 ## 7.0.1 (2021-05-23)
 
 - update dependencies to resolve a potential security issue

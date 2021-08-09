@@ -1,12 +1,13 @@
 import {inherits} from 'util'
 
-import noop from 'lodash.noop'
 import {expect} from 'chai'
 import {Class, JsonObject} from 'type-fest'
 
-import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '~src'
+import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '../src'
 
-function assert_throws_at (fn: Function, clazz: Class, reference: string): void {
+const noop = () => {}
+
+function assert_throws_at (fn: Function, clazz: Class<unknown>, reference: string): void {
     let error
 
     try {
