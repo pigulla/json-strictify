@@ -1,3 +1,8 @@
+## 7.0.2 (2021-??-??)
+
+- update dependencies to resolve a potential security issue
+- replace chai with Jest for assertions
+
 ## 7.0.1 (2021-05-23)
 
 - update dependencies to resolve a potential security issue
