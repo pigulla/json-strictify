@@ -1,36 +1,25 @@
 import {inherits} from 'util'
 
-import noop from 'lodash.noop'
 import {expect} from 'chai'
 import {Class, JsonObject} from 'type-fest'
 
 import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '~src'
 
-function assert_throws_at (fn: Function, clazz: Class, reference: string): void {
-    let error
+function assert_throws_at <T extends JsonStrictifyError> (fn: Function, clazz: Class<T>, reference: string): void {
+    let error: Error | undefined
 
     try {
         fn()
     } catch (e) {
-        error = e
+        error = e as Error
     }
 
     expect(error)
     expect(error).to.be.an.instanceof(clazz)
-    expect(error.path).to.deep.equal(reference)
+    expect((error as T).path).to.deep.equal(reference)
 }
 
 describe('JSONs', function () {
-    let revert: Function
-
-    // Generic setup for rewire
-    beforeEach(function () {
-        revert = noop
-    })
-    afterEach(function () {
-        revert()
-    })
-
     it('errors extend properly', function () {
         const circular_reference_error = new CircularReferenceError(['some', 'path'])
         const invalid_value_error = new InvalidValueError('An error message', 42, ['some', 'path'])
