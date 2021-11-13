@@ -15,11 +15,10 @@
   ],
   "scripts": {
     "build": "npm ci && rm -rf dist/ && npm test && tsc --build tsconfig.json",
-    "test": "tsc --noEmit && npm run lint && npm run jest-with-coverage && npm audit && npm run lockfile-lint",
+    "test": "tsc --noEmit && npm run lint && npm run --coverage && npm audit && npm run lockfile-lint",
     "lint": "eslint --ext=.ts .",
     "lockfile-lint": "npx lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
     "jest": "jest",
-    "jest-with-coverage": "jest --collectCoverage",
     "coveralls": "coveralls < coverage/lcov.info"
   },
   "repository": {
@@ -45,14 +44,12 @@
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.15",
     "@types/jest": "^27.0.2",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
-    "@types/node": "^14.14.35",
+    "@types/node": "^12.20.37",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
-    "chai": "^4.3.4",
     "coveralls": "^3.1.0",
     "eslint": "^7.22.0",
     "eslint-config-standard": "^16.0.2",
