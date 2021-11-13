@@ -1,6 +1,6 @@
 ## 8.0.0 (2021-11-??)
 
-- use ESM
+- [breaking] this module is now an ESM package
 - update dependencies to resolve a potential security issue
 - drop support for Node.js version 13 and below
 - replace Travis with GitHub Actions
@@ -12,7 +12,7 @@
 
 ## 7.0.0 (2021-03-19)
 
-- require Node.js >= 12 (as Node.js 10 it will reach end-of-life on March 30th)
+- [breaking] require Node.js >= 12 (as Node.js 10 it will reach end-of-life on March 30th)
 - remove Node.js 10 and 11 from build targets
 
 ## 6.4.1 (2020-10-24)
@@ -54,8 +54,8 @@
 
 ## 6.0.0 (2019-08-09)
 
+ - [breaking] remove the *Async-methods
  - move to TypeScript
- - remove the *Async-methods
 
 ## 5.1.0 (2019-07-17)
 
@@ -92,11 +92,11 @@
 
 ## 4.0.0 (2018-01-19)
 
- - disable by default if NODE_ENV is "production"
+ - [breaking] disable by default if NODE_ENV is "production"
 
 ## 3.0.0 (2017-11-14)
 
- - drop support for Node.js version 5 and below
+ - [breaking] drop support for Node.js version 5 and below
  - move from 'referee' to 'chai'
  - remove dependency 'fkt'
 
@@ -115,10 +115,10 @@
 
 ## 2.0.0 (2016-08-29)
 
+ - [breaking] requires Node.js version 4 or higher
  - remove Gulp
  - use external ESLint config
  - update dependencies
- - requires Node.js version 4 or higher 
 
 ## 1.0.0 (2016-06-20)
 

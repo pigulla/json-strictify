@@ -6,7 +6,8 @@
  * @license MIT
  */
 
-import util from 'util'
+import * as util from 'util'
+
 import CircularReferenceError from './CircularReferenceError'
 import InvalidValueError from './InvalidValueError'
 

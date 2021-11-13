@@ -2,14 +2,10 @@ import {inherits} from 'util'
 
 import {Class, JsonObject} from 'type-fest'
 
-import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '~src'
+import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '../src'
 
 function assert_throws_at <T extends JsonStrictifyError> (fn: Function, clazz: Class<T>, reference: string): void {
     let error: Error | undefined
-const noop = () => {}
-
-function assert_throws_at (fn: Function, clazz: Class<unknown>, reference: string): void {
-    let error
 
     try {
         fn()
@@ -46,7 +42,10 @@ describe('JSONs', function () {
         })
 
         it('refuses invalid values', function () {
-            expect(() => JSONs.stringify({foo () {}})).toThrow(InvalidValueError)
+            expect(() => JSONs.stringify({
+                foo () {
+                }
+            })).toThrow(InvalidValueError)
             expect(() => JSONs.stringify([undefined])).toThrow(InvalidValueError)
             expect(() => JSONs.stringify(/regex/)).toThrow(InvalidValueError)
             expect(() => JSONs.stringify(new Error())).toThrow(InvalidValueError)
@@ -69,10 +68,14 @@ describe('JSONs', function () {
         })
 
         it('works with the prototype chain', function () {
-            function A () {}
+            function A () {
+            }
+
             A.prototype.a = 42
 
-            function B () {}
+            function B () {
+            }
+
             inherits(B, A)
             B.prototype.b = 'foo'
 
