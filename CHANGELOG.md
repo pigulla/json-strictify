@@ -1,8 +1,10 @@
-## 8.0.0 (2021-08-??)
+## 8.0.0 (2021-11-??)
 
 - use ESM
+- update dependencies to resolve a potential security issue
 - drop support for Node.js version 13 and below
 - replace Travis with GitHub Actions
+- replace chai with Jest for assertions
 
 ## 7.0.1 (2021-05-23)
 
