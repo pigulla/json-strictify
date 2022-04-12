@@ -1,15 +1,15 @@
-[![npm version](http://img.shields.io/npm/v/json-strictify.svg)](http://badge.fury.io/js/json-strictify)
 ![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg)
-[![Build Status](http://img.shields.io/travis/pigulla/json-strictify.svg)](https://travis-ci.org/pigulla/json-strictify)
-[![Coverage Status](https://img.shields.io/coveralls/pigulla/json-strictify.svg)](https://coveralls.io/r/pigulla/json-strictify)
-[![Dependency Status](https://david-dm.org/pigulla/json-strictify.svg)](https://david-dm.org/pigulla/json-strictify)
-[![Known Vulnerabilities](https://snyk.io/test/github/pigulla/json-strictify/badge.svg)](https://snyk.io/test/github/pigulla/json-strictify)
-![node](https://img.shields.io/node/v/json-strictify.svg)
-[![License](https://img.shields.io/npm/l/json-strictify.svg)](https://github.com/pigulla/json-strictify/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/v/json-strictify?style=flat-square&cacheSeconds=3600)](https://www.npmjs.com/package/json-strictify)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pigulla/json-strictify/Node.js%20CI?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/json-strictify/actions?query=branch%3Amain)
+[![GitHub Issues](https://img.shields.io/github/issues-raw/pigulla/json-strictify?style=flat-square&cacheSeconds=3600)](https://github.com/pigulla/json-strictify/issues)
+[![libraries.io](https://img.shields.io/librariesio/release/npm/json-strictify?style=flat-square&cacheSeconds=3600)](https://requires.io/github/pigulla/json-strictify/requirements/?branch=main)
+[![Codecov](https://img.shields.io/codecov/c/github/pigulla/json-strictify?style=flat-square&cacheSeconds=3600)](https://app.codecov.io/gh/pigulla/json-strictify)
+[![npm bundle size](https://img.shields.io/bundlephobia/min/json-strictify?style=flat-square&cacheSeconds=3600)](https://bundlephobia.com/package/json-strictify)
+[![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/json-strictify?style=flat-square&cacheSeconds=3600)](https://snyk.io/advisor/npm-package/json-strictify)
 
 # json-strictify
 
-Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.
+> Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.
 
 #### Why
 

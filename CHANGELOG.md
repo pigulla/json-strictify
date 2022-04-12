@@ -1,6 +1,8 @@
-## 8.0.8 (2022-04-12)
+## 8.0.0 (2022-04-12)
 
-- update dependencies to resolve a potential security issue
+- require Node.js >= 14 (as Node.js 12 it will reach end-of-life on April 30th)
+- migrate from Travis CI to GitHub Actions
+- update dependencies to resolve potential security issues
 
 ## 7.0.1 (2021-05-23)
 

@@ -1,0 +1,25 @@
+name: Build and Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - run: npm i -g npm@8 --registry=https://registry.npmjs.org
+      - run: npm run setup
+      - run: npm test
+      - run: npm run build
+
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/lcov.info
+          fail_ci_if_error: true
+          verbose: true
