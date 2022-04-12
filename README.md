@@ -16,13 +16,13 @@
 The native [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) function drops or silently modifies all values that are not supported by the [JSON specification](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf):
 
 ```js
-JSON.stringify({ a: 42, b: undefined });
+JSON.stringify({ a: 42, b: undefined })
 // returns '{"a":42}'
 
-JSON.parse(JSON.stringify(NaN));
+JSON.parse(JSON.stringify(NaN))
 // returns null
 
-JSON.stringify([1, NaN, 3]);
+JSON.stringify([1, NaN, 3])
 // returns '[1,null,3]'
 ```
 
@@ -35,6 +35,7 @@ Unlike [`json-stringify-safe`](https://www.npmjs.org/package/json-stringify-safe
 ### Installation
 
 Simply install via npm:
+
 ```
 npm install json-strictify
 ```
@@ -44,9 +45,9 @@ npm install json-strictify
 json-strictify exposes three methods: `stringify`, `parse` and `enable`, so it can be used as a drop-in replacement for the native JSON object:
 
 ```typescript
-import JSON from 'json-strictify';
+import JSON from 'json-strictify'
 
-JSON.stringify(someObject);
+JSON.stringify(someObject)
 ```
 
 The `parse` method is simply a reference to the native `JSON.parse` function.
@@ -56,18 +57,20 @@ The `parse` method is simply a reference to the native `JSON.parse` function.
 ### Examples
 
 The `stringify` function throws an error if the input to be serialized contains invalid values:
-```typescript
-import JSONs from 'json-strictify';
 
-JSONs.stringify({ x: 42, y: NaN });
+```typescript
+import JSONs from 'json-strictify'
+
+JSONs.stringify({ x: 42, y: NaN })
 // InvalidValueError: Invalid value at /y (NaN is not JSON-serializable)
 ```
 
 Also, if the data you want to stringify contains circular references a `CircularReferenceError` is thrown:
+
 ```typescript
-const data = [];
-data.push(data);
-JSONs.stringify(data);
+const data = []
+data.push(data)
+JSONs.stringify(data)
 // CircularReferenceError: Circular reference found at "/0"
 ```
 
@@ -78,11 +81,13 @@ The location of the value that caused the error is given as a [JSON Pointer](htt
 ### ESLint integration
 
 If you want to ensure that all serialization is done through json-strictify you can disable the global `JSON` variable like so:
+
 ```json
 "globals": {
     "JSON": "off"
 }
 ```
+
 See the ESLint documentation on [configuring globals](https://eslint.org/docs/user-guide/configuring#specifying-globals) for details.
 
 ---
@@ -92,13 +97,13 @@ See the ESLint documentation on [configuring globals](https://eslint.org/docs/us
 In production you may not want to have the additional overhead introduced by json-strictify. This can easily be avoided by calling the `enabled` method:
 
 ```typescript
-import JSONs from 'json-strictify';
-const JSON = JSONs.enabled(config.debug);
+import JSONs from 'json-strictify'
+const JSON = JSONs.enabled(config.debug)
 
 // or for older versions of Javascript:
-const JSON = require('json-strictify').enabled(config.debug);
+const JSON = require('json-strictify').enabled(config.debug)
 ```
 
 If called with a falsy parameter, `enabled` will return an object that delegates directly to the native JSON object so there will be no performance penalty whatsoever.
 
-**Note:** json-strictify is disabled by default if `NODE_ENV` is set to `production` (you may still enable it manually, of course).  
+**Note:** json-strictify is disabled by default if `NODE_ENV` is set to `production` (you may still enable it manually, of course).
