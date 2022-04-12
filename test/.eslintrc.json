@@ -1,9 +1,0 @@
-{
-    "env": {
-        "jest": true
-    },
-    "rules": {
-        "no-return-assign": "off",
-        "no-unused-expressions": "off"
-    }
-}

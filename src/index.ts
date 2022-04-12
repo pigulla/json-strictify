@@ -1,7 +1,5 @@
-import JSONs from './JSONs'
+export { default as CircularReferenceError } from './circular-reference-error'
+export { default as InvalidValueError } from './invalid-value-error'
+export { default as JsonStrictifyError } from './json-strictify-error'
 
-export {default as CircularReferenceError} from './CircularReferenceError'
-export {default as InvalidValueError} from './InvalidValueError'
-export {default as JsonStrictifyError} from './JsonStrictifyError'
-
-export default JSONs
+export { default } from './jsons'

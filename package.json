@@ -14,13 +14,19 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "npm ci && rm -rf dist/ && npm test && tsc --build tsconfig.json",
-    "test": "tsc --noEmit && npm run lint && npm run jest-with-coverage && npm audit && npm run lockfile-lint",
+    "build": "rm -rf dist && tsc",
+    "setup": "npm ci && rm -rf coverage dist",
+    "test": "tsc --noEmit && npm run lint && npm run jest && npm audit",
+    "format": "npm run format:prettier && npm run format:eslint",
+    "format:eslint": "eslint --ext=ts --fix .",
+    "format:prettier": "prettier --write .",
     "lint": "eslint --ext=.ts .",
-    "lockfile-lint": "npx lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
-    "jest": "jest",
-    "jest-with-coverage": "jest --collectCoverage",
-    "coveralls": "coveralls < coverage/lcov.info"
+    "lint:eslint": "eslint --max-warnings=0 --ext=ts .",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc --noEmit",
+    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
+    "jest": "rm -rf coverage && jest",
+    "prepublishOnly": "npm run setup && npm test && npm run build"
   },
   "repository": {
     "type": "git",
@@ -33,7 +39,10 @@
     "stringify",
     "strict"
   ],
-  "author": "Raphael Pigulla <pigulla@four66.com>",
+  "author": {
+    "name": "Raphael Pigulla",
+    "email": "pigulla@four66.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pigulla/json-strictify/issues"
@@ -55,11 +64,13 @@
     "chai": "^4.3.4",
     "coveralls": "^3.1.0",
     "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-unicorn": "^42.0.0",
     "jest": "^27.5.1",
+    "lockfile-lint": "^4.7.4",
     "lodash.noop": "^3.0.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
