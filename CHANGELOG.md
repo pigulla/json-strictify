@@ -1,3 +1,7 @@
+## 8.0.8 (2022-04-12)
+
+- update dependencies to resolve a potential security issue
+
 ## 7.0.1 (2021-05-23)
 
 - update dependencies to resolve a potential security issue

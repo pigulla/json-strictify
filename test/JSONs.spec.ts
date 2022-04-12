@@ -6,18 +6,18 @@ import {Class, JsonObject} from 'type-fest'
 
 import JSONs, {JsonStrictifyError, InvalidValueError, CircularReferenceError} from '~src'
 
-function assert_throws_at (fn: Function, clazz: Class, reference: string): void {
-    let error
+function assert_throws_at (fn: Function, clazz: Class<JsonStrictifyError>, reference: string): void {
+    let error: JsonStrictifyError | undefined
 
     try {
         fn()
     } catch (e) {
-        error = e
+        error = e as JsonStrictifyError
     }
 
     expect(error)
     expect(error).to.be.an.instanceof(clazz)
-    expect(error.path).to.deep.equal(reference)
+    expect(error!.path).to.deep.equal(reference)
 }
 
 describe('JSONs', function () {
