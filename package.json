@@ -9,24 +9,22 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "CHANGELOG.md",
-    "README.md",
-    "LICENSE"
+    "!dist/*.tsbuildinfo",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "setup": "npm ci && rm -rf coverage dist",
-    "test": "tsc --noEmit && npm run lint && npm run jest && npm audit",
+    "test": "rm -rf coverage && npm run lint && npm run jest && npm audit",
     "format": "npm run format:prettier && npm run format:eslint",
     "format:eslint": "eslint --ext=ts --fix .",
     "format:prettier": "prettier --write .",
-    "lint": "eslint --ext=.ts .",
+    "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier && npm run lint:lockfile",
     "lint:eslint": "eslint --max-warnings=0 --ext=ts .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
     "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
     "jest": "rm -rf coverage && jest",
-    "prepublishOnly": "npm run setup && npm test && npm run build"
+    "prepublishOnly": "npm ci && npm test && npm run build"
   },
   "repository": {
     "type": "git",
