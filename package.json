@@ -72,7 +72,7 @@
     "lodash.noop": "^3.0.1",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
-    "tsconfig-paths": "^3.9.0",
+    "tsconfig-paths": "^4.0.0",
     "type-fest": "^2.12.2",
     "typescript": "^4.2.3"
   }
