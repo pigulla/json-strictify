@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^28.1.0",
     "@types/json-pointer": "^1.0.30",
     "@types/lodash.noop": "^3.0.6",
     "@types/node": "^16.11.26",
