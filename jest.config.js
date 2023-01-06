@@ -1,11 +1,12 @@
-// This is the basic configuration file. For your convenience it will run the unit and component tests, but you should
-// preferably use one of the more specialized configurations (e.g., run "jest --config jest.unit.config.js" or
-// "npm run jest:unit").
-
 module.exports = {
     moduleFileExtensions: ['js', 'json', 'ts'],
     transform: {
-        '^.+\\.ts$': 'ts-jest',
+        '^.+\\.ts$': [
+            'ts-jest',
+            {
+                tsconfig: '<rootDir>/test/tsconfig.json',
+            },
+        ],
     },
     testEnvironment: 'node',
     testRegex: ['/test/.*.spec.ts$'],
@@ -25,11 +26,5 @@ module.exports = {
         '^~src/(.+)': '<rootDir>/src/$1',
         '^~test/?$': '<rootDir>/test/index.ts',
         '^~test/(.+)': '<rootDir>/test/$1',
-    },
-    preset: 'ts-jest',
-    globals: {
-        'ts-jest': {
-            tsconfig: '<rootDir>/test/tsconfig.json',
-        },
     },
 }
