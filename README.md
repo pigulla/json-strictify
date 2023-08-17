@@ -5,7 +5,6 @@
 [![libraries.io](https://img.shields.io/librariesio/release/npm/json-strictify?style=flat-square&cacheSeconds=3600)](https://libraries.io/npm/json-strictify)
 [![Codecov](https://img.shields.io/codecov/c/github/pigulla/json-strictify?style=flat-square&cacheSeconds=3600)](https://app.codecov.io/gh/pigulla/json-strictify)
 [![npm bundle size](https://img.shields.io/bundlephobia/min/json-strictify?style=flat-square&cacheSeconds=3600)](https://bundlephobia.com/package/json-strictify)
-[![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/json-strictify?style=flat-square&cacheSeconds=3600)](https://snyk.io/advisor/npm-package/json-strictify)
 
 # json-strictify
 

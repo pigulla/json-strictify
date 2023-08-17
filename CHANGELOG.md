@@ -1,3 +1,7 @@
+## 8.0.1 (2023-08-17)
+
+-   update dependencies to resolve a potential security issue
+
 ## 8.0.0 (2022-04-12)
 
 -   filenames are now kebab-cased instead of CamelCased (does not affect exports from the barrel file)

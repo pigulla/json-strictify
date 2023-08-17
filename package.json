@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "engines": {
     "node": ">=14"
