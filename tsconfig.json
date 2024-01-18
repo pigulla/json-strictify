@@ -23,6 +23,6 @@
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,
-        "target": "es2017"
-    }
+        "target": "es2017",
+    },
 }
