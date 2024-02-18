@@ -13,13 +13,12 @@ jobs:
               with:
                   node-version: 20
 
-            - run: npm i -g npm@9 --registry=https://registry.npmjs.org
+            - run: npm i -g npm@10 --registry=https://registry.npmjs.org
             - run: npm ci
-            - run: npm test
-            - run: npm run build
+            - run: npm run ci
 
             - uses: codecov/codecov-action@v3
               with:
-                  files: ./coverage/lcov.info
+                  files: ./lcov.info
                   fail_ci_if_error: false
                   verbose: true

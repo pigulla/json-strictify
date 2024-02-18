@@ -1,9 +1,6 @@
 const path = require('path')
 
 module.exports = {
-    env: {
-        jest: true,
-    },
     parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',

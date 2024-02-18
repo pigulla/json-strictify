@@ -1,8 +1,12 @@
-## 8.0.2 (2024-??-??)
+## 8.0.2 (2024-02-18)
 
--   build is now run with Node v20
+-   pipelines now run with Node.js v20 and npm@10
 -   no longer fail the build if the upload to Codecov failed
 -   dependencies are now pinned
+-   replace `tsx` with `ts-node`
+-   use built-in Node.js test runner instead of Jest and Chai
+-   add signature validation to audit check
+-   add linting for `package.json`
 
 ## 8.0.1 (2023-08-17)
 

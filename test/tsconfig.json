@@ -2,14 +2,8 @@
     "extends": "../tsconfig.json",
     "include": ["../src/**/*.ts", "../test/**/*.ts"],
     "compilerOptions": {
-        "types": ["node", "jest"],
+        "types": ["node"],
         "rootDir": "..",
-        "noPropertyAccessFromIndexSignature": false,
-        "paths": {
-            "~src": ["src/index.ts"],
-            "~src/*": ["src/*"],
-            "~test": ["test/index.ts"],
-            "~test/*": ["test/*"]
-        }
+        "noPropertyAccessFromIndexSignature": false
     }
 }
