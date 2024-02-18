@@ -1,52 +1,49 @@
+import assert from 'node:assert/strict'
+import { describe, it, beforeEach, afterEach } from 'node:test'
 import { inherits } from 'node:util'
 
-import { expect } from 'chai'
 import noop from 'lodash.noop'
 import type { Class, JsonObject } from 'type-fest'
 
-import JSONs, { JsonStrictifyError, InvalidValueError, CircularReferenceError } from '~src'
+import JSONs, { JsonStrictifyError, InvalidValueError, CircularReferenceError } from '../src'
 
 function assertThrowsAt(
-    function_: Function,
+    callback: Function,
     clazz: Class<JsonStrictifyError>,
     reference: string,
 ): void {
     let error: JsonStrictifyError | undefined
 
     try {
-        function_()
+        callback()
     } catch (error_) {
         error = error_ as JsonStrictifyError
     }
 
-    expect(error)
-    expect(error).to.be.an.instanceof(clazz)
-    expect(error?.path).to.deep.equal(reference)
+    assert(error)
+    assert(error instanceof clazz)
+    assert.deepEqual(error?.path, reference)
 }
 
-describe('JSONs', function () {
-    let revert: Function
+void describe('JSONs', function () {
+    let revert: () => void
 
     // Generic setup for rewire
-    beforeEach(function () {
-        revert = noop
-    })
-    afterEach(function () {
-        revert()
-    })
+    beforeEach(() => (revert = noop))
+    afterEach(() => revert())
 
-    it('errors extend properly', function () {
+    void it('errors extend properly', function () {
         const circular_reference_error = new CircularReferenceError(['some', 'path'])
         const invalid_value_error = new InvalidValueError('An error message', 42, ['some', 'path'])
 
-        expect(circular_reference_error).to.be.instanceOf(Error)
-        expect(circular_reference_error).to.be.instanceOf(JsonStrictifyError)
-        expect(invalid_value_error).to.be.instanceOf(Error)
-        expect(invalid_value_error).to.be.instanceOf(JsonStrictifyError)
+        assert(circular_reference_error instanceof Error)
+        assert(circular_reference_error instanceof JsonStrictifyError)
+        assert(invalid_value_error instanceof Error)
+        assert(invalid_value_error instanceof JsonStrictifyError)
     })
 
-    describe('provides basic functionality', function () {
-        it('accepts a valid object', function () {
+    void describe('provides basic functionality', function () {
+        void it('accepts a valid object', function () {
             const o = {
                 foo: 'bar',
                 meaning: 42,
@@ -54,20 +51,20 @@ describe('JSONs', function () {
                 stuff: [1, 2, 3],
             }
 
-            expect(JSONs.stringify(o)).to.equal(JSON.stringify(o))
+            assert.equal(JSONs.stringify(o), JSON.stringify(o))
         })
 
-        it('refuses invalid values', function () {
-            expect(() => JSONs.stringify({ foo() {} })).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify([undefined])).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify(/regex/)).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify(new Error('Boom!'))).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify([0, Number.NaN, 2])).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify(BigInt(1))).to.throw(InvalidValueError)
-            expect(() => JSONs.stringify(Symbol('test'))).to.throw(InvalidValueError)
+        void it('refuses invalid values', function () {
+            assert.throws(() => JSONs.stringify({ foo() {} }), InvalidValueError)
+            assert.throws(() => JSONs.stringify([undefined]), InvalidValueError)
+            assert.throws(() => JSONs.stringify(/regex/), InvalidValueError)
+            assert.throws(() => JSONs.stringify(new Error('Boom!')), InvalidValueError)
+            assert.throws(() => JSONs.stringify([0, Number.NaN, 2]), InvalidValueError)
+            assert.throws(() => JSONs.stringify(BigInt(1)), InvalidValueError)
+            assert.throws(() => JSONs.stringify(Symbol('test')), InvalidValueError)
         })
 
-        it('honors "toJSON" methods', function () {
+        void it('honors "toJSON" methods', function () {
             const o = {
                 x: 42,
                 y: {
@@ -77,10 +74,10 @@ describe('JSONs', function () {
                 },
             }
 
-            expect(JSONs.stringify(o)).to.equal(JSON.stringify(o))
+            assert.equal(JSONs.stringify(o), JSON.stringify(o))
         })
 
-        it('works with the prototype chain', function () {
+        void it('works with the prototype chain', function () {
             function A() {}
             A.prototype.a = 42
 
@@ -92,10 +89,10 @@ describe('JSONs', function () {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const b = new B()
 
-            expect(JSONs.stringify(b)).to.equal(JSON.stringify(b))
+            assert.equal(JSONs.stringify(b), JSON.stringify(b))
         })
 
-        it('ignores non-enumerable properties', function () {
+        void it('ignores non-enumerable properties', function () {
             const o = {
                 a: 42,
                 b: false,
@@ -106,12 +103,12 @@ describe('JSONs', function () {
                 value: 'hello',
             })
 
-            expect(JSONs.stringify(o)).to.equal(JSON.stringify(o))
+            assert.equal(JSONs.stringify(o), JSON.stringify(o))
         })
     })
 
-    describe('detects circular references', function () {
-        it('that is a self loop', function () {
+    void describe('detects a circular reference', function () {
+        void it('that is a self loop', function () {
             const o: JsonObject = { a: 42 }
 
             o.b = o
@@ -119,7 +116,7 @@ describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o), CircularReferenceError, '/b')
         })
 
-        it('that is transitive', function () {
+        void it('that is transitive', function () {
             const o: JsonObject = { a: [{ b: {} }] }
 
             // @ts-ignore
@@ -128,7 +125,7 @@ describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o), CircularReferenceError, '/a/0/b/circular')
         })
 
-        it('that is none', function () {
+        void it(`that isn't actually one`, function () {
             // This is the case that used to break json-stringify-safe, so we want to get it right.
             // See https://github.com/isaacs/json-stringify-safe/issues/9
             const p = {}
@@ -137,10 +134,10 @@ describe('JSONs', function () {
                 b: p,
             }
 
-            expect(() => JSONs.stringify(o)).to.not.throw()
+            assert.equal(JSONs.stringify(o), '{"a":{},"b":{}}')
         })
 
-        it('introduced by toJSON and a replacer', function () {
+        void it('introduced by toJSON and a replacer', function () {
             const o = {
                 a: [
                     {
@@ -160,38 +157,39 @@ describe('JSONs', function () {
         })
     })
 
-    describe('delegates to native methods', function () {
-        it('for JSON.parse', function () {
-            expect(JSONs.parse).to.equal(JSON.parse)
+    void describe('delegates to native methods', function () {
+        void it('for JSON.parse', function () {
+            assert.equal(JSONs.parse, JSON.parse)
         })
 
-        it('and passes all parameters to JSON.stringify', function () {
+        void it('and passes all parameters to JSON.stringify', function () {
             const o = {
                 x: 42,
                 y: [0, 8, 15],
             }
 
-            expect(JSONs.stringify(o, null, 4)).to.equal(JSON.stringify(o, null, 4))
+            assert.equal(JSONs.stringify(o, null, 4), JSON.stringify(o, null, 4))
         })
 
-        it('when disabled', function () {
-            expect(JSONs.enabled(false).parse).to.equal(JSON.parse)
+        void it('when disabled', function () {
+            assert.equal(JSONs.enabled(false).parse, JSON.parse)
         })
 
-        it('not when enabled', function () {
-            expect(JSONs.enabled()).to.equal(JSONs)
+        void it('not when enabled', function () {
+            assert.equal(JSONs.enabled(), JSONs)
         })
 
-        it('when enabled and then disabled again', function () {
+        void it('when enabled and then disabled again', function () {
             // call 'enable' more than necessary to cover all code paths
-            expect(JSONs.enabled(false).enabled().enabled(false).enabled(false).parse).to.equal(
+            assert.equal(
+                JSONs.enabled(false).enabled().enabled(false).enabled(false).parse,
                 JSON.parse,
             )
         })
     })
 
-    describe('honors the "replacer" parameter', function () {
-        it('and preserves its context correctly', function () {
+    void describe('honors the "replacer" parameter', function () {
+        void it('and preserves its context correctly', function () {
             const o = [{ a: 42 }, { b: 42 }]
             const contexts = new Map()
             contexts.set('0', o)
@@ -201,7 +199,7 @@ describe('JSONs', function () {
 
             function replacer(this: unknown, key: string, value: unknown): unknown {
                 if (key !== '') {
-                    expect(this).to.equal(contexts.get(String(key)))
+                    assert.equal(this, contexts.get(String(key)))
                 }
 
                 return value
@@ -210,8 +208,8 @@ describe('JSONs', function () {
             JSONs.stringify(o, replacer)
         })
 
-        describe('that is an array', function () {
-            it('for valid input', function () {
+        void describe('that is an array', function () {
+            void it('for valid input', function () {
                 const replacer = ['c', 'd']
                 const o = {
                     a: 0,
@@ -220,13 +218,13 @@ describe('JSONs', function () {
                     d: 42,
                 }
 
-                expect(JSONs.stringify(o, replacer)).to.equal(JSON.stringify(o, replacer))
+                assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
             })
 
-            it('for nested valid input', function () {
+            void it('for nested valid input', function () {
                 const replacer = ['a', 'b']
 
-                expect(function () {
+                assert.equal(
                     JSONs.stringify(
                         {
                             a: 0,
@@ -237,13 +235,14 @@ describe('JSONs', function () {
                             invalid: undefined,
                         },
                         replacer,
-                    )
-                }).to.not.throw()
+                    ),
+                    '{"a":0,"b":{"a":1}}',
+                )
             })
         })
 
-        describe('that is a function', function () {
-            it('for valid input', function () {
+        void describe('that is a function', function () {
+            void it('for valid input', function () {
                 function replacer(key: string, value: number): unknown {
                     return key === '' || value > 5 ? value : undefined
                 }
@@ -255,10 +254,10 @@ describe('JSONs', function () {
                     d: 42,
                 }
 
-                expect(JSONs.stringify(o, replacer)).to.equal(JSON.stringify(o, replacer))
+                assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
             })
 
-            it('for validly replaced input', function () {
+            void it('for validly replaced input', function () {
                 function replacer(key: string, value: unknown): unknown {
                     if (key === '') {
                         return value
@@ -267,7 +266,7 @@ describe('JSONs', function () {
                     }
                 }
 
-                expect(function () {
+                assert.equal(
                     JSONs.stringify(
                         {
                             a: 0,
@@ -276,11 +275,12 @@ describe('JSONs', function () {
                             replaceMe: undefined,
                         },
                         replacer,
-                    )
-                }).to.not.throw()
+                    ),
+                    '{"a":0,"b":1,"c":13,"replaceMe":{"y":42}}',
+                )
             })
 
-            it('for invalidly replaced input', function () {
+            void it('for invalidly replaced input', function () {
                 function replacer(key: string, value: unknown): unknown {
                     if (key === '') {
                         return value
@@ -308,8 +308,8 @@ describe('JSONs', function () {
         })
     })
 
-    describe('works when both a replacer and toJSON() is used', function () {
-        it('for a valid object', function () {
+    void describe('works when both a replacer and toJSON() is used', function () {
+        void it('for a valid object', function () {
             const o = {
                 a: 42,
                 b: {
@@ -328,10 +328,10 @@ describe('JSONs', function () {
                 return key === 'z' ? undefined : value
             }
 
-            expect(JSONs.stringify(o, replacer)).to.equal(JSON.stringify(o, replacer))
+            assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
         })
 
-        it('for an object with circular references', function () {
+        void it('for an object with circular references', function () {
             const x = { y: 'z' }
             const o = {
                 a: 42,
@@ -360,7 +360,7 @@ describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o, replacer), CircularReferenceError, '/x')
         })
 
-        it('for an invalid object', function () {
+        void it('for an invalid object', function () {
             const o = {
                 a: 42,
                 b: {
@@ -388,13 +388,13 @@ describe('JSONs', function () {
         })
     })
 
-    describe('reports the correct path', function () {
-        it('for the root value', function () {
+    void describe('reports the correct path', function () {
+        void it('for the root value', function () {
             // eslint-disable-next-line unicorn/no-useless-undefined
             assertThrowsAt(() => JSONs.stringify(undefined), InvalidValueError, '')
         })
 
-        it('for some nested value', function () {
+        void it('for some nested value', function () {
             assertThrowsAt(
                 function () {
                     JSONs.stringify([
