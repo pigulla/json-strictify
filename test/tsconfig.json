@@ -9,7 +9,7 @@
             "~src": ["src/index.ts"],
             "~src/*": ["src/*"],
             "~test": ["test/index.ts"],
-            "~test/*": ["test/*"],
-        },
-    },
+            "~test/*": ["test/*"]
+        }
+    }
 }
