@@ -1,3 +1,9 @@
+## 8.0.2 (2024-??-??)
+
+-   build is now run with Node v20
+-   no longer fail the build if the upload to Codecov failed
+-   dependencies are now pinned
+
 ## 8.0.1 (2023-08-17)
 
 -   update dependencies to resolve a potential security issue
