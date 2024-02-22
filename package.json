@@ -70,7 +70,7 @@
     "lockfile-lint": "4.13.1",
     "lodash.noop": "3.0.1",
     "prettier": "3.2.5",
-    "sort-package-json": "2.7.0",
+    "sort-package-json": "2.8.0",
     "tsconfig-paths": "4.2.0",
     "tsx": "4.7.1",
     "type-fest": "4.10.2",
