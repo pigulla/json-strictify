@@ -73,7 +73,7 @@
     "sort-package-json": "2.8.0",
     "tsconfig-paths": "4.2.0",
     "tsx": "4.7.1",
-    "type-fest": "4.13.0",
+    "type-fest": "4.13.1",
     "typescript": "5.4.2"
   },
   "engines": {
