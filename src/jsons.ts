@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import * as util from 'node:util'
+import { types } from 'node:util'
 
 import type { JsonObject } from 'type-fest'
 
@@ -123,13 +123,13 @@ class JSONstrictify {
      * @throws {InvalidValueError}
      */
     private checkCommonTypes(value: unknown, references: string[]): void {
-        if (util.types.isNativeError(value)) {
+        if (types.isNativeError(value)) {
             throw new InvalidValueError(
                 'An error object is not JSON-serializable',
                 value,
                 references,
             )
-        } else if (util.types.isRegExp(value)) {
+        } else if (types.isRegExp(value)) {
             throw new InvalidValueError('A RegExp is not JSON-serializable', value, references)
         } else if (value === undefined) {
             throw new InvalidValueError('undefined is not JSON-serializable', value, references)
