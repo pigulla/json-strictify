@@ -69,7 +69,7 @@
     "eslint-plugin-unicorn": "53.0.0",
     "lockfile-lint": "4.13.2",
     "lodash.noop": "3.0.1",
-    "prettier": "3.3.1",
+    "prettier": "3.3.2",
     "sort-package-json": "2.10.0",
     "tsconfig-paths": "4.2.0",
     "tsx": "4.13.0",
