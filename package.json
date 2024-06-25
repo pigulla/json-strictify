@@ -58,7 +58,7 @@
   "devDependencies": {
     "@types/json-pointer": "1.0.34",
     "@types/lodash.noop": "3.0.9",
-    "@types/node": "20.14.2",
+    "@types/node": "20.14.8",
     "@typescript-eslint/eslint-plugin": "7.13.1",
     "@typescript-eslint/parser": "7.13.1",
     "eslint": "8.57.0",
