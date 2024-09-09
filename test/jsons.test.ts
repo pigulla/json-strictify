@@ -8,6 +8,7 @@ import type { Class, JsonObject } from 'type-fest'
 import JSONs, { JsonStrictifyError, InvalidValueError, CircularReferenceError } from '../src'
 
 function assertThrowsAt(
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     callback: Function,
     clazz: Class<JsonStrictifyError>,
     reference: string,

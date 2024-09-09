@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "keywords": [
     "JSON",
@@ -48,32 +48,32 @@
     "prepublishOnly": "npm ci && npm test && npm run build",
     "test": "npm run lint && npm run test:unit && npm run audit",
     "test:unit": "node --import tsx --test ./test/*test.ts",
-    "test:unit:ci": "node --import tsx --test --experimental-test-coverage --test-reporter lcov --test-reporter-destination=lcov.info ./dist/test"
+    "test:unit:ci": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info ./dist/test/*test.js"
   },
   "dependencies": {
     "json-pointer": "0.6.2",
     "ts-custom-error": "3.3.1",
-    "tslib": "2.6.3"
+    "tslib": "2.7.0"
   },
   "devDependencies": {
     "@types/json-pointer": "1.0.34",
     "@types/lodash.noop": "3.0.9",
-    "@types/node": "20.14.11",
-    "@typescript-eslint/eslint-plugin": "7.16.1",
-    "@typescript-eslint/parser": "7.18.0",
+    "@types/node": "22.5.4",
+    "@typescript-eslint/eslint-plugin": "8.4.0",
+    "@typescript-eslint/parser": "8.4.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-import": "2.30.0",
     "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-unicorn": "54.0.0",
+    "eslint-plugin-unicorn": "55.0.0",
     "lockfile-lint": "4.14.0",
     "lodash.noop": "3.0.1",
     "prettier": "3.3.3",
-    "sort-package-json": "2.10.0",
+    "sort-package-json": "2.10.1",
     "tsconfig-paths": "4.2.0",
-    "tsx": "4.16.2",
-    "type-fest": "4.22.1",
+    "tsx": "4.19.0",
+    "type-fest": "4.26.1",
     "typescript": "5.5.4"
   },
   "engines": {
