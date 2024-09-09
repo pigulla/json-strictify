@@ -1,3 +1,7 @@
+## 8.0.3 (2024-09-15)
+
+-   update dependencies to resolve a potential security issue
+
 ## 8.0.2 (2024-02-18)
 
 -   pipelines now run with Node.js v20 and npm@10
