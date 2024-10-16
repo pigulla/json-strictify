@@ -53,7 +53,7 @@
   "dependencies": {
     "json-pointer": "0.6.2",
     "ts-custom-error": "3.3.1",
-    "tslib": "2.7.0"
+    "tslib": "2.8.0"
   },
   "devDependencies": {
     "@types/json-pointer": "1.0.34",
