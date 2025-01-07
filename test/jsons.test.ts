@@ -16,6 +16,7 @@ function assertThrowsAt(
     let error: JsonStrictifyError | undefined
 
     try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         callback()
     } catch (error_) {
         error = error_ as JsonStrictifyError

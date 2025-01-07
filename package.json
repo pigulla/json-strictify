@@ -1,6 +1,6 @@
 {
   "name": "json-strictify",
-  "version": "8.0.3",
+  "version": "8.0.4",
   "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
   "keywords": [
     "JSON",
@@ -58,23 +58,23 @@
   "devDependencies": {
     "@types/json-pointer": "1.0.34",
     "@types/lodash.noop": "3.0.9",
-    "@types/node": "22.9.0",
-    "@typescript-eslint/eslint-plugin": "8.6.0",
-    "@typescript-eslint/parser": "8.14.0",
+    "@types/node": "22.10.5",
+    "@typescript-eslint/eslint-plugin": "8.19.1",
+    "@typescript-eslint/parser": "8.19.1",
     "eslint": "8.57.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-unicorn": "56.0.0",
+    "eslint-plugin-unicorn": "56.0.1",
     "lockfile-lint": "4.14.0",
     "lodash.noop": "3.0.1",
-    "prettier": "3.3.3",
-    "sort-package-json": "2.10.1",
+    "prettier": "3.4.2",
+    "sort-package-json": "2.12.0",
     "tsconfig-paths": "4.2.0",
     "tsx": "4.19.2",
-    "type-fest": "4.27.0",
-    "typescript": "5.6.3"
+    "type-fest": "4.31.0",
+    "typescript": "5.7.2"
   },
   "engines": {
     "node": ">=14"
