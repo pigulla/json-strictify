@@ -60,7 +60,7 @@
     "@types/lodash.noop": "3.0.9",
     "@types/node": "22.13.10",
     "@typescript-eslint/eslint-plugin": "8.26.1",
-    "@typescript-eslint/parser": "8.26.1",
+    "@typescript-eslint/parser": "8.28.0",
     "eslint": "8.57.1",
     "eslint-config-prettier": "10.1.1",
     "eslint-config-standard": "17.1.0",
