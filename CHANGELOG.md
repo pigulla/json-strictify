@@ -1,6 +1,11 @@
 ## 8.0.5 (2025-01-07)
 
 - update dependencies to resolve a potential security issue
+- replace ESLint and Prettier with Biome
+
+## 8.0.4 (2025-01-07)
+
+- update dependencies to resolve a potential security issue
 
 ## 8.0.3 (2024-09-15)
 

@@ -1,82 +1,72 @@
 {
-  "name": "json-strictify",
-  "version": "8.0.4",
-  "description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
-  "keywords": [
-    "JSON",
-    "debugging",
-    "validation",
-    "stringify",
-    "strict"
-  ],
-  "homepage": "https://github.com/pigulla/json-strictify",
-  "bugs": {
-    "url": "https://github.com/pigulla/json-strictify/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pigulla/json-strictify.git"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Raphael Pigulla",
-    "email": "pigulla@four66.com"
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*",
-    "!dist/*.tsbuildinfo",
-    "CHANGELOG.md"
-  ],
-  "scripts": {
-    "audit": "npm audit && npm audit signatures",
-    "build": "rm -rf dist && tsc",
-    "build:ci": "rm -rf dist lcov.info && tsc --project test",
-    "ci": "npm run lint && npm run build:ci && npm run test:unit:ci && npm run audit",
-    "format": "npm run format:prettier && npm run format:eslint && npm run format:package-json",
-    "format:eslint": "eslint --ext=ts --fix .",
-    "format:package-json": "sort-package-json",
-    "format:prettier": "prettier --write .",
-    "jest": "rm -rf coverage && jest",
-    "lint": "npm run lint:tsc && npm run lint:eslint && npm run lint:prettier && npm run lint:package-json && npm run lint:lockfile",
-    "lint:eslint": "eslint --max-warnings=0 --ext=ts .",
-    "lint:lockfile": "lockfile-lint --path package-lock.json --type npm --validate-https --allowed-hosts npm",
-    "lint:package-json": "sort-package-json --check",
-    "lint:prettier": "prettier --check .",
-    "lint:tsc": "tsc --noEmit",
-    "prepublishOnly": "npm ci && npm test && npm run build",
-    "test": "npm run lint && npm run test:unit && npm run audit",
-    "test:unit": "node --import tsx --test ./test/*test.ts",
-    "test:unit:ci": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info ./dist/test/*test.js"
-  },
-  "dependencies": {
-    "json-pointer": "0.6.2",
-    "ts-custom-error": "3.3.1",
-    "tslib": "2.8.1"
-  },
-  "devDependencies": {
-    "@types/json-pointer": "1.0.34",
-    "@types/lodash.noop": "3.0.9",
-    "@types/node": "22.14.0",
-    "@typescript-eslint/eslint-plugin": "8.28.0",
-    "@typescript-eslint/parser": "8.30.1",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "10.1.1",
-    "eslint-config-standard": "17.1.0",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-prettier": "5.2.5",
-    "eslint-plugin-unicorn": "56.0.1",
-    "lockfile-lint": "4.14.0",
-    "lodash.noop": "3.0.1",
-    "prettier": "3.5.3",
-    "sort-package-json": "3.0.0",
-    "tsconfig-paths": "4.2.0",
-    "tsx": "4.19.3",
-    "type-fest": "4.39.1",
-    "typescript": "5.8.2"
-  },
-  "engines": {
-    "node": ">=14"
-  }
+	"name": "json-strictify",
+	"version": "8.0.5",
+	"description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
+	"keywords": [
+		"JSON",
+		"debugging",
+		"validation",
+		"stringify",
+		"strict"
+	],
+	"homepage": "https://github.com/pigulla/json-strictify",
+	"bugs": {
+		"url": "https://github.com/pigulla/json-strictify/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pigulla/json-strictify.git"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Raphael Pigulla",
+		"email": "pigulla@four66.com"
+	},
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist/**/*",
+		"!dist/*.tsbuildinfo",
+		"CHANGELOG.md"
+	],
+	"scripts": {
+		"audit": "npm audit && npm audit signatures",
+		"build": "rm -rf dist && tsc",
+		"build:ci": "rm -rf dist lcov.info && tsc --project test",
+		"ci": "npm run lint && npm run build:ci && npm run test:unit:ci && npm run audit",
+		"format": "npm run format:biome && npm run format:package-json",
+		"format:biome": "biome format --fix",
+		"format:package-json": "sort-package-json",
+		"jest": "rm -rf coverage && jest",
+		"lint": "npm run lint:tsc && npm run lint:biome && npm run lint:package-json && npm run lint:lockfile",
+		"lint:biome": "biome check",
+		"lint:lockfile": "lockfile-lint",
+		"lint:package-json": "sort-package-json --check",
+		"lint:tsc": "tsc --noEmit --project tsconfig.json",
+		"prepublishOnly": "npm ci && npm test && npm run build",
+		"test": "npm run lint && npm run test:unit && npm run audit",
+		"test:unit": "node --import tsx --test ./test/*test.ts",
+		"test:unit:ci": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=lcov.info ./dist/test/*test.js"
+	},
+	"dependencies": {
+		"json-pointer": "0.6.2",
+		"ts-custom-error": "3.3.1",
+		"tslib": "2.8.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@types/json-pointer": "1.0.34",
+		"@types/lodash.noop": "3.0.9",
+		"@types/node": "22.14.1",
+		"lockfile-lint": "4.14.0",
+		"lodash.noop": "3.0.1",
+		"sort-package-json": "3.0.0",
+		"tsconfig-paths": "4.2.0",
+		"tsx": "4.19.3",
+		"type-fest": "4.40.0",
+		"typescript": "5.8.3"
+	},
+	"engines": {
+		"node": ">=14"
+	}
 }
