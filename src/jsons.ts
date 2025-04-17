@@ -40,9 +40,8 @@ function normalizeReplacer(replacer: Replacer): NormalizedReplacer {
     }
 
     if (Array.isArray(replacer)) {
-        return function (key: string, value: unknown): unknown {
-            return key !== '' && !replacer.includes(key) ? undefined : value
-        }
+        return (key: string, value: unknown): unknown =>
+            key !== '' && !replacer.includes(key) ? undefined : value
     }
 
     // We can't easily normalize an "empty replacer" with the identity function because we later
@@ -79,13 +78,14 @@ class JSONstrictify {
      * @throws {CircularReferenceError}
      */
     private checkObject(object: GenericObject, references: string[], ancestors: Ancestors): void {
-        let actual
+        let actual: unknown
 
         this.assertNoCycle(object, references, ancestors)
 
         if (typeof object.toJSON === 'function') {
             actual = object.toJSON()
-            return this.check(actual, references, ancestors)
+            this.check(actual, references, ancestors)
+            return
         }
 
         // eslint-disable-next-line no-restricted-syntax
@@ -129,17 +129,23 @@ class JSONstrictify {
                 value,
                 references,
             )
-        } else if (types.isRegExp(value)) {
+        }
+        if (types.isRegExp(value)) {
             throw new InvalidValueError('A RegExp is not JSON-serializable', value, references)
-        } else if (value === undefined) {
+        }
+        if (value === undefined) {
             throw new InvalidValueError('undefined is not JSON-serializable', value, references)
-        } else if (typeof value === 'symbol') {
+        }
+        if (typeof value === 'symbol') {
             throw new InvalidValueError('A symbol is not JSON-serializable', value, references)
-        } else if (typeof value === 'function') {
+        }
+        if (typeof value === 'function') {
             throw new InvalidValueError('A function is not JSON-serializable', value, references)
-        } else if (typeof value === 'bigint') {
+        }
+        if (typeof value === 'bigint') {
             throw new InvalidValueError('A BigInt is not JSON-serializable', value, references)
-        } else if (typeof value === 'number' && !Number.isFinite(value)) {
+        }
+        if (typeof value === 'number' && !Number.isFinite(value)) {
             // The value's string representation itself will actually be descriptive
             // (i.e., "Infinity", "-Infinity" or "NaN").
             throw new InvalidValueError(`${value} is not JSON-serializable`, value, references)
@@ -168,13 +174,15 @@ class JSONstrictify {
 
         if (Array.isArray(value)) {
             // If an array, check its elements.
-            return this.checkArray(value, references, ancestors)
+            this.checkArray(value, references, ancestors)
+            return
         }
 
         /* istanbul ignore else */
         if (typeof value === 'object') {
             // If an object, check its properties (we've already checked for null).
-            return this.checkObject(value as GenericObject, references, ancestors)
+            this.checkObject(value as GenericObject, references, ancestors)
+            return
         }
 
         // This case will not occur in a regular Node.js or browser environment, but could happen if you run your
@@ -208,7 +216,7 @@ const native_impl: JSONs = {
     [Symbol.toStringTag]: 'JSON',
     parse: JSON.parse,
     stringify: JSON.stringify,
-    enabled(enabled: boolean = true): JSONs {
+    enabled(enabled = true): JSONs {
         /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         return enabled ? strict_impl : native_impl
     },
@@ -225,10 +233,10 @@ const strict_impl: JSONs = {
             ? JSON.stringify(value, replacer, space)
             : JSON.stringify(value, replacer, space)
     },
-    enabled(enabled: boolean = true): JSONs {
+    enabled(enabled = true): JSONs {
         return enabled ? strict_impl : native_impl
     },
 }
 
 /* istanbul ignore next */
-export default process.env['NODE_ENV'] === 'production' ? native_impl : strict_impl
+export default process.env.NODE_ENV === 'production' ? native_impl : strict_impl

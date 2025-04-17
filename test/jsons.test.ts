@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { describe, it, beforeEach, afterEach } from 'node:test'
+import { afterEach, beforeEach, describe, it } from 'node:test'
 import { inherits } from 'node:util'
 
 import noop from 'lodash.noop'
@@ -8,7 +8,7 @@ import type { Class, JsonObject } from 'type-fest'
 import JSONs, { JsonStrictifyError, InvalidValueError, CircularReferenceError } from '../src'
 
 function assertThrowsAt(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    // biome-ignore lint/complexity/noBannedTypes: <explanation>
     callback: Function,
     clazz: Class<JsonStrictifyError>,
     reference: string,
@@ -27,14 +27,15 @@ function assertThrowsAt(
     assert.deepEqual(error?.path, reference)
 }
 
-void describe('JSONs', function () {
+void describe('JSONs', () => {
     let revert: () => void
 
     // Generic setup for rewire
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
     beforeEach(() => (revert = noop))
     afterEach(() => revert())
 
-    void it('errors extend properly', function () {
+    void it('errors extend properly', () => {
         const circular_reference_error = new CircularReferenceError(['some', 'path'])
         const invalid_value_error = new InvalidValueError('An error message', 42, ['some', 'path'])
 
@@ -44,8 +45,8 @@ void describe('JSONs', function () {
         assert(invalid_value_error instanceof JsonStrictifyError)
     })
 
-    void describe('provides basic functionality', function () {
-        void it('accepts a valid object', function () {
+    void describe('provides basic functionality', () => {
+        void it('accepts a valid object', () => {
             const o = {
                 foo: 'bar',
                 meaning: 42,
@@ -56,7 +57,7 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(o), JSON.stringify(o))
         })
 
-        void it('refuses invalid values', function () {
+        void it('refuses invalid values', () => {
             assert.throws(() => JSONs.stringify({ foo() {} }), InvalidValueError)
             assert.throws(() => JSONs.stringify([undefined]), InvalidValueError)
             assert.throws(() => JSONs.stringify(/regex/), InvalidValueError)
@@ -66,7 +67,7 @@ void describe('JSONs', function () {
             assert.throws(() => JSONs.stringify(Symbol('test')), InvalidValueError)
         })
 
-        void it('honors "toJSON" methods', function () {
+        void it('honors "toJSON" methods', () => {
             const o = {
                 x: 42,
                 y: {
@@ -79,7 +80,7 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(o), JSON.stringify(o))
         })
 
-        void it('works with the prototype chain', function () {
+        void it('works with the prototype chain', () => {
             function A() {}
             A.prototype.a = 42
 
@@ -94,7 +95,7 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(b), JSON.stringify(b))
         })
 
-        void it('ignores non-enumerable properties', function () {
+        void it('ignores non-enumerable properties', () => {
             const o = {
                 a: 42,
                 b: false,
@@ -109,8 +110,8 @@ void describe('JSONs', function () {
         })
     })
 
-    void describe('detects a circular reference', function () {
-        void it('that is a self loop', function () {
+    void describe('detects a circular reference', () => {
+        void it('that is a self loop', () => {
             const o: JsonObject = { a: 42 }
 
             o.b = o
@@ -118,7 +119,7 @@ void describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o), CircularReferenceError, '/b')
         })
 
-        void it('that is transitive', function () {
+        void it('that is transitive', () => {
             const o: JsonObject = { a: [{ b: {} }] }
 
             // @ts-ignore
@@ -127,7 +128,7 @@ void describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o), CircularReferenceError, '/a/0/b/circular')
         })
 
-        void it(`that isn't actually one`, function () {
+        void it(`that isn't actually one`, () => {
             // This is the case that used to break json-stringify-safe, so we want to get it right.
             // See https://github.com/isaacs/json-stringify-safe/issues/9
             const p = {}
@@ -139,7 +140,7 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(o), '{"a":{},"b":{}}')
         })
 
-        void it('introduced by toJSON and a replacer', function () {
+        void it('introduced by toJSON and a replacer', () => {
             const o = {
                 a: [
                     {
@@ -159,12 +160,12 @@ void describe('JSONs', function () {
         })
     })
 
-    void describe('delegates to native methods', function () {
-        void it('for JSON.parse', function () {
+    void describe('delegates to native methods', () => {
+        void it('for JSON.parse', () => {
             assert.equal(JSONs.parse, JSON.parse)
         })
 
-        void it('and passes all parameters to JSON.stringify', function () {
+        void it('and passes all parameters to JSON.stringify', () => {
             const o = {
                 x: 42,
                 y: [0, 8, 15],
@@ -173,15 +174,15 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(o, null, 4), JSON.stringify(o, null, 4))
         })
 
-        void it('when disabled', function () {
+        void it('when disabled', () => {
             assert.equal(JSONs.enabled(false).parse, JSON.parse)
         })
 
-        void it('not when enabled', function () {
+        void it('not when enabled', () => {
             assert.equal(JSONs.enabled(), JSONs)
         })
 
-        void it('when enabled and then disabled again', function () {
+        void it('when enabled and then disabled again', () => {
             // call 'enable' more than necessary to cover all code paths
             assert.equal(
                 JSONs.enabled(false).enabled().enabled(false).enabled(false).parse,
@@ -190,8 +191,8 @@ void describe('JSONs', function () {
         })
     })
 
-    void describe('honors the "replacer" parameter', function () {
-        void it('and preserves its context correctly', function () {
+    void describe('honors the "replacer" parameter', () => {
+        void it('and preserves its context correctly', () => {
             const o = [{ a: 42 }, { b: 42 }]
             const contexts = new Map()
             contexts.set('0', o)
@@ -210,8 +211,8 @@ void describe('JSONs', function () {
             JSONs.stringify(o, replacer)
         })
 
-        void describe('that is an array', function () {
-            void it('for valid input', function () {
+        void describe('that is an array', () => {
+            void it('for valid input', () => {
                 const replacer = ['c', 'd']
                 const o = {
                     a: 0,
@@ -223,7 +224,7 @@ void describe('JSONs', function () {
                 assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
             })
 
-            void it('for nested valid input', function () {
+            void it('for nested valid input', () => {
                 const replacer = ['a', 'b']
 
                 assert.equal(
@@ -243,8 +244,8 @@ void describe('JSONs', function () {
             })
         })
 
-        void describe('that is a function', function () {
-            void it('for valid input', function () {
+        void describe('that is a function', () => {
+            void it('for valid input', () => {
                 function replacer(key: string, value: number): unknown {
                     return key === '' || value > 5 ? value : undefined
                 }
@@ -259,13 +260,12 @@ void describe('JSONs', function () {
                 assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
             })
 
-            void it('for validly replaced input', function () {
+            void it('for validly replaced input', () => {
                 function replacer(key: string, value: unknown): unknown {
                     if (key === '') {
                         return value
-                    } else {
-                        return key === 'replaceMe' ? { y: 42 } : value
                     }
+                    return key === 'replaceMe' ? { y: 42 } : value
                 }
 
                 assert.equal(
@@ -282,17 +282,16 @@ void describe('JSONs', function () {
                 )
             })
 
-            void it('for invalidly replaced input', function () {
+            void it('for invalidly replaced input', () => {
                 function replacer(key: string, value: unknown): unknown {
                     if (key === '') {
                         return value
-                    } else {
-                        return key === 'replaceMe' ? { y: Number.NaN } : value
                     }
+                    return key === 'replaceMe' ? { y: Number.NaN } : value
                 }
 
                 assertThrowsAt(
-                    function () {
+                    () => {
                         JSONs.stringify(
                             {
                                 a: 0,
@@ -310,8 +309,8 @@ void describe('JSONs', function () {
         })
     })
 
-    void describe('works when both a replacer and toJSON() is used', function () {
-        void it('for a valid object', function () {
+    void describe('works when both a replacer and toJSON() is used', () => {
+        void it('for a valid object', () => {
             const o = {
                 a: 42,
                 b: {
@@ -333,7 +332,7 @@ void describe('JSONs', function () {
             assert.equal(JSONs.stringify(o, replacer), JSON.stringify(o, replacer))
         })
 
-        void it('for an object with circular references', function () {
+        void it('for an object with circular references', () => {
             const x = { y: 'z' }
             const o = {
                 a: 42,
@@ -362,7 +361,7 @@ void describe('JSONs', function () {
             assertThrowsAt(() => JSONs.stringify(o, replacer), CircularReferenceError, '/x')
         })
 
-        void it('for an invalid object', function () {
+        void it('for an invalid object', () => {
             const o = {
                 a: 42,
                 b: {
@@ -390,15 +389,15 @@ void describe('JSONs', function () {
         })
     })
 
-    void describe('reports the correct path', function () {
-        void it('for the root value', function () {
+    void describe('reports the correct path', () => {
+        void it('for the root value', () => {
             // eslint-disable-next-line unicorn/no-useless-undefined
             assertThrowsAt(() => JSONs.stringify(undefined), InvalidValueError, '')
         })
 
-        void it('for some nested value', function () {
+        void it('for some nested value', () => {
             assertThrowsAt(
-                function () {
+                () => {
                     JSONs.stringify([
                         null,
                         42,
