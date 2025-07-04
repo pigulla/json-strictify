@@ -1,5 +1,6 @@
 lcov.info
 npm-debug.log
+coverage/
 .idea/
 dist/
 node_modules/

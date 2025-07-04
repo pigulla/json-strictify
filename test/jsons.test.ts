@@ -5,18 +5,16 @@ import { inherits } from 'node:util'
 import noop from 'lodash.noop'
 import type { Class, JsonObject } from 'type-fest'
 
-import JSONs, { JsonStrictifyError, InvalidValueError, CircularReferenceError } from '../src'
+import JSONs, { CircularReferenceError, InvalidValueError, JsonStrictifyError } from '../src'
 
 function assertThrowsAt(
-    // biome-ignore lint/complexity/noBannedTypes: <explanation>
-    callback: Function,
+    callback: (...args: unknown[]) => unknown,
     clazz: Class<JsonStrictifyError>,
     reference: string,
 ): void {
     let error: JsonStrictifyError | undefined
 
     try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         callback()
     } catch (error_) {
         error = error_ as JsonStrictifyError
@@ -31,7 +29,7 @@ void describe('JSONs', () => {
     let revert: () => void
 
     // Generic setup for rewire
-    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+    // biome-ignore lint/suspicious/noAssignInExpressions: This is fine.
     beforeEach(() => (revert = noop))
     afterEach(() => revert())
 
