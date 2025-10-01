@@ -57,7 +57,7 @@
 		"@biomejs/biome": "2.2.4",
 		"@types/json-pointer": "1.0.34",
 		"@types/lodash.noop": "3.0.9",
-		"@types/node": "24.5.2",
+		"@types/node": "24.6.1",
 		"lockfile-lint": "4.14.1",
 		"lodash.noop": "3.0.1",
 		"sort-package-json": "3.4.0",
