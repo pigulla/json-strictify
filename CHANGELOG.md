@@ -1,3 +1,7 @@
+## 8.0.5 (2025-11-25)
+
+- update dependencies to resolve a potential security issue
+
 ## 8.0.5 (2025-01-07)
 
 - update dependencies to resolve a potential security issue
