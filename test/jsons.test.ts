@@ -86,7 +86,7 @@ void describe('JSONs', () => {
             inherits(B, A)
             B.prototype.b = 'foo'
 
-            // @ts-ignore
+            // @ts-expect-error
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const b = new B()
 
@@ -120,7 +120,7 @@ void describe('JSONs', () => {
         void it('that is transitive', () => {
             const o: JsonObject = { a: [{ b: {} }] }
 
-            // @ts-ignore
+            // @ts-expect-error
             o.a[0].b.circular = o
 
             assertThrowsAt(() => JSONs.stringify(o), CircularReferenceError, '/a/0/b/circular')

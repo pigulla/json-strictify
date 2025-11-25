@@ -1,6 +1,6 @@
 {
 	"name": "json-strictify",
-	"version": "8.0.5",
+	"version": "8.0.6",
 	"description": "Safely serialize a value to JSON without unintended loss of data or going into an infinite loop due to circular references.",
 	"keywords": [
 		"JSON",
@@ -54,7 +54,7 @@
 		"tslib": "2.8.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.5",
+		"@biomejs/biome": "2.3.7",
 		"@types/json-pointer": "1.0.34",
 		"@types/lodash.noop": "3.0.9",
 		"@types/node": "24.10.1",
