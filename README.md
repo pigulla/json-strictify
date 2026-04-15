@@ -1,3 +1,4 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 ![Typescript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-blue.svg?style=flat-square)
 [![npm](https://img.shields.io/npm/v/json-strictify?style=flat-square&cacheSeconds=3600)](https://www.npmjs.com/package/json-strictify)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/pigulla/json-strictify/build-and-test.yml?style=flat-square)
